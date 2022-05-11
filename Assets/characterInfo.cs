@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class characterInfo : MonoBehaviour
 {
-    [SerializeField]
-    private SpriteRenderer sr;
-    [SerializeField] private Sprite sp;
-
-    // Start is called before the first frame update
+  
+    private int HP, EN;
     void Awake()
     {
-        sr = gameObject.GetComponent<SpriteRenderer>();
-        sr.sprite = sp;
-
+        HP = 100;
+        EN = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+    
+    public void setHP(int h){
+        HP = h;
+    }
+    public void setEN(int e){
+        EN = e;
+    }
+    public int getHP(){
+        return HP;
+    }
+    public int getEN(){
+        return EN;
     }
 }

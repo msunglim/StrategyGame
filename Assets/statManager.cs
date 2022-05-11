@@ -5,16 +5,21 @@ using UnityEngine;
 public class statManager : MonoBehaviour
 {
     [SerializeField]
-    private int vector;
-    [SerializeField]
-    private float defaultX;
+    private float vector; //player -1: 1, 2: 1
+
+    private float defaultSize;
+    private float startingX;
+
     [SerializeField]
     private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("player"+ player.transform.position.x + " scale "+player.transform.localScale .x);
+        defaultSize = 4.5f;
+        startingX = player.transform.position.x + vector*player.GetComponent<SpriteRenderer>().bounds.size.x/2 ;
+        transform.position= new Vector2(startingX +vector*(defaultSize/2) , transform.position.y);
+
     }
 
     // Update is called once per frame
@@ -22,7 +27,12 @@ public class statManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = transform.position + new Vector3(vector, 0, 0) * 1;
+            defaultSize -= 0.5f;
+            player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
+            transform.localScale = new Vector2(defaultSize, transform.localScale.y);
+            transform.position = new Vector2(startingX + vector*(defaultSize/2),transform.position.y); 
+        
+            Debug.Log("hp"+ player.GetComponent<characterInfo>().getHP());
         }
     }
 }
