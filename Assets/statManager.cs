@@ -5,7 +5,7 @@ using UnityEngine;
 public class statManager : MonoBehaviour
 {
     [SerializeField]
-    private float vector; //player -1: 1, 2: 1
+    private float playerNumber; //player 1:1, 2:-1
 
     private float defaultSize;
     private float startingX;
@@ -17,22 +17,40 @@ public class statManager : MonoBehaviour
     void Start()
     {
         defaultSize = 4.5f;
-        startingX = player.transform.position.x + vector*player.GetComponent<SpriteRenderer>().bounds.size.x/2 ;
-        transform.position= new Vector2(startingX +vector*(defaultSize/2) , transform.position.y);
+        startingX = player.transform.position.x + playerNumber * player.GetComponent<SpriteRenderer>().bounds.size.x / 2;
+        gameObject.transform.position = new Vector2(startingX + playerNumber * (defaultSize / 2), gameObject.transform.position.y);
+        if (playerNumber == -1)
+        {
+            PlayerPrefs.SetInt("player1HP", 100);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("player2HP", 100);
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown("a") && playerNumber == 1)
         {
             defaultSize -= 0.5f;
-            player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
-            transform.localScale = new Vector2(defaultSize, transform.localScale.y);
-            transform.position = new Vector2(startingX + vector*(defaultSize/2),transform.position.y); 
-        
-            Debug.Log("hp"+ player.GetComponent<characterInfo>().getHP());
+            // player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
+            gameObject.transform.localScale = new Vector2(defaultSize, gameObject.transform.localScale.y);
+            gameObject.transform.position = new Vector2(startingX + playerNumber * (defaultSize / 2), gameObject.transform.position.y);
+            int p1HP = PlayerPrefs.GetInt("player1HP");
+            PlayerPrefs.SetInt("player1HP", p1HP - 10);
+
+        }
+        else if (Input.GetKeyDown("s") && playerNumber == -1)
+        {
+            defaultSize -= 0.5f;
+            // player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
+            gameObject.transform.localScale = new Vector2(defaultSize, gameObject.transform.localScale.y);
+            gameObject.transform.position = new Vector2(startingX + playerNumber * (defaultSize / 2), gameObject.transform.position.y);
+            int p2HP = PlayerPrefs.GetInt("player2HP");
+            PlayerPrefs.SetInt("player2HP", p2HP - 10);
         }
     }
 }
