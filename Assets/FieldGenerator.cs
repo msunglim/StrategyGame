@@ -21,8 +21,11 @@ public class FieldGenerator : MonoBehaviour
     private playerControll p1controll, p2controll;
     private SpriteRenderer sr1, sr2;
     private float[] x, y;
+    //true if p1 -> <- p2. false if p2 -> <-p1.
+    private bool crossDirection;
     void Start()
     {
+        crossDirection = false;
         x = new float[] { -4.5f, -1.5f, 1.5f, 4.5f };
         y = new float[] { 0.0f, -1.3f, -2.6f };
         p1 = Instantiate(player1, new Vector3(x[0], y[1], -2), Quaternion.identity);
@@ -30,10 +33,9 @@ public class FieldGenerator : MonoBehaviour
         p1controll.setXY(0, 1);
         sr1 = p1.GetComponent<SpriteRenderer>();
 
-        p2 = Instantiate(player2, new Vector3(x[3], y[1], -2), Quaternion.identity);
+        p2 = Instantiate(player2, new Vector3(x[2], y[1], -2), Quaternion.identity);
         p2controll = p2.GetComponent<playerControll>();
-
-        p2controll.setXY(3, 1);
+        p2controll.setXY(2, 1);
         sr2 = p2.GetComponent<SpriteRenderer>();
         sr2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
@@ -95,7 +97,19 @@ public class FieldGenerator : MonoBehaviour
 
         int p1x = p1controll.getX();
         int p2x = p2controll.getX();
+        if (crossDirection && p1x <= p2x)
+        {
+            p1controll.changeDirection();
+            p2controll.changeDirection();
+            crossDirection = !crossDirection;
+        }
+        else if (!crossDirection && p1x > p2x)
+        {
+            Debug.Log("p1x"+p1x+"p2x"+p2x);
+            p1controll.changeDirection();
+            p2controll.changeDirection();
+            crossDirection = !crossDirection;
+        }
 
-        
     }
 }

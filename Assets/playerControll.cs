@@ -9,12 +9,14 @@ public class playerControll : MonoBehaviour
     private Animator anime;
     [SerializeField]
     private GameObject skill1Effect;
-    private int x, y;
+    private int x, y; //x y index for fields.
+    private int direction;
 
     // Start is called before the first frame update
     void Start()
     {
         anime = GetComponent<Animator>();
+        direction = playerCode;
     }
     public void moveLeft()
     {
@@ -43,8 +45,7 @@ public class playerControll : MonoBehaviour
     public void effect1()
     {
         GameObject effect = Instantiate(skill1Effect, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
-        effect.GetComponent<MoveToDirection>().setDirection(2, 0);
-
+        effect.GetComponent<MoveToDirection>().setDirection(direction * 2, 0);
     }
     public void actionComplete()
     {
@@ -63,5 +64,11 @@ public class playerControll : MonoBehaviour
     public int getY()
     {
         return y;
+    }
+    public void changeDirection()
+    {
+        direction = -direction;
+        Debug.Log("dirction" + direction);
+        transform.Rotate(new Vector3(0, 180, 0));
     }
 }
