@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//useless script.
 public class characterInfo : MonoBehaviour
 {
   
