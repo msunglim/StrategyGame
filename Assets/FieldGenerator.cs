@@ -28,16 +28,17 @@ public class FieldGenerator : MonoBehaviour
         crossDirection = false;
         x = new float[] { -4.5f, -1.5f, 1.5f, 4.5f };
         y = new float[] { 0.0f, -1.3f, -2.6f };
-        p1 = Instantiate(player1, new Vector3(x[0], y[1], -2), Quaternion.identity);
+        //+-0.5f is adjusting.
+        p1 = Instantiate(player1, new Vector3(x[0] - 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p1controll = p1.GetComponent<playerControll>();
         p1controll.setXY(0, 1);
         sr1 = p1.GetComponent<SpriteRenderer>();
 
-        p2 = Instantiate(player2, new Vector3(x[2], y[1], -2), Quaternion.identity);
-        p2controll = p2.GetComponent<playerControll>();
-        p2controll.setXY(2, 1);
-        sr2 = p2.GetComponent<SpriteRenderer>();
-        sr2.transform.Rotate(new Vector3(0, 180, 0));
+        // p2 = Instantiate(player2, new Vector3(x[2] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
+        // p2controll = p2.GetComponent<playerControll>();
+        // p2controll.setXY(2, 1);
+        // sr2 = p2.GetComponent<SpriteRenderer>();
+        // sr2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -50,6 +51,12 @@ public class FieldGenerator : MonoBehaviour
 
 
     }
+    private void movePlayer(float inputX, float inputY, GameObject player)
+    {
+        float adjustedX = (player == p1) ? inputX - 0.5f : inputX + 0.5f;
+        float adjustedY = inputY +0.8f;
+        player.transform.position = new Vector3(adjustedX, adjustedY, -2);
+    }
 
     // Update is called once per frame
     void Update()
@@ -57,59 +64,49 @@ public class FieldGenerator : MonoBehaviour
         if (Input.GetKeyDown("d"))
         {
             p1controll.useSkill1();
-            Debug.Log("player 1 xy" + p1.GetComponent<playerControll>().getX() + p1.GetComponent<playerControll>().getY());
         }
-        if (Input.GetKeyDown("f"))
-        {
-            p2controll.useSkill1();
-            // p2.GetComponent<playerControll>().useSkill1();
-            Debug.Log("player 2 xy" + p2.GetComponent<playerControll>().getX() + p2.GetComponent<playerControll>().getY());
-        }
+        // if (Input.GetKeyDown("f"))
+        // {
+        //     p2controll.useSkill1();
+        // }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             p1controll.moveLeft();
-            p1.transform.position = new Vector3(x[p1controll.getX()], y[p1controll.getY()], -2);
-            // p1.GetComponent<playerControll>().setXY(p1.GetComponent<playerControll>().getX() - 1, p1.GetComponent<playerControll>().getY());
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
+            // p1.transform.position = new Vector3(x[p1controll.getX()], y[p1controll.getY()], -2);
 
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             p1controll.moveRight();
-            p1.transform.position = new Vector3(x[p1controll.getX()], y[p1controll.getY()], -2);
-            // p1.GetComponent<playerControll>().setXY(p1.GetComponent<playerControll>().getX() + 1, p1.GetComponent<playerControll>().getY());
-            //         x++;
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             p1controll.moveUp();
-            p1.transform.position = new Vector3(x[p1controll.getX()], y[p1controll.getY()], -2);
-            // p1.GetComponent<playerControll>().setXY(p1.GetComponent<playerControll>().getX(), p1.GetComponent<playerControll>().getY() - 1);
-            //       y--;
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             p1controll.moveDown();
-            p1.transform.position = new Vector3(x[p1controll.getX()], y[p1controll.getY()], -2);
-            // p1.GetComponent<playerControll>().setXY(p1.GetComponent<playerControll>().getX(), p1.GetComponent<playerControll>().getY() + 1);
-            //     y++;
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
 
 
         int p1x = p1controll.getX();
-        int p2x = p2controll.getX();
-        if (crossDirection && p1x <= p2x)
-        {
-            p1controll.changeDirection();
-            p2controll.changeDirection();
-            crossDirection = !crossDirection;
-        }
-        else if (!crossDirection && p1x > p2x)
-        {
-            Debug.Log("p1x"+p1x+"p2x"+p2x);
-            p1controll.changeDirection();
-            p2controll.changeDirection();
-            crossDirection = !crossDirection;
-        }
+        // int p2x = p2controll.getX();
+        // if (crossDirection && p1x <= p2x)
+        // {
+        //     p1controll.changeDirection();
+        //     p2controll.changeDirection();
+        //     crossDirection = !crossDirection;
+        // }
+        // else if (!crossDirection && p1x > p2x)
+        // {
+        //     p1controll.changeDirection();
+        //     p2controll.changeDirection();
+        //     crossDirection = !crossDirection;
+        // }
 
     }
 }

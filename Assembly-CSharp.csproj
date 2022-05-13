@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets\characterInfo.cs" />
      <Compile Include="Assets\statManager.cs" />
+     <Compile Include="Assets\characterSetting.cs" />
      <Compile Include="Assets\MoveToDirection.cs" />
      <Compile Include="Assets\FieldGenerator.cs" />
      <Compile Include="Assets\playerControll.cs" />
