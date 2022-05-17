@@ -7,26 +7,33 @@ public class playerControll : MonoBehaviour
     [SerializeField]
     private int playerCode; // player 1 : 1 , player 2= -1 . this also means which direction a player looks at.
     [SerializeField]
-    GameObject character;
+    private GameObject character;
 
     private int x, y; //x y index for fields.
     private int direction;
-    private SpriteRenderer sr;
-    private Animator anime;
+    // private SpriteRenderer sr;
+    // private Animator anime;
     // Start is called before the first frame update
+
+
     void Start()
     {
         direction = playerCode;
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = character.GetComponent<characterSetting>().getSprite();
-        anime = GetComponent<Animator>();
-        anime.runtimeAnimatorController = character.GetComponent<characterSetting>().getAnimator();
+        
+        // sr = GetComponent<SpriteRenderer>();
+        // sr.sprite = character.GetComponent<characterSetting>().getSprite();
+        // anime = GetComponent<Animator>();
+        // anime.runtimeAnimatorController = character.GetComponent<characterSetting>().getAnimator();
     }
- 
+    public GameObject getCharacter()
+    {
+        return character;
+    }
     public void useSkill1()
     {
         // character.GetComponent<characterSetting>().useSkill1();
-        anime.SetInteger("useSkill", 1);
+
+        //anime.SetInteger("useSkill", 1);
     }
     public void effect1()
     {
@@ -37,7 +44,7 @@ public class playerControll : MonoBehaviour
     }
     public void actionComplete()
     {
-        anime.SetInteger("useSkill", 0);
+        // anime.SetInteger("useSkill", 0);
 
     }
     public void moveLeft()
@@ -78,7 +85,6 @@ public class playerControll : MonoBehaviour
     {
         direction = -direction;
         transform.Rotate(new Vector3(0, 180, 0));
-        Debug.Log("dirction" + direction);
 
     }
 
