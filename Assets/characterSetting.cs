@@ -10,9 +10,12 @@ public class characterSetting : MonoBehaviour
     private GameObject skill1Effect;
     [SerializeField]
     private Sprite sp;
+    private SpriteRenderer spr;
     // Start is called before the first frame update
     void Start()
     {
+        spr = GetComponent<SpriteRenderer>();
+        spr.sprite = sp;
         // anime = GetComponent<Animator>();
     }
 

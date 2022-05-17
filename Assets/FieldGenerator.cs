@@ -13,13 +13,13 @@ public class FieldGenerator : MonoBehaviour
     [SerializeField]
     private GameObject player2;
 
+    //this is the clone of player 1 and 2 that are actually shown in the screen.
     GameObject p1;
     GameObject p2;
     // Start is called before the first frame update
     GameObject[,] list = new GameObject[3, 4];
 
     private playerControll p1controll, p2controll;
-    private SpriteRenderer sr1, sr2;
     private float[] x, y;
     //true if p1 -> <- p2. false if p2 -> <-p1.
     private bool crossDirection;
@@ -29,15 +29,16 @@ public class FieldGenerator : MonoBehaviour
         x = new float[] { -4.5f, -1.5f, 1.5f, 4.5f };
         y = new float[] { 0.0f, -1.3f, -2.6f };
         //+-0.5f is adjusting.
-        p1 = Instantiate(player1, new Vector3(x[0] - 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
+        GameObject player1Character = player1.GetComponent<playerControll>().getCharacter();
+        Debug.Log(player1Character);
+        p1 = Instantiate(player1Character, new Vector3(x[0] - 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p1controll = p1.GetComponent<playerControll>();
         p1controll.setXY(0, 1);
-        sr1 = p1.GetComponent<SpriteRenderer>();
 
         // p2 = Instantiate(player2, new Vector3(x[2] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         // p2controll = p2.GetComponent<playerControll>();
         // p2controll.setXY(2, 1);
-        // sr2 = p2.GetComponent<SpriteRenderer>();
+        //180도 돌리는건 유지해야해!!!
         // sr2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
         {
