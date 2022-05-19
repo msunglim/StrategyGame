@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveToDirection : MonoBehaviour
 {
     private int directionX, directionY; //vector direction
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,8 +14,9 @@ public class MoveToDirection : MonoBehaviour
     public void setDirection(int a, int b)
     {
         directionX = a;
-        if(directionX <0){
-             transform.Rotate(new Vector3(0, 180, 0));
+        if (directionX < 0)
+        {
+            transform.Rotate(new Vector3(0, 180, 0));
         }
         directionY = b;
     }
