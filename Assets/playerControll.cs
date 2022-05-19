@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//this Gameobject controls player's location and contains character info.
 public class playerControll : MonoBehaviour
 {
     [SerializeField]
@@ -10,7 +12,7 @@ public class playerControll : MonoBehaviour
     private GameObject character;
 
     private int x, y; //x y index for fields.
-    private int direction;
+    // private int direction;
     // private SpriteRenderer sr;
     // private Animator anime;
     // Start is called before the first frame update
@@ -18,35 +20,12 @@ public class playerControll : MonoBehaviour
 
     void Start()
     {
-        direction = playerCode;
-        
-        // sr = GetComponent<SpriteRenderer>();
-        // sr.sprite = character.GetComponent<characterSetting>().getSprite();
-        // anime = GetComponent<Animator>();
-        // anime.runtimeAnimatorController = character.GetComponent<characterSetting>().getAnimator();
     }
     public GameObject getCharacter()
     {
         return character;
     }
-    public void useSkill1()
-    {
-        // character.GetComponent<characterSetting>().useSkill1();
-
-        //anime.SetInteger("useSkill", 1);
-    }
-    public void effect1()
-    {
-        // int direction = GetComponent<playerControll>().getDirection();
-        GameObject skill1 = character.GetComponent<characterSetting>().getSkill1();
-        GameObject effect = Instantiate(skill1, new Vector3(transform.position.x, transform.position.y, -2), Quaternion.identity);
-        effect.GetComponent<MoveToDirection>().setDirection(direction * 10, 0); //10 is speed of skill
-    }
-    public void actionComplete()
-    {
-        // anime.SetInteger("useSkill", 0);
-
-    }
+ 
     public void moveLeft()
     {
         if (x == 0) return;
@@ -81,12 +60,5 @@ public class playerControll : MonoBehaviour
     {
         return y;
     }
-    public void changeDirection()
-    {
-        direction = -direction;
-        transform.Rotate(new Vector3(0, 180, 0));
-
-    }
-
 
 }
