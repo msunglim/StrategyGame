@@ -5,6 +5,7 @@ using UnityEngine;
 //actually FieldManager would be more appropriate name.
 public class FieldGenerator : MonoBehaviour
 {
+    //'field' is a cell of field
     [SerializeField]
     private GameObject field;
 
@@ -17,7 +18,8 @@ public class FieldGenerator : MonoBehaviour
     //to control players, we need to use this objects.
     GameObject p1;
     GameObject p2;
-    // Start is called before the first frame update
+
+    //list is consisted of 'field' which is a cell.
     GameObject[,] list = new GameObject[3, 4];
 
     private playerControll p1controll, p2controll;
@@ -39,9 +41,9 @@ public class FieldGenerator : MonoBehaviour
         p1.GetComponent<characterSetting>().setDirection(1);
 
         GameObject player2Character = player2.GetComponent<playerControll>().getCharacter();
-        p2 = Instantiate(player2Character, new Vector3(x[2] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
+        p2 = Instantiate(player2Character, new Vector3(x[1] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p2controll = player2.GetComponent<playerControll>();
-        p2controll.setXY(2, 1);
+        p2controll.setXY(1, 1);
         p2.GetComponent<characterSetting>().setDirection(-1);
         p2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
@@ -68,7 +70,10 @@ public class FieldGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown("d"))
         {
-            p1.GetComponent<characterSetting>().useSkill1();
+            GameObject skill = p1.GetComponent<characterSetting>().useSkill1();
+            int[] targetArea = skill.GetComponent<skillManager>().getTargetArea();
+            applySkill(skill, targetArea, p1controll);
+
         }
         if (Input.GetKeyDown("f"))
         {
@@ -105,6 +110,50 @@ public class FieldGenerator : MonoBehaviour
             p1.GetComponent<characterSetting>().changeDirection();
             p2.GetComponent<characterSetting>().changeDirection();
             crossDirection = !crossDirection;
+        }
+    }
+    private void applySkill(GameObject skill, int[] targetArea, playerControll pc)
+    {
+        for (int i = 0; i < targetArea.Length; i++)
+        {
+            int x = pc.getX();
+            int y = pc.getY();
+            try
+            {
+                switch (targetArea[i])
+                {
+                    case 0:
+                        list[y - 1, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 1:
+                        list[y - 1, x].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 2:
+                        list[y - 1, x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 3:
+                        list[y , x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 4:
+                        list[y , x ].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 5:
+                        list[y , x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 6:
+                        list[y +1, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 7:
+                        list[y +1,x ].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                    case 8:
+                        list[y +1, x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        break;
+                }
+            }
+            catch( System.Exception ex){
+                //it's ok to have outofrange exception.
+            }
         }
     }
 }

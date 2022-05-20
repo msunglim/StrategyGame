@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7191182901597158906}
   - component: {fileID: 2140036439730570265}
   - component: {fileID: 2610094175731574187}
-  - component: {fileID: -8103577050401939212}
+  - component: {fileID: 7929537741571027259}
   m_Layer: 0
   m_Name: character1
   m_TagString: Untagged
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86b931d74d65d04188592e8b5287d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anime: {fileID: 9100000, guid: ef96d68d6f349664abdb3c28451b9f12, type: 2}
-  skill1Effect: {fileID: 8103981942090560074, guid: d59ca34ea760e4640a5bfcd5a85e36d4, type: 3}
   sp: {fileID: 447773346, guid: 17b58112799d9e2489e403813165f487, type: 3}
+  skillList:
+  - {fileID: 5956017597671529302, guid: 07a61d21983b12548b1fced829318cb3, type: 3}
 --- !u!212 &2610094175731574187
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &-8103577050401939212
+--- !u!95 &7929537741571027259
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
