@@ -8,7 +8,8 @@ public class statManager : MonoBehaviour
     private float playerNumber; //player 1:1, 2:-1
 
     private float defaultSize;
-    private float currentSize;
+    private float currentSizeHP;
+    private float currentSizeEN;
     private float startingX;
 
     [SerializeField]
@@ -18,7 +19,8 @@ public class statManager : MonoBehaviour
     void Start()
     {
         defaultSize = 4.5f;
-        currentSize= defaultSize;
+        currentSizeHP = defaultSize;
+        currentSizeEN = defaultSize;
         startingX = player.transform.position.x + playerNumber * player.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         gameObject.transform.position = new Vector2(startingX + playerNumber * (defaultSize / 2), gameObject.transform.position.y);
         if (playerNumber == -1)
@@ -57,10 +59,19 @@ public class statManager : MonoBehaviour
     }
     public void updateHPbar(int newHP)
     {
-        currentSize = defaultSize * (float)(newHP / 100.0);
+        currentSizeHP = defaultSize * (float)(newHP / 100.0);
         // player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
-        gameObject.transform.localScale = new Vector2(currentSize, gameObject.transform.localScale.y);
-        gameObject.transform.position = new Vector2(startingX + playerNumber * (currentSize / 2), gameObject.transform.position.y);
+        gameObject.transform.localScale = new Vector2(currentSizeHP, gameObject.transform.localScale.y);
+        gameObject.transform.position = new Vector2(startingX + playerNumber * (currentSizeHP / 2), gameObject.transform.position.y);
+        // int p1HP = PlayerPrefs.GetInt("player1HP");
+        // PlayerPrefs.SetInt("player1HP", p1HP - 10);
+    }
+    public void updateENbar(int newEN)
+    {
+        currentSizeEN = defaultSize * (float)(newEN / 100.0);
+        // player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
+        gameObject.transform.localScale = new Vector2(currentSizeEN, gameObject.transform.localScale.y);
+        gameObject.transform.position = new Vector2(startingX + playerNumber * (currentSizeEN / 2), gameObject.transform.position.y);
         // int p1HP = PlayerPrefs.GetInt("player1HP");
         // PlayerPrefs.SetInt("player1HP", p1HP - 10);
     }

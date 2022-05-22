@@ -15,8 +15,8 @@ public class FieldGenerator : MonoBehaviour
 
     //this is the clone of player 1 and 2 that are actually shown in the screen.
     //to control players, we need to use this objects.
-    GameObject p1;
-    GameObject p2;
+    private GameObject p1;
+    private GameObject p2;
 
     //list is consisted of 'field' which is a cell.
     GameObject[,] list = new GameObject[3, 4];
@@ -71,13 +71,7 @@ public class FieldGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("z"))
-        {
-            GameObject playerInfo = GameObject.Find("PlayerInfo");
-            GameObject pp1 = playerInfo.transform.GetChild(0).gameObject;
-            // pp1.transform.GetChild(1).GetComponent<statManager>().hi();
-
-        }
+      
         if (Input.GetKeyDown("d"))
         {
             GameObject skill = p1.GetComponent<characterSetting>().useSkill1(p1controll);
@@ -85,7 +79,6 @@ public class FieldGenerator : MonoBehaviour
             {
                 int[] targetArea = skill.GetComponent<skillManager>().getTargetArea();
                 StartCoroutine(applyAttackSkill(skill, targetArea, p1controll, p2controll));
-
 
             }
 
@@ -196,29 +189,45 @@ public class FieldGenerator : MonoBehaviour
             }
         }
         //return the cell color to its original state.
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
 
+        
+        int opponentX = pc2.getX();
+        int opponentY = pc2.getY();
 
         for (int j = 0; j < coordinateList.Count; j++)
         {
+            //skillXY: where skill lands, opponextXY 
             int[] cell = coordinateList[j];
             int skillX = cell[1];
             int skillY = cell[0];
-            int opponentX = pc2.getX();
-            int opponentY = pc2.getY();
 
-            //if opponent is located in targeted area, decrease its hp
+
+            GameObject playerInfo = GameObject.Find("PlayerInfo");
+            //if opponent is located in targeted area, reduce its hp by skill damage.
             if (skillX == opponentX && skillY == opponentY)
             {
                 pc2.setHP(pc2.getHP() - skill.GetComponent<skillManager>().getDamage());
 
                 //update HP bar of opponent of a skill caster.
-                GameObject playerInfo = GameObject.Find("PlayerInfo");
                 int playerCode = (pc2 == p2controll) ? 1 : 0;
-                GameObject pp1 = playerInfo.transform.GetChild(playerCode).gameObject;
-                pp1.transform.GetChild(1).GetComponent<statManager>().updateHPbar(pc2.getHP());
+                GameObject opponentHP = playerInfo.transform.GetChild(playerCode).gameObject;
+                opponentHP.transform.GetChild(1).GetComponent<statManager>().updateHPbar(pc2.getHP());
+                //player 1 is hit by the skill 
+                if(playerCode ==0){
+                    p1.GetComponent<characterSetting>().getHit();
+                }else{
+                    p2.GetComponent<characterSetting>().getHit();
+                }
 
             }
+
+            //update EN bar of a skill caster.           
+            int playerCode2 = (pc2 != p2controll) ? 1 : 0;
+            GameObject casterEN = playerInfo.transform.GetChild(playerCode2).gameObject;
+            casterEN.transform.GetChild(2).GetComponent<statManager>().updateENbar(pc1.getEN());
+
+
             //list [y, x] = list[row, col]
             list[skillY, skillX].GetComponent<SpriteRenderer>().color = Color.white;
         }

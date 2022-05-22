@@ -28,6 +28,7 @@ public class characterSetting : MonoBehaviour
     public GameObject useSkill1(playerControll pc)
     {
       //  Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
+        //use skill if it has enough energy to cast.
         if (pc.getEN() >= skillList[0].GetComponent<skillManager>().getCost())
         {
             anime.SetInteger("useSkill", 1);
@@ -44,6 +45,13 @@ public class characterSetting : MonoBehaviour
     public void effect1()
     {
         skillList[0].GetComponent<skillManager>().effect(direction, transform.position.x, transform.position.y);
+    }
+
+    public void getHit(){
+        anime.SetBool("isHit", true);
+    }
+    public void standBack(){
+         anime.SetBool("isHit", false);
     }
     public Sprite getSprite()
     {
