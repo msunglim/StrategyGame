@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetArea: 
+  targetArea: 00000000020000000300000004000000050000000600000008000000
   skillEffect: {fileID: 4060725292437241961, guid: 3ddb2cd03be826d4bb8e606d6e9f208e, type: 3}
+  damage: 15
+  cost: 25

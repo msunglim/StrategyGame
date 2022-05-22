@@ -8,6 +8,7 @@ public class statManager : MonoBehaviour
     private float playerNumber; //player 1:1, 2:-1
 
     private float defaultSize;
+    private float currentSize;
     private float startingX;
 
     [SerializeField]
@@ -17,6 +18,7 @@ public class statManager : MonoBehaviour
     void Start()
     {
         defaultSize = 4.5f;
+        currentSize= defaultSize;
         startingX = player.transform.position.x + playerNumber * player.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         gameObject.transform.position = new Vector2(startingX + playerNumber * (defaultSize / 2), gameObject.transform.position.y);
         if (playerNumber == -1)
@@ -52,5 +54,14 @@ public class statManager : MonoBehaviour
             int p2HP = PlayerPrefs.GetInt("player2HP");
             PlayerPrefs.SetInt("player2HP", p2HP - 10);
         }
+    }
+    public void updateHPbar(int newHP)
+    {
+        currentSize = defaultSize * (float)(newHP / 100.0);
+        // player.GetComponent<characterInfo>().setHP(player.GetComponent<characterInfo>().getHP() - 10);
+        gameObject.transform.localScale = new Vector2(currentSize, gameObject.transform.localScale.y);
+        gameObject.transform.position = new Vector2(startingX + playerNumber * (currentSize / 2), gameObject.transform.position.y);
+        // int p1HP = PlayerPrefs.GetInt("player1HP");
+        // PlayerPrefs.SetInt("player1HP", p1HP - 10);
     }
 }

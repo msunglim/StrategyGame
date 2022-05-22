@@ -10,22 +10,39 @@ public class playerControll : MonoBehaviour
     private int playerCode; // player 1 : 1 , player 2= -1 . this also means which direction a player looks at.
     [SerializeField]
     private GameObject character;
-
+    private int hp;
+    private int en;
     private int x, y; //x y index for fields.
     // private int direction;
     // private SpriteRenderer sr;
     // private Animator anime;
     // Start is called before the first frame update
-
-
     void Start()
     {
+
+    }
+
+    public void setHP(int newHP)
+    {
+        hp = newHP;
+    }
+    public int getHP()
+    {
+        return hp;
+    }
+    public void setEN(int newEN)
+    {
+        en = newEN;
+    }
+    public int getEN()
+    {
+        return en;
     }
     public GameObject getCharacter()
     {
         return character;
     }
- 
+
     public void moveLeft()
     {
         if (x == 0) return;

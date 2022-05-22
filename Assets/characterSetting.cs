@@ -25,10 +25,21 @@ public class characterSetting : MonoBehaviour
     {
         direction = d;
     }
-    public GameObject useSkill1()
+    public GameObject useSkill1(playerControll pc)
     {
-        anime.SetInteger("useSkill", 1);
-        return skillList[0];
+      //  Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
+        if (pc.getEN() >= skillList[0].GetComponent<skillManager>().getCost())
+        {
+            anime.SetInteger("useSkill", 1);
+            pc.setEN(pc.getEN() - skillList[0].GetComponent<skillManager>().getCost());
+            return skillList[0];
+        }
+        else
+        {
+            return null;
+        }
+        // anime.SetInteger("useSkill", 1);
+
     }
     public void effect1()
     {

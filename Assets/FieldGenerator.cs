@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 //actually FieldManager would be more appropriate name.
 public class FieldGenerator : MonoBehaviour
 {
@@ -38,12 +37,16 @@ public class FieldGenerator : MonoBehaviour
         p1 = Instantiate(player1Character, new Vector3(x[0] - 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p1controll = player1.GetComponent<playerControll>();
         p1controll.setXY(0, 1);
+        p1controll.setHP(100);
+        p1controll.setEN(100);
         p1.GetComponent<characterSetting>().setDirection(1);
 
         GameObject player2Character = player2.GetComponent<playerControll>().getCharacter();
         p2 = Instantiate(player2Character, new Vector3(x[1] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p2controll = player2.GetComponent<playerControll>();
         p2controll.setXY(1, 1);
+        p2controll.setHP(100);
+        p2controll.setEN(100);
         p2.GetComponent<characterSetting>().setDirection(-1);
         p2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
@@ -68,16 +71,36 @@ public class FieldGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("z"))
+        {
+            GameObject playerInfo = GameObject.Find("PlayerInfo");
+            GameObject pp1 = playerInfo.transform.GetChild(0).gameObject;
+            // pp1.transform.GetChild(1).GetComponent<statManager>().hi();
+
+        }
         if (Input.GetKeyDown("d"))
         {
-            GameObject skill = p1.GetComponent<characterSetting>().useSkill1();
-            int[] targetArea = skill.GetComponent<skillManager>().getTargetArea();
-            applySkill(skill, targetArea, p1controll);
+            GameObject skill = p1.GetComponent<characterSetting>().useSkill1(p1controll);
+            if (skill != null)
+            {
+                int[] targetArea = skill.GetComponent<skillManager>().getTargetArea();
+                StartCoroutine(applyAttackSkill(skill, targetArea, p1controll, p2controll));
+
+
+            }
 
         }
         if (Input.GetKeyDown("f"))
         {
-            p2.GetComponent<characterSetting>().useSkill1();
+            // p2.GetComponent<characterSetting>().useSkill1();
+            GameObject skill = p2.GetComponent<characterSetting>().useSkill1(p2controll);
+            if (skill != null)
+            {
+                int[] targetArea = skill.GetComponent<skillManager>().getTargetArea();
+                StartCoroutine(applyAttackSkill(skill, targetArea, p2controll, p1controll));
+
+            }
+
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -112,48 +135,92 @@ public class FieldGenerator : MonoBehaviour
             crossDirection = !crossDirection;
         }
     }
-    private void applySkill(GameObject skill, int[] targetArea, playerControll pc)
+
+    //show targeted area in red for 0.xf second, and change its color back to white.
+    //if an opponent player(pc2) is located in the area, then apply the skill effect to it.
+    //pc1: the player who casts its skill
+    //pc2: the opponent of player who casts its skill
+    private IEnumerator applyAttackSkill(GameObject skill, int[] targetArea, playerControll pc1, playerControll pc2)
     {
+        List<int[]> coordinateList = new List<int[]>();
         for (int i = 0; i < targetArea.Length; i++)
         {
-            int x = pc.getX();
-            int y = pc.getY();
+            int x = pc1.getX();
+            int y = pc1.getY();
             try
             {
                 switch (targetArea[i])
                 {
                     case 0:
                         list[y - 1, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y - 1, x - 1 });
                         break;
                     case 1:
                         list[y - 1, x].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y - 1, x });
                         break;
                     case 2:
-                        list[y - 1, x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y - 1, x + 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y - 1, x + 1 });
                         break;
                     case 3:
-                        list[y , x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y, x - 1 });
                         break;
                     case 4:
-                        list[y , x ].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y, x].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y, x });
                         break;
                     case 5:
-                        list[y , x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y, x + 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y, x + 1 });
                         break;
                     case 6:
-                        list[y +1, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y + 1, x - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y + 1, x - 1 });
                         break;
                     case 7:
-                        list[y +1,x ].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y + 1, x].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y + 1, x });
                         break;
                     case 8:
-                        list[y +1, x +1].GetComponent<SpriteRenderer>().color = Color.red;
+                        list[y + 1, x + 1].GetComponent<SpriteRenderer>().color = Color.red;
+                        coordinateList.Add(new int[] { y + 1, x + 1 });
                         break;
                 }
+
             }
-            catch( System.Exception ex){
+            catch (System.Exception ex)
+            {
                 //it's ok to have outofrange exception.
             }
+        }
+        //return the cell color to its original state.
+        yield return new WaitForSeconds(0.7f);
+
+
+        for (int j = 0; j < coordinateList.Count; j++)
+        {
+            int[] cell = coordinateList[j];
+            int skillX = cell[1];
+            int skillY = cell[0];
+            int opponentX = pc2.getX();
+            int opponentY = pc2.getY();
+
+            //if opponent is located in targeted area, decrease its hp
+            if (skillX == opponentX && skillY == opponentY)
+            {
+                pc2.setHP(pc2.getHP() - skill.GetComponent<skillManager>().getDamage());
+
+                //update HP bar of opponent of a skill caster.
+                GameObject playerInfo = GameObject.Find("PlayerInfo");
+                int playerCode = (pc2 == p2controll) ? 1 : 0;
+                GameObject pp1 = playerInfo.transform.GetChild(playerCode).gameObject;
+                pp1.transform.GetChild(1).GetComponent<statManager>().updateHPbar(pc2.getHP());
+
+            }
+            //list [y, x] = list[row, col]
+            list[skillY, skillX].GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 }
