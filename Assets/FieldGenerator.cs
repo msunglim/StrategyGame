@@ -191,7 +191,6 @@ public class FieldGenerator : MonoBehaviour
         //return the cell color to its original state.
         yield return new WaitForSeconds(0.5f);
 
-        
         int opponentX = pc2.getX();
         int opponentY = pc2.getY();
 
