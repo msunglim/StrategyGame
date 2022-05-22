@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetArea: 030000000400000005000000
   skillEffect: {fileID: 8103981942090560074, guid: d59ca34ea760e4640a5bfcd5a85e36d4, type: 3}
+  damage: 25
+  cost: 10

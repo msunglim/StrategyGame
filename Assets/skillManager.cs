@@ -5,10 +5,11 @@ using UnityEngine;
 public class skillManager : MonoBehaviour
 {
     [SerializeField]
-    int[] targetArea;
+    private int[] targetArea;
     [SerializeField]
-    GameObject skillEffect;
-
+    private GameObject skillEffect;
+    [SerializeField]
+    private int damage, cost;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,10 @@ public class skillManager : MonoBehaviour
         GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
         effect.GetComponent<MoveToDirection>().setDirection(direction * 10, 0); //10 is speed of skill
     }
-
+    public int getDamage(){
+        return damage;
+    }
+    public int getCost(){
+        return cost;
+    }
 }

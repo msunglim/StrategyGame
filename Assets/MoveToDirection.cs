@@ -23,7 +23,6 @@ public class MoveToDirection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(directionX + "," + directionY);
         transform.position += new Vector3(directionX, directionY, 0) * 3 * Time.deltaTime;
 
     }

@@ -25,14 +25,33 @@ public class characterSetting : MonoBehaviour
     {
         direction = d;
     }
-    public GameObject useSkill1()
+    public GameObject useSkill1(playerControll pc)
     {
-        anime.SetInteger("useSkill", 1);
-        return skillList[0];
+      //  Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
+        //use skill if it has enough energy to cast.
+        if (pc.getEN() >= skillList[0].GetComponent<skillManager>().getCost())
+        {
+            anime.SetInteger("useSkill", 1);
+            pc.setEN(pc.getEN() - skillList[0].GetComponent<skillManager>().getCost());
+            return skillList[0];
+        }
+        else
+        {
+            return null;
+        }
+        // anime.SetInteger("useSkill", 1);
+
     }
     public void effect1()
     {
         skillList[0].GetComponent<skillManager>().effect(direction, transform.position.x, transform.position.y);
+    }
+
+    public void getHit(){
+        anime.SetBool("isHit", true);
+    }
+    public void standBack(){
+         anime.SetBool("isHit", false);
     }
     public Sprite getSprite()
     {
