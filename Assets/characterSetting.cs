@@ -53,6 +53,10 @@ public class characterSetting : MonoBehaviour
     public void standBack(){
          anime.SetBool("isHit", false);
     }
+    public void die(){
+        
+        anime.SetBool("isDead", true);
+    }
     public Sprite getSprite()
     {
         return sp;
