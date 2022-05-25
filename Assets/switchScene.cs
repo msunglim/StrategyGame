@@ -6,19 +6,10 @@ public class switchScene : MonoBehaviour
 {
     [SerializeField]
     private Object destination;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
- 
     public void SwitchScene(){
+        // SceneManager.UnloadScene( SceneManager.GetActiveScene());
         SceneManager.LoadScene(destination.name);
+        
     }
 }
