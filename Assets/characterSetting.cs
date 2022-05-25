@@ -27,7 +27,8 @@ public class characterSetting : MonoBehaviour
     }
     public GameObject useSkill1(playerControll pc)
     {
-      //  Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
+        
+       Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
         //use skill if it has enough energy to cast.
         if (pc.getEN() >= skillList[0].GetComponent<skillManager>().getCost())
         {

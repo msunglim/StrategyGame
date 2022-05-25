@@ -33,21 +33,16 @@ public class FieldGenerator : MonoBehaviour
         y = new float[] { 0.0f, -1.3f, -2.6f };
         //+-0.5f is to adjust player image and field.
 
-
         GameObject player1Character = player1.GetComponent<playerControll>().getCharacter();
         p1 = Instantiate(player1Character, new Vector3(x[0] - 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p1controll = player1.GetComponent<playerControll>();
         p1controll.setXY(0, 1);
-        p1controll.setHP(100);
-        p1controll.setEN(100);
         p1.GetComponent<characterSetting>().setDirection(1);
 
         GameObject player2Character = player2.GetComponent<playerControll>().getCharacter();
         p2 = Instantiate(player2Character, new Vector3(x[1] + 0.5f, y[1] + 0.8f, -2), Quaternion.identity);
         p2controll = player2.GetComponent<playerControll>();
         p2controll.setXY(1, 1);
-        p2controll.setHP(100);
-        p2controll.setEN(100);
         p2.GetComponent<characterSetting>().setDirection(-1);
         p2.transform.Rotate(new Vector3(0, 180, 0));
         for (int i = 0; i < 3; i++)
@@ -238,17 +233,19 @@ public class FieldGenerator : MonoBehaviour
             //return the color of cell to white.
             list[skillY, skillX].GetComponent<SpriteRenderer>().color = new Color (255, 255, 255, 0.5f);
         }
+        Debug.Log("p1 " + GameMaster.p1HP + "P2" + GameMaster.p2HP);
     }
     //exeucte this code after any attack skill executes.
     //if player's hp is less or equal to zero, it dies.
     private IEnumerator endPhase(characterSetting p1, characterSetting p2)
     {
         yield return new WaitForSeconds(0.5f);
-        if (p1controll.getHP() <= 0)
+         Debug.Log("ENDPHAS Ep1 " + GameMaster.p1HP + "," +p1controll.getHP() + "P2" + GameMaster.p2HP + ", "+p2controll.getHP());
+        if (GameMaster.p1HP <= 0)
         {
             p1.die();
         }
-        if (p2controll.getHP() <= 0)
+        if (GameMaster.p2HP <= 0)
         {
             p2.die();
         }

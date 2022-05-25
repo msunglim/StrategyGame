@@ -36,14 +36,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\characterInfo.cs" />
      <Compile Include="Assets\statManager.cs" />
      <Compile Include="Assets\characterSetting.cs" />
      <Compile Include="Assets\skillManager.cs" />
      <Compile Include="Assets\MoveToDirection.cs" />
+     <Compile Include="Assets\switchScene.cs" />
      <Compile Include="Assets\FieldGenerator.cs" />
      <Compile Include="Assets\playerControll.cs" />
-     <Compile Include="Assets\switchScene.cs" />
+     <Compile Include="Assets\GameMaster.cs" />
     <Reference Include="UnityEngine">
         <HintPath>D:\Unity\2021.3.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
