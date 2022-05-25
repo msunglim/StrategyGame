@@ -186,6 +186,7 @@ public class FieldGenerator : MonoBehaviour
             }
             catch (System.Exception ex)
             {
+                Debug.Log(ex);
                 //it's ok to have outofrange exception.
             }
         }
