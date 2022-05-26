@@ -49,6 +49,7 @@ MonoBehaviour:
   sp: {fileID: 447773346, guid: 17b58112799d9e2489e403813165f487, type: 3}
   skillList:
   - {fileID: 5956017597671529302, guid: 07a61d21983b12548b1fced829318cb3, type: 3}
+  minProfile: {fileID: 3450265242079525782, guid: 2fb15d2e97db280479ebf4d95485e3ce, type: 3}
 --- !u!212 &2610094175731574187
 SpriteRenderer:
   m_ObjectHideFlags: 0

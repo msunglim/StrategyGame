@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class statManager : MonoBehaviour
 {
+    //used to adjust PlayerInfo panel.
     [SerializeField]
     private float playerNumber; //player 1:1, 2:-1
 
@@ -62,12 +63,6 @@ public class statManager : MonoBehaviour
                 new Vector2(startingX + playerNumber * (currentSizeEN / 2),
                     gameObject.transform.position.y);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-     
     }
 
     public void updateHPbar(int newHP)

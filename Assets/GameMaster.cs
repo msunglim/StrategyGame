@@ -9,13 +9,20 @@ public class GameMaster : MonoBehaviour
     // [SerializeField]
     // public static GameObject pi;
     public static int p1HP = 100;
-
     public static int p1EN = 100;
-
     public static int p2HP = 100;
-
     public static int p2EN = 100;
 
+    public static int p1x = 0;
+    public static int p1y = 1;
+
+    public static int p2x = 1;
+    public static int p2y = 1;
+
+    public static playerControll p1c;
+    public static playerControll p2c;
+    
+    
     void Awake()
     {
         if (gm != null)
@@ -23,7 +30,6 @@ public class GameMaster : MonoBehaviour
             Destroy (gameObject);
             return;
         }
-        Debug.Log("ㅋㅋㅋㅋ");
         gm = this;
         DontDestroyOnLoad (gameObject);
     }
