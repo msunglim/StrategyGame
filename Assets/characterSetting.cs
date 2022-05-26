@@ -11,6 +11,8 @@ public class characterSetting : MonoBehaviour
     private int direction;
     [SerializeField]
     private GameObject[] skillList;
+    [SerializeField]
+    private GameObject minProfile;
     //private GameObject skill1Effect;
     private Animator anime;
 
@@ -20,6 +22,10 @@ public class characterSetting : MonoBehaviour
         anime = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = sp;
+
+    }
+    public GameObject getMinProfile(){
+        return minProfile;
     }
     public void setDirection(int d)
     {
@@ -28,7 +34,6 @@ public class characterSetting : MonoBehaviour
     public GameObject useSkill1(playerControll pc)
     {
         
-       Debug.Log("en" + pc.getEN() + "cost" + skillList[0].GetComponent<skillManager>().getCost());
         //use skill if it has enough energy to cast.
         if (pc.getEN() >= skillList[0].GetComponent<skillManager>().getCost())
         {
