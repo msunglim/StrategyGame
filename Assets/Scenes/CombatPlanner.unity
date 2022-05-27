@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell: {fileID: 2850545177384644079, guid: b98c243a710c3f349927a5fabbe6ce5b, type: 3}
+  skillCard: {fileID: 6543018588243829030, guid: 8510a96903f40a14da5b42b69dbe6895, type: 3}
 --- !u!1001 &1217577353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -463,7 +464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627922531}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.387, y: -4.29, z: 0.13415486}
+  m_LocalPosition: {x: 3.387, y: -4.29, z: 1}
   m_LocalScale: {x: 15.714, y: 4.4401, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
