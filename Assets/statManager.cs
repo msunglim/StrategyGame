@@ -32,7 +32,6 @@ public class statManager : MonoBehaviour
             new Vector2(startingX + playerNumber * (defaultSize / 2),
                 gameObject.transform.position.y);
 
-        
         if (playerNumber == 1)
         {
             currentSizeHP = defaultSize * (float)(GameMaster.p1HP / 100.0);

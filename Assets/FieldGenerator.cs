@@ -53,6 +53,8 @@ public class FieldGenerator : MonoBehaviour
             Quaternion.identity);
         p1controll = player1.GetComponent<playerControll>();
         p1controll.setXY(GameMaster.p1x, GameMaster.p1y);
+        p1controll.setHP(GameMaster.p1HP);
+        p1controll.setEN(GameMaster.p1EN);
         p1.GetComponent<characterSetting>().setDirection(1);
 
         GameObject player2Character =
@@ -63,6 +65,8 @@ public class FieldGenerator : MonoBehaviour
             Quaternion.identity);
         p2controll = player2.GetComponent<playerControll>();
         p2controll.setXY(GameMaster.p2x, GameMaster.p2y);
+        p2controll.setHP(GameMaster.p2HP);
+        p2controll.setEN(GameMaster.p2EN);
         p2.GetComponent<characterSetting>().setDirection(-1);
         p2.transform.Rotate(new Vector3(0, 180, 0));
 
@@ -301,11 +305,11 @@ public class FieldGenerator : MonoBehaviour
     private IEnumerator endPhase(characterSetting p1, characterSetting p2)
     {
         yield return new WaitForSeconds(0.5f);
-        if (GameMaster.p1HP <= 0)
+        if (p1controll.getHP() <= 0)
         {
             p1.die();
         }
-        if (GameMaster.p2HP <= 0)
+        if (p2controll.getHP() <= 0)
         {
             p2.die();
         }

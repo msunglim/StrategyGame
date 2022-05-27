@@ -16,6 +16,7 @@ public class playerControll : MonoBehaviour
     private int en;
 
     private int
+
             x,
             y; //x y index for fields.
 
@@ -25,9 +26,10 @@ public class playerControll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
-    public GameObject getMinProfile(){
+
+    public GameObject getMinProfile()
+    {
         return character.GetComponent<characterSetting>().getMinProfile();
     }
 
@@ -41,7 +43,7 @@ public class playerControll : MonoBehaviour
         {
             GameMaster.p2HP = newHP;
         }
-        // hp = newHP;
+        hp = newHP;
     }
 
     public int getHP()
@@ -54,7 +56,7 @@ public class playerControll : MonoBehaviour
         {
             return GameMaster.p2HP;
         }
-        //return hp;
+        // return hp;
     }
 
     public void setEN(int newEN)
@@ -67,7 +69,7 @@ public class playerControll : MonoBehaviour
         {
             GameMaster.p2EN = newEN;
         }
-        // en = newEN;
+        en = newEN;
     }
 
     public int getEN()
@@ -152,25 +154,27 @@ public class playerControll : MonoBehaviour
 
     public int getX()
     {
-       if (playerCode == 1)
-        {
-             return GameMaster.p1x;
-        }
-        else
-        {
-             return GameMaster.p2x;
-        }
+           if (playerCode == 1)
+            {
+                 return GameMaster.p1x;
+            }
+            else
+            {
+                 return GameMaster.p2x;
+            }
+        // return x;
     }
 
     public int getY()
     {
-       if (playerCode == 1)
-        {
-             return GameMaster.p1y;
-        }
-        else
-        {
-             return GameMaster.p2y;
-        }
+           if (playerCode == 1)
+            {
+                 return GameMaster.p1y;
+            }
+            else
+            {
+                 return GameMaster.p2y;
+            }
+        // return y;
     }
 }
