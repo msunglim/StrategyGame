@@ -15,7 +15,7 @@ public class SkillCardManager : MonoBehaviour
     {
         spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
-        spr.transform.localScale = new Vector3(0.5f, 0.5f, -2);
+        spr.transform.localScale = new Vector3(0.5f, 0.5f, 0);
         if (index == 0)
         {
             spr.sprite =
@@ -23,16 +23,20 @@ public class SkillCardManager : MonoBehaviour
                     .p1c
                     .getCharacter()
                     .GetComponent<characterSetting>()
-                    .getSkillCardImageList()[0];
+                    .getSkillList()[0]
+                    .GetComponent<skillManager>()
+                    .getSkillMinImage();
         }
         else
         {
-            spr.sprite =
+              spr.sprite =
                 GameMaster
                     .p1c
                     .getCharacter()
                     .GetComponent<characterSetting>()
-                    .getSkillCardImageList()[1];
+                    .getSkillList()[0] //지금은 skill1로등록됨.
+                    .GetComponent<skillManager>()
+                    .getSkillMinImage();
         }
     }
 

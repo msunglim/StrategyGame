@@ -48,3 +48,5 @@ MonoBehaviour:
   skillEffect: {fileID: 8103981942090560074, guid: d59ca34ea760e4640a5bfcd5a85e36d4, type: 3}
   damage: 25
   cost: 10
+  skillMinImage: {fileID: 21300000, guid: 029f83128dc085947a4c0fa5a681d29a, type: 3}
+  skillName: Slash bluster
