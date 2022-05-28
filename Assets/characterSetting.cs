@@ -20,9 +20,6 @@ public class characterSetting : MonoBehaviour
     //private GameObject skill1Effect;
     private Animator anime;
 
-    [SerializeField]
-    Sprite[] skillCardImageList;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -30,10 +27,10 @@ public class characterSetting : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = sp;
     }
-
-    public Sprite [] getSkillCardImageList(){
-        return skillCardImageList;
+    public GameObject [] getSkillList(){
+        return skillList;
     }
+    
     public GameObject getMinProfile()
     {
         return minProfile;
@@ -77,6 +74,7 @@ public class characterSetting : MonoBehaviour
     public void standBack()
     {
         anime.SetBool("isHit", false);
+         anime.SetBool("isMove", false);
     }
 
     public void die()
@@ -98,5 +96,8 @@ public class characterSetting : MonoBehaviour
     {
         direction = -direction;
         transform.Rotate(new Vector3(0, 180, 0));
+    }
+    public void move(){
+         anime.SetBool("isMove", true);
     }
 }

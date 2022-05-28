@@ -48,3 +48,5 @@ MonoBehaviour:
   skillEffect: {fileID: 4060725292437241961, guid: 3ddb2cd03be826d4bb8e606d6e9f208e, type: 3}
   damage: 90
   cost: 10
+  skillMinImage: {fileID: 21300000, guid: d7b84f5fdf8b1d14a8aedf5e51855519, type: 3}
+  skillName: Energy bolt

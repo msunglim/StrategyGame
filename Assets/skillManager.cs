@@ -10,11 +10,21 @@ public class skillManager : MonoBehaviour
     private GameObject skillEffect;
     [SerializeField]
     private int damage, cost;
+        [SerializeField]
+    private Sprite skillMinImage;
+    [SerializeField]
+    private string skillName;
 
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+    public string getSkillName(){
+        return skillName;
+    }
+    public Sprite getSkillMinImage(){
+        return skillMinImage;
     }
     public int [] getTargetArea(){
         return targetArea;
