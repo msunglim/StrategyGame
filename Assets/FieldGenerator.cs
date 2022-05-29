@@ -87,49 +87,13 @@ public class FieldGenerator : MonoBehaviour
         }
     }
 
-    private void movePlayer(
-        float startX,
-        float startY,
-        float endX,
-        float endY,
-        GameObject player
-    )
+    private void movePlayer(float endX, float endY, GameObject player)
     {
-        p1.GetComponent<characterSetting>().move();
         float adjustedX = (player == p1) ? endX - 0.5f : endX + 0.5f;
         float adjustedY = endY + 0.8f;
-
-        float currX = (player == p1) ? startX - 0.5f : startX + 0.5f;
-        float currY = startY + 0.8f;
-
-        float directionX = (endX >= startX) ? 1 : -1;
-        float directionY = (endY >= startY) ? 1 : -1;
-
-        Debug
-            .Log("currX" +
-            currX +
-            "\nAdj" +
-            adjustedX +
-            "\ncurrY" +
-            currY +
-            "\nAdjY" +
-            adjustedY +
-            "\nStartX" +
-            startX +
-            "\nEndX" +
-            endX +
-            "\nDirection" +
-            directionX +
-            "\nstartY" +
-            startY +
-            "\nendY" +
-            endY +
-            "\ndirectionY " +
-            directionY +
-            "\n calcue" +
-            (directionX * 0.1f));
-
-        player.transform.position = new Vector3(adjustedX, adjustedY, -2);
+        
+        GameObject skill = p1.GetComponent<characterSetting>().move(adjustedX, adjustedY);
+      
     }
 
     // Update is called once per frame
@@ -177,38 +141,22 @@ public class FieldGenerator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             p1controll.moveLeft();
-            movePlayer(x[p1X],
-            y[p1Y],
-            x[p1controll.getX()],
-            y[p1controll.getY()],
-            p1);
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             p1controll.moveRight();
-            movePlayer(x[p1X],
-            y[p1Y],
-            x[p1controll.getX()],
-            y[p1controll.getY()],
-            p1);
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             p1controll.moveUp();
-            movePlayer(x[p1X],
-            y[p1Y],
-            x[p1controll.getX()],
-            y[p1controll.getY()],
-            p1);
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             p1controll.moveDown();
-            movePlayer(x[p1X],
-            y[p1Y],
-            x[p1controll.getX()],
-            y[p1controll.getY()],
-            p1);
+            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
         }
 
         if ((crossDirection && p1X <= p2X) || (!crossDirection && p1X > p2X))
