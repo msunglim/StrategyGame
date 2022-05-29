@@ -34,7 +34,7 @@ public class SkillCardManager : MonoBehaviour
                     .p1c
                     .getCharacter()
                     .GetComponent<characterSetting>()
-                    .getSkillList()[0] //지금은 skill1로등록됨.
+                    .getSkillList()[4] //지금은 skill1로등록됨.
                     .GetComponent<skillManager>()
                     .getSkillMinImage();
         }
