@@ -23,96 +23,6 @@ public class SkillCardManager : MonoBehaviour
     {
         spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
-        //skill number
-        if (index == 0)
-        //temporary if statement. since character doesn't have 10 skills yet,
-        //if index is greater than the number of skills character currently have,
-        //there will be error.
-        {
-            spr.sprite =
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[0]
-                    .GetComponent<skillManager>()
-                    .getSkillMinImage();
-
-            skillname =
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[0]
-                    .GetComponent<skillManager>()
-                    .getSkillName();
-
-            skillStatData =
-                "" +
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[0]
-                    .GetComponent<skillManager>()
-                    .getDamage()
-            +"\n" +
-            GameMaster
-                .p1c
-                .getCharacter()
-                .GetComponent<characterSetting>()
-                .getSkillList()[0]
-                .GetComponent<skillManager>()
-                .getCost();
-        }
-        else
-        {
-            spr.sprite =
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[4] //지금은 skill1로등록됨.
-                    .GetComponent<skillManager>()
-                    .getSkillMinImage();
-            skillname =
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[4]
-                    .GetComponent<skillManager>()
-                    .getSkillName();
-             skillStatData =
-                "" +
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[4]
-                    .GetComponent<skillManager>()
-                    .getDamage()
-            +"\n" +
-            GameMaster
-                .p1c
-                .getCharacter()
-                .GetComponent<characterSetting>()
-                .getSkillList()[4]
-                .GetComponent<skillManager>()
-                .getCost(); 
-                Debug.Log("dama??"+GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[4]
-                    .GetComponent<skillManager>()
-                    .getDamage());
-        }
-
-        transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().text =
-            skillname;
-        spr.transform.localScale = new Vector3(0.5f, 0.5f, 0);
-
         //generate area cells
         float[] areaX = new float[] { -0.5f, -0.3f, -0.1f };
         float[] areaY = new float[] { -0.4f, -0.6f, -0.8f };
@@ -121,7 +31,7 @@ public class SkillCardManager : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                areaCellList[i + j] =
+                areaCellList[i*3 + j] =
                     Instantiate(areaCell,
                     new Vector3(transform.position.x + areaX[j],
                         transform.position.y + areaY[i],
@@ -129,8 +39,48 @@ public class SkillCardManager : MonoBehaviour
                     Quaternion.identity);
             }
         }
-         transform.GetChild(2).transform.GetChild(2).GetComponent<TMPro.TextMeshPro>().text =
-            skillStatData;
+
+        //skill number
+      //  if (index < 5)
+        //temporary if statement. since character doesn't have 10 skills yet,
+        //if index is greater than the number of skills character currently have,
+        //there will be error.
+       // {
+            skillManager currSkillManager =
+                GameMaster
+                    .p1c
+                    .getCharacter()
+                    .GetComponent<characterSetting>()
+                    .getSkillList()[index]
+                    .GetComponent<skillManager>();
+            spr.sprite = currSkillManager.getSkillMinImage();
+
+            skillname = currSkillManager.getSkillName();
+
+            skillStatData =
+                "" +
+                currSkillManager.getDamage() +
+                "\n" +
+                currSkillManager.getCost();
+
+            for (int t = 0; t < currSkillManager.getTargetArea().Length; t++)
+            {
+                areaCellList[currSkillManager.getTargetArea()[t]].GetComponent<SpriteRenderer>().color =
+                    Color.red;
+            }
+        
+
+        transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().text =
+            skillname;
+        spr.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+
+        //set DM and EN stats
+        transform
+            .GetChild(2)
+            .transform
+            .GetChild(2)
+            .GetComponent<TMPro.TextMeshPro>()
+            .text = skillStatData;
     }
 
     // Update is called once per frame

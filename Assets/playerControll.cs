@@ -14,7 +14,7 @@ public class playerControll : MonoBehaviour
     private int hp;
 
     private int en;
-
+    private int def; 
     private int
 
             x,
@@ -32,7 +32,12 @@ public class playerControll : MonoBehaviour
     {
         return character.GetComponent<characterSetting>().getMinProfile();
     }
-
+    public void setDEF(int d){
+        def = d;
+    }
+    public int getDEF(){
+        return def;
+    }
     public void setHP(int newHP)
     {
         if (playerCode == 1)

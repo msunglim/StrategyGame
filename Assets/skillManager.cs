@@ -29,10 +29,13 @@ public class skillManager : MonoBehaviour
     public int [] getTargetArea(){
         return targetArea;
     }
-    public void effect(int direction, float x, float y)
+    //direction : where the player is currently headed
+    //x, y: location of player
+    //dx,dy: where the effect will be headed
+    public void effect(int direction, float x, float y, int dx, int dy)
     {
         GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
-        effect.GetComponent<MoveToDirection>().setDirection(direction * 10, 0); //10 is speed of skill
+        effect.GetComponent<MoveToDirection>().setDirection(direction * dx, dy); //10 is speed of skill
     }
     public int getDamage(){
         return damage;
