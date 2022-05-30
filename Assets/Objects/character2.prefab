@@ -48,10 +48,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sp: {fileID: -560056810, guid: f1b871e9da1e8994da523db7cecb0d83, type: 3}
   skillList:
+  - {fileID: 4082483347852188030, guid: e63ae081dfb48484c835726d339c7d11, type: 3}
+  - {fileID: 1409199071813496934, guid: 19fb7a260d8fc9544a38f256f0e550b6, type: 3}
+  - {fileID: 4082483347852188030, guid: 0278386d74ce65e499553ffd8fc399d0, type: 3}
+  - {fileID: 4082483347852188030, guid: 887ce9ef333f3d44096734438a0b250e, type: 3}
+  - {fileID: 5956017597671529302, guid: 3d1f53814d4c0b944971324c59c01f95, type: 3}
   - {fileID: 3640218960975787756, guid: aa814d443def4f140bd56cec5b8decb3, type: 3}
   minProfile: {fileID: 5300957158923141673, guid: cbb05e4a5c836b646b1d25d67260dba1, type: 3}
-  skillCardImageList:
-  - {fileID: 21300000, guid: f7ea233b9816b694d8d5be0d0995ee83, type: 3}
 --- !u!212 &2311981914024374853
 SpriteRenderer:
   m_ObjectHideFlags: 0

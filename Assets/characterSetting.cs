@@ -14,6 +14,8 @@ public class characterSetting : MonoBehaviour
     [SerializeField]
     private GameObject[] skillList;
 
+    private GameObject currSkill;
+
     [SerializeField]
     private GameObject minProfile;
 
@@ -72,29 +74,85 @@ public class characterSetting : MonoBehaviour
     }
 
     //return SKill object for instantiating skill effect in battle field
-    public GameObject useSkill1(playerControll pc)
+    public GameObject useSkill(playerControll pc, int skillindex)
     {
         //use skill if it has enough energy to cast.
-        if (pc.getEN() >= skillList[4].GetComponent<skillManager>().getCost())
+        if (
+            pc.getEN() >=
+            skillList[4 + skillindex].GetComponent<skillManager>().getCost()
+        )
         {
-            anime.SetInteger("useSkill", 1);
+            anime.SetInteger("useSkill", skillindex);
             pc
                 .setEN(pc.getEN() -
-                skillList[4].GetComponent<skillManager>().getCost());
-            return skillList[4];
+                skillList[4 + skillindex]
+                    .GetComponent<skillManager>()
+                    .getCost());
+            currSkill = skillList[4 + skillindex];
+            return skillList[4 + skillindex];
         }
         else
         {
             return null;
         }
-     
     }
 
+    //animation에서 사용됨
+    //go to 1 direction
     public void effect1()
     {
-        skillList[4]
+        currSkill
             .GetComponent<skillManager>()
-            .effect(direction, transform.position.x, transform.position.y);
+            .effect(direction,
+            transform.position.x,
+            transform.position.y,
+            5,
+            0);
+    }
+
+    //go to 8 directions
+    public void effect2()
+    {
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                if (i == 0 && j == 0) continue;
+                currSkill
+                    .GetComponent<skillManager>()
+                    .effect(direction,
+                    transform.position.x,
+                    transform.position.y,
+                    5 * i,
+                    5 * j);
+            }
+        }
+    }
+
+    public void effect3()
+    {
+        currSkill
+            .GetComponent<skillManager>()
+            .effect(direction,
+            transform.position.x,
+            transform.position.y + 10,
+            0,
+            -15);
+    }
+
+    public GameObject heal(playerControll pc)
+    {
+        pc.setEN(pc.getEN() + 15);
+        anime.SetBool("isHeal", true);
+        return skillList[9];
+    }
+
+    public GameObject guard(playerControll pc)
+    {
+        //Debug.Log("pc def"+pc.getDEF());
+        pc.setDEF(15);
+        anime.SetBool("isGuard", true);
+        return skillList[4];
     }
 
     public void getHit()
@@ -105,6 +163,8 @@ public class characterSetting : MonoBehaviour
     public void standBack()
     {
         anime.SetBool("isHit", false);
+        anime.SetBool("isHeal", false);
+        currSkill = null;
     }
 
     public void die()
@@ -131,27 +191,35 @@ public class characterSetting : MonoBehaviour
     //return which direction move is used.
     //aX,aY: destination of character location.
     public GameObject move(float aX, float aY)
-    {   
+    {
         anime.SetBool("isMove", true);
         adjustedX = aX;
         adjustedY = aY;
-        
+
         float currX = transform.position.x;
         float currY = transform.position.y;
 
-        if(currX == adjustedX){
-            if(currY < adjustedY){
+        if (currX == adjustedX)
+        {
+            if (currY < adjustedY)
+            {
                 return skillList[0];
-            }else{
+            }
+            else
+            {
                 return skillList[1];
             }
-        }else{
-            if(currX < adjustedX){
+        }
+        else
+        {
+            if (currX < adjustedX)
+            {
                 return skillList[2];
-            }else{
+            }
+            else
+            {
                 return skillList[3];
             }
         }
-       
     }
 }

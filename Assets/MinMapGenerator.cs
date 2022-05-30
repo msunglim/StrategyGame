@@ -69,7 +69,7 @@ public class MinMapGenerator : MonoBehaviour
                     Instantiate(skillCard,
                     new Vector3(skillCardX[j], skillCardY[i], -1),
                     Quaternion.identity);
-                skillcard.GetComponent<SkillCardManager>().setImage(i);
+                skillcard.GetComponent<SkillCardManager>().setImage(5*i+j);
             }
         }
     }
