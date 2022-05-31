@@ -30,6 +30,10 @@ public class GameMaster : MonoBehaviour
 
     public static GameObject p2;
 
+    public static GameObject[] p1Skills = new GameObject[3];
+    public static int p1Size = 0;
+    public static GameObject[] p2Skills = new GameObject[3];
+    public static int p2Size = 0;
     [SerializeField]
     public GameObject
 
@@ -55,5 +59,20 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public static void addToP1Skills(GameObject newSkill)
+    {
+        if(p1Size == p1Skills.Length) return;
+        for (int i = 0; i < p1Skills.Length; i++)
+        {
+            if (p1Skills[i] == null)
+            {
+                p1Skills[i] = newSkill;
+                Debug.Log("p1size "+p1Size);
+                p1Size++;
+                break;
+            }
+        }
     }
 }
