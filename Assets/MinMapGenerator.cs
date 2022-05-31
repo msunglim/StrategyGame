@@ -26,6 +26,10 @@ public class MinMapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameMaster.p1Skills = new GameObject[3];
+        GameMaster.p1Size = 0;
+        GameMaster.p2Skills = new GameObject[3];
+        GameMaster.p2Size = 0;
         minMapX = new float[] { 2.3f, 3.8f, 5.3f, 6.8f };
         minMapY = new float[] { -2.9f, -3.6f, -4.3f };
 
@@ -39,6 +43,7 @@ public class MinMapGenerator : MonoBehaviour
                 minMapY[GameMaster.p1y],
                 -2),
             Quaternion.identity);
+        p1min.transform.parent = gameObject.transform;
         p1min.transform.localScale = new Vector3(0.5f, 0.5f, 1);
 
         GameObject p2MinProfile = GameMaster.p2c.getMinProfile();
@@ -48,6 +53,7 @@ public class MinMapGenerator : MonoBehaviour
                 minMapY[GameMaster.p2y],
                 -2),
             Quaternion.identity);
+             p2min.transform.parent = gameObject.transform;
         p2min.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         for (int i = 0; i < 3; i++)
         {
@@ -58,6 +64,7 @@ public class MinMapGenerator : MonoBehaviour
                     new Vector3(minMapX[j], minMapY[i], -1),
                     Quaternion.identity);
                 cellList[i, j] = minMapCell;
+                 minMapCell.transform.parent = gameObject.transform;
             }
         }
 

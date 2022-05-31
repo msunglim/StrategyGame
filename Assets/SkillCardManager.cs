@@ -8,7 +8,9 @@ public class SkillCardManager : MonoBehaviour
     private SpriteRenderer spr;
 
     private GameObject skill;
+
     private skillManager currSkillManager;
+
     private string skillname;
 
     private string skillStatData;
@@ -16,9 +18,14 @@ public class SkillCardManager : MonoBehaviour
     [SerializeField]
     private GameObject areaCell;
 
+    private bool isAdded;
+
+    // [SerializeField]
+    // private GameObject combatSchedule;
     // Start is called before the first frame update
     void Start()
     {
+        isAdded = false;
     }
 
     public void setImage(int index)
@@ -39,6 +46,8 @@ public class SkillCardManager : MonoBehaviour
                         transform.position.y + areaY[i],
                         -3),
                     Quaternion.identity);
+                areaCellList[i * 3 + j].transform.parent =
+                    gameObject.transform.GetChild(2).transform.GetChild(0);
             }
         }
 
@@ -54,7 +63,7 @@ public class SkillCardManager : MonoBehaviour
                 .getCharacter()
                 .GetComponent<characterSetting>()
                 .getSkillList()[index];
-         currSkillManager = skill.GetComponent<skillManager>();
+        currSkillManager = skill.GetComponent<skillManager>();
         spr.sprite = currSkillManager.getSkillMinImage();
 
         skillname = currSkillManager.getSkillName();
@@ -89,15 +98,55 @@ public class SkillCardManager : MonoBehaviour
     void Update()
     {
     }
+    public void setIsAdd(bool tf){
+        isAdded = tf;
+    }
+    public bool getIsAdded(){
+        return isAdded;
+    }
 
     private void OnMouseDown()
     {
-       GameObject playerInfo = GameObject.Find("PlayerInfo");
-       GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
+        //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
+        //if it is true, then it can be removed by clicking out of combat schedule.
+        if (!isAdded && GameMaster.p1Size < GameMaster.p1Skills.Length)
+        {
+            GameObject playerInfo = GameObject.Find("PlayerInfo");
+            GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
 
-       Debug.Log("skill EN cost"+ currSkillManager.getCost());
+            p1Stat
+                .GetComponent<statManager>()
+                .updateENbar(GameMaster.p1EN - currSkillManager.getCost());
 
-       p1Stat.GetComponent<statManager>().updateENbar(GameMaster.p1EN -currSkillManager.getCost() );
-
+          
+                GameObject combatSchedule = GameObject.Find("CombatSchedule");
+                combatSchedule.GetComponent<CombatScheduler>().add(Instantiate(gameObject,
+                new Vector3(combatSchedule
+                        .transform
+                        .GetChild(GameMaster.p1Size)
+                        .transform
+                        .position
+                        .x,
+                    combatSchedule
+                        .transform
+                        .GetChild(GameMaster.p1Size)
+                        .transform
+                        .position
+                        .y,
+                    -2),
+                Quaternion.identity));
+               
+          
+            GameMaster.addToP1Skills (skill);
+            SpriteRenderer[] allspr = GetComponentsInChildren<SpriteRenderer>();
+            for (int i = 0; i < allspr.Length; i++)
+            {
+                allspr[i].color = Color.grey;
+            }
+            isAdded = true;
+        }else{
+            
+        }
+        
     }
 }

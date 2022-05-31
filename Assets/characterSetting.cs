@@ -187,7 +187,6 @@ public class characterSetting : MonoBehaviour
 
     public void actionComplete()
     {
-        Debug.Log("..");
         anime.SetInteger("useSkill", 0);
     }
 
