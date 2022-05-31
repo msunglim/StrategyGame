@@ -106,7 +106,7 @@ public class characterSetting : MonoBehaviour
             .effect(direction,
             transform.position.x,
             transform.position.y,
-            5,
+            15,
             0);
     }
 
@@ -127,6 +127,7 @@ public class characterSetting : MonoBehaviour
                     5 * j);
             }
         }
+     
     }
 
     public void effect3()
@@ -179,6 +180,7 @@ public class characterSetting : MonoBehaviour
 
     public void actionComplete()
     {
+        Debug.Log("..");
         anime.SetInteger("useSkill", 0);
     }
 
