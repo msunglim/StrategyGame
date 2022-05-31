@@ -52,6 +52,7 @@ public class FieldGenerator : MonoBehaviour
             new Vector3(x[GameMaster.p1x] - 0.5f, y[GameMaster.p1y] + 0.8f, -2),
             Quaternion.identity);
         p1controll = player1.GetComponent<playerControll>();
+      
         p1controll.setXY(GameMaster.p1x, GameMaster.p1y);
         p1controll.setHP(GameMaster.p1HP);
         p1controll.setEN(GameMaster.p1EN);
@@ -73,8 +74,8 @@ public class FieldGenerator : MonoBehaviour
         p2.transform.Rotate(new Vector3(0, 180, 0));
 
         //this will allow other scenes to get min profile of players.
-        GameMaster.p1c = p1controll;
-        GameMaster.p2c = p2controll;
+        // GameMaster.p1c = p1controll;
+        // GameMaster.p2c = p2controll;
 
         for (int i = 0; i < 3; i++)
         {
@@ -322,7 +323,7 @@ public class FieldGenerator : MonoBehaviour
             int skillY = cell[0];
 
             GameObject playerInfo = GameObject.Find("PlayerInfo");
-
+            // GameObject playerInfo = GameMaster.gameObject;
             //update EN bar of a skill caster.
             //p2는 피격자다. 피격자가 p2가 아닐경우에는 p2가 스킬시전자란소리.
             int playerCode2 = (pc2 != p2controll) ? 1 : 0;
@@ -383,23 +384,25 @@ public class FieldGenerator : MonoBehaviour
         //int playerCode2 = (pc != p2controll) ? 1 : 0;
         if (updateHP)
         {
-            GameObject opponentHP =
-                playerInfo.transform.GetChild(playerCode).gameObject;
-            opponentHP
-                .transform
-                .GetChild(1)
-                .GetComponent<statManager>()
-                .updateHPbar(pc.getHP());
+            // GameObject opponentHP =
+                playerInfo.transform.GetChild(playerCode).GetComponent<statManager>().updateHPbar(pc.getHP());
+                //실제로는 playerInfo.transform.GetChild(playerCode).gameObject .transform.GetChild(1) 이 opponent HP다.
+            // opponentHP
+            //     .transform
+            //     .GetChild(1)
+            //     .GetComponent<statManager>()
+            //     .updateHPbar(pc.getHP());
         }
         else
         {
-            GameObject casterEN =
-                playerInfo.transform.GetChild(playerCode).gameObject;
-            casterEN
-                .transform
-                .GetChild(2)
-                .GetComponent<statManager>()
-                .updateENbar(pc.getEN());
+              playerInfo.transform.GetChild(playerCode).GetComponent<statManager>().updateENbar(pc.getEN());
+            // GameObject casterEN =
+            //     playerInfo.transform.GetChild(playerCode).gameObject;
+            // casterEN
+            //     .transform
+            //     .GetChild(2)
+            //     .GetComponent<statManager>()
+            //     .updateENbar(pc.getEN());
         }
     }
 

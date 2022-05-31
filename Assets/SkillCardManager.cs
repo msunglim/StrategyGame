@@ -7,6 +7,8 @@ public class SkillCardManager : MonoBehaviour
     //min image for skill
     private SpriteRenderer spr;
 
+    private GameObject skill;
+    private skillManager currSkillManager;
     private string skillname;
 
     private string skillStatData;
@@ -31,7 +33,7 @@ public class SkillCardManager : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                areaCellList[i*3 + j] =
+                areaCellList[i * 3 + j] =
                     Instantiate(areaCell,
                     new Vector3(transform.position.x + areaX[j],
                         transform.position.y + areaY[i],
@@ -41,34 +43,34 @@ public class SkillCardManager : MonoBehaviour
         }
 
         //skill number
-      //  if (index < 5)
+        //  if (index < 5)
         //temporary if statement. since character doesn't have 10 skills yet,
         //if index is greater than the number of skills character currently have,
         //there will be error.
-       // {
-            skillManager currSkillManager =
-                GameMaster
-                    .p1c
-                    .getCharacter()
-                    .GetComponent<characterSetting>()
-                    .getSkillList()[index]
-                    .GetComponent<skillManager>();
-            spr.sprite = currSkillManager.getSkillMinImage();
+        // {
+        skill =
+            GameMaster
+                .p1c
+                .getCharacter()
+                .GetComponent<characterSetting>()
+                .getSkillList()[index];
+         currSkillManager = skill.GetComponent<skillManager>();
+        spr.sprite = currSkillManager.getSkillMinImage();
 
-            skillname = currSkillManager.getSkillName();
+        skillname = currSkillManager.getSkillName();
 
-            skillStatData =
-                "" +
-                currSkillManager.getDamage() +
-                "\n" +
-                currSkillManager.getCost();
+        skillStatData =
+            "" +
+            currSkillManager.getDamage() +
+            "\n" +
+            currSkillManager.getCost();
 
-            for (int t = 0; t < currSkillManager.getTargetArea().Length; t++)
-            {
-                areaCellList[currSkillManager.getTargetArea()[t]].GetComponent<SpriteRenderer>().color =
-                    Color.red;
-            }
-        
+        for (int t = 0; t < currSkillManager.getTargetArea().Length; t++)
+        {
+            areaCellList[currSkillManager.getTargetArea()[t]]
+                .GetComponent<SpriteRenderer>()
+                .color = Color.red;
+        }
 
         transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().text =
             skillname;
@@ -86,5 +88,16 @@ public class SkillCardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    private void OnMouseDown()
+    {
+       GameObject playerInfo = GameObject.Find("PlayerInfo");
+       GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
+
+       Debug.Log("skill EN cost"+ currSkillManager.getCost());
+
+       p1Stat.GetComponent<statManager>().updateENbar(GameMaster.p1EN -currSkillManager.getCost() );
+
     }
 }

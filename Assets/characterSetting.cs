@@ -7,6 +7,9 @@ public class characterSetting : MonoBehaviour
     [SerializeField]
     private Sprite sp;
 
+    [SerializeField]
+    private Sprite characterProfile;
+
     private SpriteRenderer spr;
 
     private int direction;
@@ -56,6 +59,11 @@ public class characterSetting : MonoBehaviour
             }
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
+    }
+
+    public Sprite getCharacterProfile()
+    {
+        return characterProfile;
     }
 
     public GameObject[] getSkillList()
@@ -127,7 +135,6 @@ public class characterSetting : MonoBehaviour
                     5 * j);
             }
         }
-     
     }
 
     public void effect3()

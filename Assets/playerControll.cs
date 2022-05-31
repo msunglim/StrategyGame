@@ -28,6 +28,9 @@ public class playerControll : MonoBehaviour
     {
     }
 
+    public Sprite getCharacterProfile(){
+       return character.GetComponent<characterSetting>().getCharacterProfile();
+    }
     public GameObject getMinProfile()
     {
         return character.GetComponent<characterSetting>().getMinProfile();

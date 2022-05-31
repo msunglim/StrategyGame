@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sp: {fileID: -560056810, guid: f1b871e9da1e8994da523db7cecb0d83, type: 3}
+  characterProfile: {fileID: 21300000, guid: 922fa1e59f3ef984da508113faf11035, type: 3}
   skillList:
   - {fileID: 4082483347852188030, guid: e63ae081dfb48484c835726d339c7d11, type: 3}
   - {fileID: 1409199071813496934, guid: 19fb7a260d8fc9544a38f256f0e550b6, type: 3}

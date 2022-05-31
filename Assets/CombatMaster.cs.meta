@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 32bb0f076389adf4394c448e87fec16d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - combatSchedule: {fileID: 2405971896061321895, guid: 03185e764d82c374a98fea6410d1a434, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
