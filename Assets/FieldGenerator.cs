@@ -160,6 +160,22 @@ public class FieldGenerator : MonoBehaviour
                 p2.GetComponent<characterSetting>()));
             }
         }
+         if (Input.GetKeyDown("j"))
+        {
+            GameObject skill =
+                p1.GetComponent<characterSetting>().useSkill(p1controll,4);
+            if (skill != null)
+            {
+                int[] targetArea =
+                    skill.GetComponent<skillManager>().getTargetArea();
+                StartCoroutine(applyAttackSkill(skill,
+                targetArea,
+                p1controll,
+                p2controll));
+                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
+                p2.GetComponent<characterSetting>()));
+            }
+        }
         if (Input.GetKeyDown("f"))
         {
             // p2.GetComponent<characterSetting>().useSkill1();
