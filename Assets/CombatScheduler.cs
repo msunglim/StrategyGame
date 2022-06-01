@@ -17,10 +17,7 @@ public class CombatScheduler : MonoBehaviour
     {
         
     }
-    public void add(GameObject newCard){
-        newCard.GetComponent<SkillCardManager>().setIsAdd(true);
-        transform.GetChild(0).GetComponent<ScheduledSkillManager>().setSkillCard(newCard);
-    }
+  
     
 
 }
