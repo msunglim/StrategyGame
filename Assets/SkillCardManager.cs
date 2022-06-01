@@ -50,7 +50,7 @@ public class SkillCardManager : MonoBehaviour
                     Instantiate(areaCell,
                     new Vector3(transform.position.x + areaX[j],
                         transform.position.y + areaY[i],
-                        -2),
+                        transform.position.z - 1 ),
                     Quaternion.identity);
                 areaCellList[i * 3 + j].transform.parent =
                     gameObject.transform.GetChild(2).transform.GetChild(0);
@@ -124,7 +124,7 @@ public class SkillCardManager : MonoBehaviour
     {
         filter =
             Instantiate(filterpref,
-            new Vector3(transform.position.x, transform.position.y, -3),
+            new Vector3(transform.position.x, transform.position.y, -2),
             Quaternion.identity);
         isAdded = true;
     }
@@ -142,21 +142,31 @@ public class SkillCardManager : MonoBehaviour
 
     private void OnMouseDown()
     {
+        // GameObject minmap = GameObject.Find("MinMap");
+        int availableEN =
+            transform.parent.GetComponent<MinMapGenerator>().getAvailableEN();
+        GameObject playerInfo = GameObject.Find("PlayerInfo");
+        GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
+
         //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
         //if it is true, then it can be removed by clicking out of combat schedule.
-        if (!isAdded && GameMaster.p1Size < GameMaster.p1Skills.Length)
+        if (
+            !isAdded &&
+            GameMaster.p1Size < GameMaster.p1Skills.Length &&
+            availableEN >= currSkillManager.getCost()
+        )
         {
-            GameObject playerInfo = GameObject.Find("PlayerInfo");
-            GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
-
             p1Stat
                 .GetComponent<statManager>()
-                .updateENbar(GameMaster.p1EN - currSkillManager.getCost());
+                .updateENbar(availableEN - currSkillManager.getCost());
 
-           
+            transform
+                .parent
+                .GetComponent<MinMapGenerator>()
+                .setAvailableEN(availableEN - currSkillManager.getCost());
+
             //여기서 가능한곳에 넣어야합니다. 지금은 사이즈에 따라 하고있음.. ㅜ
-            GameMaster.addToP1Skills(skill, gameObject);
-            
+            GameMaster.addToP1Skills (skill, gameObject, transform.parent);
 
             //이것들을 필터만 추가하는것으로 바꾸어야합니다.
             // SpriteRenderer[] allspr = GetComponentsInChildren<SpriteRenderer>();
@@ -172,8 +182,20 @@ public class SkillCardManager : MonoBehaviour
             GameMaster
                 .removeToP1Skills(parent
                     .GetComponent<SkillCardManager>()
-                    .getSkill(), gameObject);
-           
+                    .getSkill(),
+                gameObject);
+
+            //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
+            
+            //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
+            p1Stat
+                .GetComponent<statManager>()
+                .updateENbar(availableEN +parent.GetComponent<SkillCardManager>().getSkill().GetComponent<skillManager>().getCost() );
+
+            transform
+                .parent
+                .GetComponent<MinMapGenerator>()
+                .setAvailableEN(availableEN +parent.GetComponent<SkillCardManager>().getSkill().GetComponent<skillManager>().getCost() );
         }
     }
 }

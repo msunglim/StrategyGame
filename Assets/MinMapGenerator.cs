@@ -22,7 +22,7 @@ public class MinMapGenerator : MonoBehaviour
 
             skillCardX,
             skillCardY;
-
+    public  int availableEN;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +35,8 @@ public class MinMapGenerator : MonoBehaviour
 
         skillCardX = new float[] { -3.6f, -1.8f, 0.0f, 1.8f, 3.6f };
         skillCardY = new float[] { 0.8f, -1.3f };
+
+        availableEN = GameMaster.p1c.getEN();
 
         GameObject p1MinProfile = GameMaster.p1c.getMinProfile();
         GameObject p1min =
@@ -77,6 +79,7 @@ public class MinMapGenerator : MonoBehaviour
                     new Vector3(skillCardX[j], skillCardY[i], -1),
                     Quaternion.identity);
                 skillcard.GetComponent<SkillCardManager>().setImage(5*i+j);
+                skillcard.transform.parent = gameObject.transform;
             }
         }
     }
@@ -85,4 +88,11 @@ public class MinMapGenerator : MonoBehaviour
     void Update()
     {
     }
+    public int getAvailableEN(){
+        return availableEN;
+    }
+    public void setAvailableEN(int a){
+        availableEN = a;
+    }
+    
 }
