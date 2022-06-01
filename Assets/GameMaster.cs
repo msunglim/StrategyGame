@@ -31,9 +31,13 @@ public class GameMaster : MonoBehaviour
     public static GameObject p2;
 
     public static GameObject[] p1Skills = new GameObject[3];
+
     public static int p1Size = 0;
+
     public static GameObject[] p2Skills = new GameObject[3];
+
     public static int p2Size = 0;
+
     [SerializeField]
     public GameObject
 
@@ -61,18 +65,57 @@ public class GameMaster : MonoBehaviour
     {
     }
 
-    public static void addToP1Skills(GameObject newSkill)
+    public static void
+    addToP1Skills(GameObject skill, GameObject skillCard)
     {
-        if(p1Size == p1Skills.Length) return;
+        if (p1Size == p1Skills.Length) return ;
+        GameObject combatSchedule = GameObject.Find("CombatSchedule");
+        GameObject added = Instantiate(skillCard);
         for (int i = 0; i < p1Skills.Length; i++)
         {
+           
+            added.transform.position = 
+            new Vector3(combatSchedule
+                    .transform
+                    .GetChild(i)
+                    .transform
+                    .position
+                    .x,
+                combatSchedule
+                    .transform
+                    .GetChild(i)
+                    .transform
+                    .position
+                    .y,
+                -2);
             if (p1Skills[i] == null)
             {
-                p1Skills[i] = newSkill;
-                Debug.Log("p1size "+p1Size);
+                p1Skills[i] = skill;
+
                 p1Size++;
                 break;
             }
         }
+       
+        // combatSchedule.GetComponent<CombatScheduler>().add(added, gameObject);
+        added.GetComponent<SkillCardManager>().setIsAdd(true);
+        added.GetComponent<SkillCardManager>().setParent(skillCard);
+
+        // return added;
+    }
+
+    public static void removeToP1Skills(GameObject skill, GameObject skillCard)
+    {
+        for (int i = 0; i < p1Skills.Length; i++)
+        {
+            if (p1Skills[i] == skill)
+            {
+                p1Skills[i] = null;
+
+                break;
+            }
+        }
+        Destroy (skillCard);
+        p1Size--;
     }
 }
