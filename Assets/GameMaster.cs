@@ -65,38 +65,42 @@ public class GameMaster : MonoBehaviour
     {
     }
 
-    public static void
-    addToP1Skills(GameObject skill, GameObject skillCard)
+    public static void addToP1Skills(GameObject skill, GameObject skillCard, Transform minmapParent)
     {
-        if (p1Size == p1Skills.Length) return ;
+        if (p1Size == p1Skills.Length) return;
         GameObject combatSchedule = GameObject.Find("CombatSchedule");
         GameObject added = Instantiate(skillCard);
         for (int i = 0; i < p1Skills.Length; i++)
         {
-           
-            added.transform.position = 
-            new Vector3(combatSchedule
-                    .transform
-                    .GetChild(i)
-                    .transform
-                    .position
-                    .x,
-                combatSchedule
-                    .transform
-                    .GetChild(i)
-                    .transform
-                    .position
-                    .y,
-                -2);
             if (p1Skills[i] == null)
             {
+                added.transform.position =
+                    new Vector3(combatSchedule
+                            .transform
+                            .GetChild(i)
+                            .transform
+                            .position
+                            .x,
+                        combatSchedule
+                            .transform
+                            .GetChild(i)
+                            .transform
+                            .position
+                            .y,
+                        combatSchedule
+                            .transform
+                            .GetChild(i)
+                            .transform
+                            .position
+                            .z );
+                added.transform.parent = minmapParent.transform;
                 p1Skills[i] = skill;
 
                 p1Size++;
                 break;
             }
         }
-       
+
         // combatSchedule.GetComponent<CombatScheduler>().add(added, gameObject);
         added.GetComponent<SkillCardManager>().setIsAdd(true);
         added.GetComponent<SkillCardManager>().setParent(skillCard);
