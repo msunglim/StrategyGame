@@ -27,8 +27,10 @@ public class SkillCardManager : MonoBehaviour
 
     private GameObject filter;
 
-    // [SerializeField]
-    // private GameObject combatSchedule;
+    private int availableEN;
+
+    private bool isFilterAdded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +52,7 @@ public class SkillCardManager : MonoBehaviour
                     Instantiate(areaCell,
                     new Vector3(transform.position.x + areaX[j],
                         transform.position.y + areaY[i],
-                        transform.position.z - 1 ),
+                        transform.position.z - 1),
                     Quaternion.identity);
                 areaCellList[i * 3 + j].transform.parent =
                     gameObject.transform.GetChild(2).transform.GetChild(0);
@@ -74,11 +76,8 @@ public class SkillCardManager : MonoBehaviour
 
         skillname = currSkillManager.getSkillName();
 
-        skillStatData =
-            "" +
-            currSkillManager.getDamage() +
-            "\n" +
-            currSkillManager.getCost();
+        int currCost = -currSkillManager.getCost();
+        skillStatData = "" + currSkillManager.getDamage() + "\n" + currCost;
 
         for (int t = 0; t < currSkillManager.getTargetArea().Length; t++)
         {
@@ -103,6 +102,37 @@ public class SkillCardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (parent == null)
+        {
+            availableEN =
+                transform
+                    .parent
+                    .GetComponent<MinMapGenerator>()
+                    .getAvailableEN();
+            if (!isAdded && !isFilterAdded)
+            {
+                if (currSkillManager.getCost() > availableEN)
+                {
+                    addFilter();
+                }
+            }
+            else if (!isAdded && isFilterAdded)
+            {
+                if (currSkillManager.getCost() <= availableEN)
+                {
+                    removeFilter();
+                }
+            }
+        }
+        else //since the object currently belongs to Combat Schedule, it can access to minmapgenerator through its parent.
+        {
+            availableEN =
+                parent
+                    .transform
+                    .parent
+                    .GetComponent<MinMapGenerator>()
+                    .getAvailableEN();
+        }
     }
 
     public void setIsAdd(bool tf)
@@ -119,6 +149,9 @@ public class SkillCardManager : MonoBehaviour
     {
         parent = p;
     }
+    public GameObject getParent(){
+        return parent;
+    }
 
     private void addFilter()
     {
@@ -126,13 +159,15 @@ public class SkillCardManager : MonoBehaviour
             Instantiate(filterpref,
             new Vector3(transform.position.x, transform.position.y, -2),
             Quaternion.identity);
-        isAdded = true;
+        filter.transform.parent = gameObject.transform;
+        isFilterAdded = true;
     }
 
-    private void removeFilter()
+    public void removeFilter()
     {
         Destroy (filter);
         isAdded = false;
+        isFilterAdded = false;
     }
 
     public GameObject getSkill()
@@ -143,8 +178,6 @@ public class SkillCardManager : MonoBehaviour
     private void OnMouseDown()
     {
         // GameObject minmap = GameObject.Find("MinMap");
-        int availableEN =
-            transform.parent.GetComponent<MinMapGenerator>().getAvailableEN();
         GameObject playerInfo = GameObject.Find("PlayerInfo");
         GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
 
@@ -166,7 +199,7 @@ public class SkillCardManager : MonoBehaviour
                 .setAvailableEN(availableEN - currSkillManager.getCost());
 
             //여기서 가능한곳에 넣어야합니다. 지금은 사이즈에 따라 하고있음.. ㅜ
-            GameMaster.addToP1Skills (skill, gameObject, transform.parent);
+            GameMaster.addToP1Skills (skill, gameObject);
 
             //이것들을 필터만 추가하는것으로 바꾸어야합니다.
             // SpriteRenderer[] allspr = GetComponentsInChildren<SpriteRenderer>();
@@ -175,6 +208,7 @@ public class SkillCardManager : MonoBehaviour
             //     allspr[i].color = Color.grey;
             // }
             addFilter();
+            isAdded = true;
         }
         else if (isAdded && parent != null)
         {
@@ -186,16 +220,26 @@ public class SkillCardManager : MonoBehaviour
                 gameObject);
 
             //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
-            
             //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
             p1Stat
                 .GetComponent<statManager>()
-                .updateENbar(availableEN +parent.GetComponent<SkillCardManager>().getSkill().GetComponent<skillManager>().getCost() );
+                .updateENbar(availableEN +
+                parent
+                    .GetComponent<SkillCardManager>()
+                    .getSkill()
+                    .GetComponent<skillManager>()
+                    .getCost());
 
-            transform
+            parent
+                .transform
                 .parent
                 .GetComponent<MinMapGenerator>()
-                .setAvailableEN(availableEN +parent.GetComponent<SkillCardManager>().getSkill().GetComponent<skillManager>().getCost() );
+                .setAvailableEN(availableEN +
+                parent
+                    .GetComponent<SkillCardManager>()
+                    .getSkill()
+                    .GetComponent<skillManager>()
+                    .getCost());
         }
     }
 }

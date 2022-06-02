@@ -65,7 +65,8 @@ public class GameMaster : MonoBehaviour
     {
     }
 
-    public static void addToP1Skills(GameObject skill, GameObject skillCard, Transform minmapParent)
+    //여기서 스킬은 캐릭터로부터 받은 스킬이지 스킬카드가아님. 스킬카드는 부모복제용으로만 사용됨.
+    public static void addToP1Skills(GameObject skill, GameObject skillCard)
     {
         if (p1Size == p1Skills.Length) return;
         GameObject combatSchedule = GameObject.Find("CombatSchedule");
@@ -74,6 +75,7 @@ public class GameMaster : MonoBehaviour
         {
             if (p1Skills[i] == null)
             {
+
                 added.transform.position =
                     new Vector3(combatSchedule
                             .transform
@@ -93,7 +95,7 @@ public class GameMaster : MonoBehaviour
                             .transform
                             .position
                             .z );
-                added.transform.parent = minmapParent.transform;
+                added.transform.parent = combatSchedule.transform.GetChild(i).transform;
                 p1Skills[i] = skill;
 
                 p1Size++;
