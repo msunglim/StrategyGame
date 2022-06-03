@@ -33,7 +33,7 @@ public class characterSetting : MonoBehaviour
             adjustedY;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         anime = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
@@ -60,6 +60,10 @@ public class characterSetting : MonoBehaviour
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
+    public void setAnime(Animator ani){
+        anime = ani;
+    }
+    
 
     public Sprite getCharacterProfile()
     {
@@ -97,6 +101,7 @@ public class characterSetting : MonoBehaviour
                     .GetComponent<skillManager>()
                     .getCost());
             currSkill = skillList[4 + skillindex];
+            Debug.Log("curr skill"+ currSkill);
             return skillList[4 + skillindex];
         }
         else
@@ -109,6 +114,7 @@ public class characterSetting : MonoBehaviour
     //go to 1 direction
     public void effect1()
     {
+          Debug.Log("curr skill what?"+ currSkill);
         currSkill
             .GetComponent<skillManager>()
             .effect(direction,
@@ -157,8 +163,8 @@ public class characterSetting : MonoBehaviour
 
     public GameObject guard(playerControll pc)
     {
-        //Debug.Log("pc def"+pc.getDEF());
         pc.setDEF(15);
+
         anime.SetBool("isGuard", true);
         return skillList[4];
     }
