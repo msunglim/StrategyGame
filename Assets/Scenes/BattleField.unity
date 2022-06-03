@@ -192,6 +192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
+--- !u!1 &2168352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1034526386024139501, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
+  m_PrefabInstance: {fileID: 2168351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &25587961
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +277,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25587961}
   m_CullTransparentMesh: 1
+--- !u!1 &142539501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 142539503}
+  - component: {fileID: 142539502}
+  m_Layer: 0
+  m_Name: BattleMaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &142539502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142539501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bfba3daeb43444c8b3794b3f16850c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleField: {fileID: 2168352}
+--- !u!4 &142539503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142539501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.8588097, y: 0.20419784, z: -2.0532308}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206820971
 GameObject:
   m_ObjectHideFlags: 0

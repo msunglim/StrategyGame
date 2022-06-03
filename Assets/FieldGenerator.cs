@@ -51,8 +51,8 @@ public class FieldGenerator : MonoBehaviour
             Instantiate(player1Character,
             new Vector3(x[GameMaster.p1x] - 0.5f, y[GameMaster.p1y] + 0.8f, -2),
             Quaternion.identity);
+
         p1controll = player1.GetComponent<playerControll>();
-      
         p1controll.setXY(GameMaster.p1x, GameMaster.p1y);
         p1controll.setHP(GameMaster.p1HP);
         p1controll.setEN(GameMaster.p1EN);
@@ -76,7 +76,6 @@ public class FieldGenerator : MonoBehaviour
         //this will allow other scenes to get min profile of players.
         // GameMaster.p1c = p1controll;
         // GameMaster.p2c = p2controll;
-
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -88,6 +87,17 @@ public class FieldGenerator : MonoBehaviour
                 list[i, j] = clone;
             }
         }
+    }
+
+    //왜 p1.getcomponent가 안되냐면 p1은 clone이기때문에 등록된게없음.. player object에 등록되었기때문에 관리자는 player object임..
+    public playerControll getPlayer1Controll()
+    {
+        return p1controll;
+    }
+
+    public GameObject getPlayer1()
+    {
+        return p1;
     }
 
     private void movePlayer(float endX, float endY, GameObject player)
@@ -111,12 +121,12 @@ public class FieldGenerator : MonoBehaviour
         {
             GameObject skill =
                 p1.GetComponent<characterSetting>().heal(p1controll);
-              updatePlayerInfoBar(p1controll, 0 , false);    
+            updatePlayerInfoBar(p1controll, 0, false);
         }
         if (Input.GetKeyDown("d"))
         {
             GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll,1);
+                p1.GetComponent<characterSetting>().useSkill(p1controll, 1);
             if (skill != null)
             {
                 int[] targetArea =
@@ -132,7 +142,7 @@ public class FieldGenerator : MonoBehaviour
         if (Input.GetKeyDown("g"))
         {
             GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll,2);
+                p1.GetComponent<characterSetting>().useSkill(p1controll, 2);
             if (skill != null)
             {
                 int[] targetArea =
@@ -145,10 +155,10 @@ public class FieldGenerator : MonoBehaviour
                 p2.GetComponent<characterSetting>()));
             }
         }
-         if (Input.GetKeyDown("h"))
+        if (Input.GetKeyDown("h"))
         {
             GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll,3);
+                p1.GetComponent<characterSetting>().useSkill(p1controll, 3);
             if (skill != null)
             {
                 int[] targetArea =
@@ -161,10 +171,10 @@ public class FieldGenerator : MonoBehaviour
                 p2.GetComponent<characterSetting>()));
             }
         }
-         if (Input.GetKeyDown("j"))
+        if (Input.GetKeyDown("j"))
         {
             GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll,4);
+                p1.GetComponent<characterSetting>().useSkill(p1controll, 4);
             if (skill != null)
             {
                 int[] targetArea =
@@ -227,6 +237,16 @@ public class FieldGenerator : MonoBehaviour
             p2.GetComponent<characterSetting>().changeDirection();
             crossDirection = !crossDirection;
         }
+    }
+
+    public float[] getXList()
+    {
+        return x;
+    }
+
+    public float[] getYList()
+    {
+        return y;
     }
 
     //show targeted area in red for 0.xf second, and change its color back to white.
@@ -323,11 +343,13 @@ public class FieldGenerator : MonoBehaviour
             int skillY = cell[0];
 
             GameObject playerInfo = GameObject.Find("PlayerInfo");
+
             // GameObject playerInfo = GameMaster.gameObject;
             //update EN bar of a skill caster.
             //p2는 피격자다. 피격자가 p2가 아닐경우에는 p2가 스킬시전자란소리.
             int playerCode2 = (pc2 != p2controll) ? 1 : 0;
             updatePlayerInfoBar(pc1, playerCode2, false);
+
             // GameObject casterEN =
             //     playerInfo.transform.GetChild(playerCode2).gameObject;
             // casterEN
@@ -335,7 +357,6 @@ public class FieldGenerator : MonoBehaviour
             //     .GetChild(2)
             //     .GetComponent<statManager>()
             //     .updateENbar(pc1.getEN());
-
             //if opponent is located in targeted area, reduce its hp by skill damage.
             if (skillX == opponentX && skillY == opponentY)
             {
@@ -346,6 +367,7 @@ public class FieldGenerator : MonoBehaviour
                 //update HP bar of opponent of a skill caster.
                 int playerCode = (pc2 == p2controll) ? 1 : 0;
                 updatePlayerInfoBar(pc2, playerCode, true);
+
                 // GameObject opponentHP =
                 //     playerInfo.transform.GetChild(playerCode).gameObject;
                 // opponentHP
@@ -353,7 +375,6 @@ public class FieldGenerator : MonoBehaviour
                 //     .GetChild(1)
                 //     .GetComponent<statManager>()
                 //     .updateHPbar(pc2.getHP());
-
                 //가드일경우 하지않는다!
                 //player 1 is hit by the skill
                 if (playerCode == 0)
@@ -385,8 +406,12 @@ public class FieldGenerator : MonoBehaviour
         if (updateHP)
         {
             // GameObject opponentHP =
-                playerInfo.transform.GetChild(playerCode).GetComponent<statManager>().updateHPbar(pc.getHP());
-                //실제로는 playerInfo.transform.GetChild(playerCode).gameObject .transform.GetChild(1) 이 opponent HP다.
+            playerInfo
+                .transform
+                .GetChild(playerCode)
+                .GetComponent<statManager>()
+                .updateHPbar(pc.getHP());
+            //실제로는 playerInfo.transform.GetChild(playerCode).gameObject .transform.GetChild(1) 이 opponent HP다.
             // opponentHP
             //     .transform
             //     .GetChild(1)
@@ -395,7 +420,11 @@ public class FieldGenerator : MonoBehaviour
         }
         else
         {
-              playerInfo.transform.GetChild(playerCode).GetComponent<statManager>().updateENbar(pc.getEN());
+            playerInfo
+                .transform
+                .GetChild(playerCode)
+                .GetComponent<statManager>()
+                .updateENbar(pc.getEN());
             // GameObject casterEN =
             //     playerInfo.transform.GetChild(playerCode).gameObject;
             // casterEN
