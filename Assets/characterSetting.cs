@@ -25,6 +25,9 @@ public class characterSetting : MonoBehaviour
     //private GameObject skill1Effect;
     private Animator anime;
 
+    [SerializeField]
+    private string name;
+
     private float
 
             moveDirectionX,
@@ -42,7 +45,7 @@ public class characterSetting : MonoBehaviour
 
     void Update()
     {
-        if (anime.GetBool("isMove") == true)
+        if (anime.GetBool(name+"isMove") == true)
         //if(transform.position.x != adjustedX && transform.position.y != adjustedY)
         {
             transform.position =
@@ -55,15 +58,16 @@ public class characterSetting : MonoBehaviour
                 transform.position.y == adjustedY
             )
             {
-                anime.SetBool("isMove", false);
+                anime.SetBool(name+"isMove", false);
             }
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-    public void setAnime(Animator ani){
+
+    public void setAnime(Animator ani)
+    {
         anime = ani;
     }
-    
 
     public Sprite getCharacterProfile()
     {
@@ -94,14 +98,13 @@ public class characterSetting : MonoBehaviour
             skillList[4 + skillindex].GetComponent<skillManager>().getCost()
         )
         {
-            anime.SetInteger("useSkill", skillindex);
+            anime.SetInteger(name+"useSkill", skillindex);
             pc
                 .setEN(pc.getEN() -
                 skillList[4 + skillindex]
                     .GetComponent<skillManager>()
                     .getCost());
             currSkill = skillList[4 + skillindex];
-            Debug.Log("curr skill"+ currSkill);
             return skillList[4 + skillindex];
         }
         else
@@ -114,7 +117,6 @@ public class characterSetting : MonoBehaviour
     //go to 1 direction
     public void effect1()
     {
-          Debug.Log("curr skill what?"+ currSkill);
         currSkill
             .GetComponent<skillManager>()
             .effect(direction,
@@ -157,7 +159,7 @@ public class characterSetting : MonoBehaviour
     public GameObject heal(playerControll pc)
     {
         pc.setEN(pc.getEN() + 15);
-        anime.SetBool("isHeal", true);
+        anime.SetBool(name+"isHeal", true);
         return skillList[9];
     }
 
@@ -165,25 +167,25 @@ public class characterSetting : MonoBehaviour
     {
         pc.setDEF(15);
 
-        anime.SetBool("isGuard", true);
+        anime.SetBool(name+"isGuard", true);
         return skillList[4];
     }
 
     public void getHit()
     {
-        anime.SetBool("isHit", true);
+        anime.SetBool(name+"isHit", true);
     }
 
     public void standBack()
     {
-        anime.SetBool("isHit", false);
-        anime.SetBool("isHeal", false);
+        anime.SetBool(name+"isHit", false);
+        anime.SetBool(name+"isHeal", false);
         currSkill = null;
     }
 
     public void die()
     {
-        anime.SetBool("isDead", true);
+        anime.SetBool(name+"isDead", true);
     }
 
     public Sprite getSprite()
@@ -193,7 +195,7 @@ public class characterSetting : MonoBehaviour
 
     public void actionComplete()
     {
-        anime.SetInteger("useSkill", 0);
+        anime.SetInteger(name+"useSkill", 0);
     }
 
     public void changeDirection()
@@ -206,7 +208,7 @@ public class characterSetting : MonoBehaviour
     //aX,aY: destination of character location.
     public GameObject move(float aX, float aY)
     {
-        anime.SetBool("isMove", true);
+        anime.SetBool(name+"isMove", true);
         adjustedX = aX;
         adjustedY = aY;
 
