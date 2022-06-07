@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2087762965382874896
+--- !u!1 &3640218960975787756
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2087762965382874899}
-  - component: {fileID: 2087762965382874892}
+  - component: {fileID: 2242881057943361876}
+  - component: {fileID: 2491723016162932918}
   m_Layer: 0
-  m_Name: player1
+  m_Name: c2Skill2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2087762965382874899
+--- !u!4 &2242881057943361876
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087762965382874896}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.96, y: -0.5, z: -2}
+  m_GameObject: {fileID: 3640218960975787756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4551017, y: -0.21834862, z: 5.5457764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2087762965382874892
+--- !u!114 &2491723016162932918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087762965382874896}
+  m_GameObject: {fileID: 3640218960975787756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91302b80ad5fcb4d96293198ed4ee8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCode: 1
-  character: {fileID: 1170795459838145575, guid: a51bc8c45a0f90e4198067e89b87e0e0, type: 3}
+  targetArea: 010000000400000007000000
+  skillEffect: {fileID: 8103981942090560074, guid: 6968aa30eae7cbf4f832fadbbea2e317, type: 3}
+  damage: 30
+  cost: 20
+  skillMinImage: {fileID: 21300000, guid: 7958e4e44232cf54cbc7927b2943a9ad, type: 3}
+  skillName: Divine Rain

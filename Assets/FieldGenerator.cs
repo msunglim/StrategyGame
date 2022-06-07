@@ -88,17 +88,28 @@ public class FieldGenerator : MonoBehaviour
             }
         }
     }
-
+    public GameObject [,] getCellList(){
+        return list;
+    }
     //왜 p1.getcomponent가 안되냐면 p1은 clone이기때문에 등록된게없음.. player object에 등록되었기때문에 관리자는 player object임..
     public playerControll getPlayer1Controll()
     {
         return p1controll;
+    }
+   public playerControll getPlayer2Controll()
+    {
+        return p2controll;
     }
 
     public GameObject getPlayer1()
     {
         return p1;
     }
+     public GameObject getPlayer2()
+    {
+        return p2;
+    }
+
 
     private void movePlayer(float endX, float endY, GameObject player)
     {
@@ -112,125 +123,30 @@ public class FieldGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("a"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().guard(p1controll);
-        }
-        if (Input.GetKeyDown("s"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().heal(p1controll);
-            updatePlayerInfoBar(p1controll, 0, false);
-        }
-        if (Input.GetKeyDown("d"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll, 1);
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
-                p1controll,
-                p2controll));
-                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
-                p2.GetComponent<characterSetting>()));
-            }
-        }
-        if (Input.GetKeyDown("g"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll, 2);
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
-                p1controll,
-                p2controll));
-                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
-                p2.GetComponent<characterSetting>()));
-            }
-        }
-        if (Input.GetKeyDown("h"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll, 3);
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
-                p1controll,
-                p2controll));
-                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
-                p2.GetComponent<characterSetting>()));
-            }
-        }
-        if (Input.GetKeyDown("j"))
-        {
-            GameObject skill =
-                p1.GetComponent<characterSetting>().useSkill(p1controll, 4);
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
-                p1controll,
-                p2controll));
-                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
-                p2.GetComponent<characterSetting>()));
-            }
-        }
-        if (Input.GetKeyDown("f"))
-        {
-            // p2.GetComponent<characterSetting>().useSkill1();
-            GameObject skill =
-                p2.GetComponent<characterSetting>().useSkill(p2controll, 1);
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
-                p2controll,
-                p1controll));
-                StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
-                p2.GetComponent<characterSetting>()));
-            }
-        }
+        // if (Input.GetKeyDown("f"))
+        // {
+        //     // p2.GetComponent<characterSetting>().useSkill1();
+        //     GameObject skill =
+        //         p2.GetComponent<characterSetting>().useSkill(p2controll, 1);
+        //     if (skill != null)
+        //     {
+        //         int[] targetArea =
+        //             skill.GetComponent<skillManager>().getTargetArea();
+        //         StartCoroutine(applyAttackSkill(skill,
+        //         targetArea,
+        //         p2controll,
+        //         p1controll));
+        //         StartCoroutine(endPhase(p1.GetComponent<characterSetting>(),
+        //         p2.GetComponent<characterSetting>()));
+        //     }
+        // }
         int p1X = p1controll.getX();
         int p1Y = p1controll.getY();
         int p2X = p2controll.getX();
         int p2Y = p2controll.getY();
 
-        //currently only can move player 1.
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            p1controll.moveLeft();
-            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            p1controll.moveRight();
-            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            p1controll.moveUp();
-            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            p1controll.moveDown();
-            movePlayer(x[p1controll.getX()], y[p1controll.getY()], p1);
-        }
-
+     
+        //Switch players' way they look if they cross each other.
         if ((crossDirection && p1X <= p2X) || (!crossDirection && p1X > p2X))
         {
             p1.GetComponent<characterSetting>().changeDirection();
@@ -249,204 +165,5 @@ public class FieldGenerator : MonoBehaviour
         return y;
     }
 
-    //show targeted area in red for 0.xf second, and change its color back to white.
-    //if an opponent player(pc2) is located in the area, then apply the skill effect to it.
-    //pc1: the player who casts its skill
-    //pc2: the opponent of player who casts its skill
-    private IEnumerator
-    applyAttackSkill(
-        GameObject skill,
-        int[] targetArea,
-        playerControll pc1,
-        playerControll pc2
-    )
-    {
-        List<int[]> coordinateList = new List<int[]>();
-        for (int i = 0; i < targetArea.Length; i++)
-        {
-            int x = pc1.getX();
-            int y = pc1.getY();
-            try
-            {
-                switch (targetArea[i])
-                {
-                    case 0:
-                        list[y - 1, x - 1]
-                            .GetComponent<SpriteRenderer>()
-                            .color = new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y - 1, x - 1 });
-                        break;
-                    case 1:
-                        list[y - 1, x].GetComponent<SpriteRenderer>().color =
-                            new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y - 1, x });
-                        break;
-                    case 2:
-                        list[y - 1, x + 1]
-                            .GetComponent<SpriteRenderer>()
-                            .color = new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y - 1, x + 1 });
-                        break;
-                    case 3:
-                        list[y, x - 1].GetComponent<SpriteRenderer>().color =
-                            new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y, x - 1 });
-                        break;
-                    case 4:
-                        list[y, x].GetComponent<SpriteRenderer>().color =
-                            new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y, x });
-                        break;
-                    case 5:
-                        list[y, x + 1].GetComponent<SpriteRenderer>().color =
-                            new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y, x + 1 });
-                        break;
-                    case 6:
-                        list[y + 1, x - 1]
-                            .GetComponent<SpriteRenderer>()
-                            .color = new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y + 1, x - 1 });
-                        break;
-                    case 7:
-                        list[y + 1, x].GetComponent<SpriteRenderer>().color =
-                            new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y + 1, x });
-                        break;
-                    case 8:
-                        list[y + 1, x + 1]
-                            .GetComponent<SpriteRenderer>()
-                            .color = new Color(255, 0, 0, 0.5f);
-                        coordinateList.Add(new int[] { y + 1, x + 1 });
-                        break;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                //if targeted area of skill is out of field.
-                Debug.Log (ex);
-                //it's ok to have outofrange exception.
-            }
-        }
-
-        //return the cell color to its original state.
-        yield return new WaitForSeconds(0.5f);
-
-        int opponentX = pc2.getX();
-        int opponentY = pc2.getY();
-
-        for (int j = 0; j < coordinateList.Count; j++)
-        {
-            //skillXY: where skill lands, opponextXY
-            int[] cell = coordinateList[j];
-            int skillX = cell[1];
-            int skillY = cell[0];
-
-            GameObject playerInfo = GameObject.Find("PlayerInfo");
-
-            // GameObject playerInfo = GameMaster.gameObject;
-            //update EN bar of a skill caster.
-            //p2는 피격자다. 피격자가 p2가 아닐경우에는 p2가 스킬시전자란소리.
-            int playerCode2 = (pc2 != p2controll) ? 1 : 0;
-            updatePlayerInfoBar(pc1, playerCode2, false);
-
-            // GameObject casterEN =
-            //     playerInfo.transform.GetChild(playerCode2).gameObject;
-            // casterEN
-            //     .transform
-            //     .GetChild(2)
-            //     .GetComponent<statManager>()
-            //     .updateENbar(pc1.getEN());
-            //if opponent is located in targeted area, reduce its hp by skill damage.
-            if (skillX == opponentX && skillY == opponentY)
-            {
-                pc2
-                    .setHP((pc2.getHP() + pc2.getDEF()) -
-                    skill.GetComponent<skillManager>().getDamage());
-
-                //update HP bar of opponent of a skill caster.
-                int playerCode = (pc2 == p2controll) ? 1 : 0;
-                updatePlayerInfoBar(pc2, playerCode, true);
-
-                // GameObject opponentHP =
-                //     playerInfo.transform.GetChild(playerCode).gameObject;
-                // opponentHP
-                //     .transform
-                //     .GetChild(1)
-                //     .GetComponent<statManager>()
-                //     .updateHPbar(pc2.getHP());
-                //가드일경우 하지않는다!
-                //player 1 is hit by the skill
-                if (playerCode == 0)
-                {
-                    p1.GetComponent<characterSetting>().getHit();
-                }
-                else
-                {
-                    p2.GetComponent<characterSetting>().getHit();
-                }
-            }
-
-            //return the color of cell to white.
-            list[skillY, skillX].GetComponent<SpriteRenderer>().color =
-                new Color(255, 255, 255, 0.5f);
-        }
-    }
-
-    private void updatePlayerInfoBar(
-        playerControll pc,
-        int playerCode,
-        bool updateHP
-    )
-    {
-        GameObject playerInfo = GameObject.Find("PlayerInfo");
-
-        //update EN bar of a skill caster.
-        //int playerCode2 = (pc != p2controll) ? 1 : 0;
-        if (updateHP)
-        {
-            // GameObject opponentHP =
-            playerInfo
-                .transform
-                .GetChild(playerCode)
-                .GetComponent<statManager>()
-                .updateHPbar(pc.getHP());
-            //실제로는 playerInfo.transform.GetChild(playerCode).gameObject .transform.GetChild(1) 이 opponent HP다.
-            // opponentHP
-            //     .transform
-            //     .GetChild(1)
-            //     .GetComponent<statManager>()
-            //     .updateHPbar(pc.getHP());
-        }
-        else
-        {
-            playerInfo
-                .transform
-                .GetChild(playerCode)
-                .GetComponent<statManager>()
-                .updateENbar(pc.getEN());
-            // GameObject casterEN =
-            //     playerInfo.transform.GetChild(playerCode).gameObject;
-            // casterEN
-            //     .transform
-            //     .GetChild(2)
-            //     .GetComponent<statManager>()
-            //     .updateENbar(pc.getEN());
-        }
-    }
-
-    //exeucte this code after any attack skill executes.
-    //if player's hp is less or equal to zero, it dies.
-    private IEnumerator endPhase(characterSetting p1, characterSetting p2)
-    {
-        yield return new WaitForSeconds(0.5f);
-        if (p1controll.getHP() <= 0)
-        {
-            p1.die();
-        }
-        if (p2controll.getHP() <= 0)
-        {
-            p2.die();
-        }
-    }
+  
 }

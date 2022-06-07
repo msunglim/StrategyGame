@@ -49,13 +49,18 @@ MonoBehaviour:
   sp: {fileID: -560056810, guid: f1b871e9da1e8994da523db7cecb0d83, type: 3}
   characterProfile: {fileID: 21300000, guid: 922fa1e59f3ef984da508113faf11035, type: 3}
   skillList:
-  - {fileID: 4082483347852188030, guid: e63ae081dfb48484c835726d339c7d11, type: 3}
-  - {fileID: 1409199071813496934, guid: 19fb7a260d8fc9544a38f256f0e550b6, type: 3}
-  - {fileID: 4082483347852188030, guid: 0278386d74ce65e499553ffd8fc399d0, type: 3}
-  - {fileID: 4082483347852188030, guid: 887ce9ef333f3d44096734438a0b250e, type: 3}
-  - {fileID: 5956017597671529302, guid: 3d1f53814d4c0b944971324c59c01f95, type: 3}
+  - {fileID: 4082483347852188030, guid: 2597f14be83ff424b9b7c56acef81c2a, type: 3}
+  - {fileID: 4082483347852188030, guid: 76e66ba61d238f84c930c63e25215043, type: 3}
+  - {fileID: 4082483347852188030, guid: 1d410b68b22be5449b72016a0b88550b, type: 3}
+  - {fileID: 4082483347852188030, guid: 6144b9f94ff67bb46a9b5bf9780664cb, type: 3}
+  - {fileID: 5956017597671529302, guid: 2426eeea6b60dc147814e773ea3f8302, type: 3}
   - {fileID: 3640218960975787756, guid: aa814d443def4f140bd56cec5b8decb3, type: 3}
+  - {fileID: 3640218960975787756, guid: 584647cd9cc2d2f44910bf0e7110d5fe, type: 3}
+  - {fileID: 3640218960975787756, guid: 666e52becda254d4d845bf0cd4da9a91, type: 3}
+  - {fileID: 3640218960975787756, guid: 3a79247bc521555439b5580ad94ba40f, type: 3}
+  - {fileID: 4082483347852188030, guid: de311c005d7102745889d407dcc1d017, type: 3}
   minProfile: {fileID: 5300957158923141673, guid: cbb05e4a5c836b646b1d25d67260dba1, type: 3}
+  name: c2
 --- !u!212 &2311981914024374853
 SpriteRenderer:
   m_ObjectHideFlags: 0
