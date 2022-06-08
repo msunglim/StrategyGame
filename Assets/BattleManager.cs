@@ -65,7 +65,7 @@ public class BattleManager : MonoBehaviour
                
                 
                p1character.move (adjustedX, adjustedY);
-               p2character.move (adjustedX, adjustedY);
+              // p2character.move (adjustedX, adjustedY);
                 Debug.Log("move move");
             }
             if (GameMaster.p1Skills[i] == p1character.getSkillList()[1])
@@ -145,11 +145,6 @@ public class BattleManager : MonoBehaviour
                 StartCoroutine(endPhase());
             }
 
-            //  playerInfo
-            //         .transform
-            //         .GetChild(0)
-            //         .GetComponent<statManager>()
-            //         .updateENbar(p1controll.getEN());
             yield return new WaitForSeconds(2);
         }
     }
@@ -288,7 +283,6 @@ public class BattleManager : MonoBehaviour
     {
         if (updateHP)
         {
-            Debug.Log("hpt update ");
             playerInfo
                 .transform
                 .GetChild(playerCode)
@@ -297,7 +291,6 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("en update ");
             playerInfo
                 .transform
                 .GetChild(playerCode)
