@@ -60,7 +60,7 @@ MonoBehaviour:
   - {fileID: 3640218960975787756, guid: 3a79247bc521555439b5580ad94ba40f, type: 3}
   - {fileID: 4082483347852188030, guid: de311c005d7102745889d407dcc1d017, type: 3}
   minProfile: {fileID: 5300957158923141673, guid: cbb05e4a5c836b646b1d25d67260dba1, type: 3}
-  name: c2
+  characterName: c2
 --- !u!212 &2311981914024374853
 SpriteRenderer:
   m_ObjectHideFlags: 0
