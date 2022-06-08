@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: -15
   skillMinImage: {fileID: 21300000, guid: 98d535cd2886d86469ea300f96e9031e, type: 3}
   skillName: Energy Up
+  skillPriority: 1

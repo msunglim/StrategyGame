@@ -14,11 +14,15 @@ public class skillManager : MonoBehaviour
     private Sprite skillMinImage;
     [SerializeField]
     private string skillName;
-
+     [SerializeField]
+     private int skillPriority;
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+    public int getSkillPriority(){
+        return skillPriority;
     }
     public string getSkillName(){
         return skillName;

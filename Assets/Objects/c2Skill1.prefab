@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: 10
   skillMinImage: {fileID: 21300000, guid: d7b84f5fdf8b1d14a8aedf5e51855519, type: 3}
   skillName: Energy bolt
+  skillPriority: 2

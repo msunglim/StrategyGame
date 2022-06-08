@@ -49,6 +49,7 @@ public class BattleManager : MonoBehaviour
         p1character = p1.GetComponent<characterSetting>();
         p2character = p2.GetComponent<characterSetting>();
         playerInfo = GameObject.Find("PlayerInfo");
+
         StartCoroutine(activateSkill());
     }
 
@@ -56,97 +57,150 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[0])
+            if (
+                GameMaster
+                    .p1Skills[i]
+                    .GetComponent<skillManager>()
+                    .getSkillPriority() <=
+                GameMaster
+                    .p2Skills[i]
+                    .GetComponent<skillManager>()
+                    .getSkillPriority()
+            )
             {
-                p1controll.moveUp();
-              //  p2controll.moveUp();
-                float adjustedX = x[p1controll.getX()] - 0.5f;
-                float adjustedY = y[p1controll.getY()] + 0.8f;
-               
-                
-               p1character.move (adjustedX, adjustedY);
-              // p2character.move (adjustedX, adjustedY);
-                Debug.Log("move move");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[1])
-            {
-                p1controll.moveDown();
-
-                float adjustedX = x[p1controll.getX()] - 0.5f;
-                float adjustedY = y[p1controll.getY()] + 0.8f;
-                p1character.move (adjustedX, adjustedY);
-                Debug.Log("move move");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[2])
-            {
-                p1controll.moveLeft();
-
-                float adjustedX = x[p1controll.getX()] - 0.5f;
-                float adjustedY = y[p1controll.getY()] + 0.8f;
-                p1character.move (adjustedX, adjustedY);
-                Debug.Log("move move");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[3])
-            {
-                p1controll.moveRight();
-
-                float adjustedX = x[p1controll.getX()] - 0.5f;
-                float adjustedY = y[p1controll.getY()] + 0.8f;
-                p1character.move (adjustedX, adjustedY);
-                Debug.Log("move move");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[4])
-            {
-                p1character.guard (p1controll);
-                p2character.guard (p2controll);
-                Debug.Log("guard guard");
-            }
-
-            //attack skills
-            GameObject skill = null;
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[5])
-            {
-                skill = p1character.useSkill(p1controll, 1);
-                p2character.useSkill(p2controll, 1);
-                Debug.Log("attack attack");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[6])
-            {
-                skill = p1character.useSkill(p1controll, 2);
-                Debug.Log("attack attack");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[7])
-            {
-                skill = p1character.useSkill(p1controll, 3);
-                Debug.Log("attack attack");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[8])
-            {
-                skill = p1character.useSkill(p1controll, 4);
-                Debug.Log("attack attack");
-            }
-            if (GameMaster.p1Skills[i] == p1character.getSkillList()[9])
-            {
-                p1character.heal (p1controll);
-                p2character.heal (p2controll);
-                // updatePlayerInfoBar(p1controll, 0, false);
-                Debug.Log("heal heal");
-            }
-
-            if (skill != null)
-            {
-                int[] targetArea =
-                    skill.GetComponent<skillManager>().getTargetArea();
-                StartCoroutine(applyAttackSkill(skill,
-                targetArea,
+                StartCoroutine(activateHelper(i,
+                GameMaster.p1Skills,
+                p1character,
                 p1controll,
                 p2controll));
-
-                StartCoroutine(endPhase());
+                yield return new WaitForSeconds(2);
+                StartCoroutine(activateHelper(i,
+                GameMaster.p2Skills,
+                p2character,
+                p2controll,
+                p1controll));
+                yield return new WaitForSeconds(2);
+            }else{
+                StartCoroutine(activateHelper(i,
+                GameMaster.p2Skills,
+                p2character,
+                p2controll,
+                p1controll));
+                yield return new WaitForSeconds(2);
+                StartCoroutine(activateHelper(i,
+                GameMaster.p1Skills,
+                p1character,
+                p1controll,
+                p2controll));
+                yield return new WaitForSeconds(2);
+                
             }
-
-            yield return new WaitForSeconds(2);
         }
+    }
+
+    private IEnumerator
+    activateHelper(
+        int i,
+        GameObject[] skills,
+        characterSetting character,
+        playerControll activatercontroll,
+        playerControll opponentcontroll
+    )
+    {
+        if (skills[i] == character.getSkillList()[0])
+        {
+            activatercontroll.moveUp();
+
+            //  p2controll.moveUp();
+            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedY = y[activatercontroll.getY()] + 0.8f;
+
+            character.move (adjustedX, adjustedY);
+
+            // p2character.move (adjustedX, adjustedY);
+            Debug.Log("move move");
+        }
+        if (skills[i] == character.getSkillList()[1])
+        {
+            activatercontroll.moveDown();
+
+            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedY = y[activatercontroll.getY()] + 0.8f;
+            character.move (adjustedX, adjustedY);
+            Debug.Log("move move");
+        }
+        if (skills[i] == character.getSkillList()[2])
+        {
+            activatercontroll.moveLeft();
+
+            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedY = y[activatercontroll.getY()] + 0.8f;
+            character.move (adjustedX, adjustedY);
+            Debug.Log("move move");
+        }
+        if (skills[i] == character.getSkillList()[3])
+        {
+            activatercontroll.moveRight();
+
+            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedY = y[activatercontroll.getY()] + 0.8f;
+            character.move (adjustedX, adjustedY);
+            Debug.Log("move move");
+        }
+        if (skills[i] == character.getSkillList()[4])
+        {
+            character.guard (p1controll);
+
+            //   p2character.guard (p2controll);
+            Debug.Log("guard guard");
+        }
+
+        //attack skills
+        GameObject skill = null;
+        if (skills[i] == character.getSkillList()[5])
+        {
+            skill = character.useSkill(activatercontroll, 1);
+
+            //   p2character.useSkill(p2controll, 1);
+            Debug.Log("attack attack");
+        }
+        if (skills[i] == character.getSkillList()[6])
+        {
+            skill = character.useSkill(activatercontroll, 2);
+            Debug.Log("attack attack");
+        }
+        if (skills[i] == character.getSkillList()[7])
+        {
+            skill = character.useSkill(activatercontroll, 3);
+            Debug.Log("attack attack");
+        }
+        if (skills[i] == character.getSkillList()[8])
+        {
+            skill = character.useSkill(activatercontroll, 4);
+            Debug.Log("attack attack");
+        }
+        if (skills[i] == character.getSkillList()[9])
+        {
+            character.heal (activatercontroll);
+
+            //  p2character.heal (p2controll);
+            // updatePlayerInfoBar(p1controll, 0, false);
+            Debug.Log("heal heal");
+        }
+
+        if (skill != null)
+        {
+            int[] targetArea =
+                skill.GetComponent<skillManager>().getTargetArea();
+            StartCoroutine(applyAttackSkill(skill,
+            targetArea,
+            activatercontroll,
+            opponentcontroll));
+
+            StartCoroutine(endPhase());
+        }
+
+        yield return new WaitForSeconds(2);
     }
 
     private IEnumerator

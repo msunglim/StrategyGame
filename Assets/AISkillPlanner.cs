@@ -22,7 +22,7 @@ public class AISkillPlanner : MonoBehaviour
             Debug.Log("added skill " + skillList[rnd].GetComponent<skillManager>().getSkillName());
 
         }
-        GameMaster.p2Skills = skillList;
+        GameMaster.p2Skills = p2skillList;
 
     }
 

@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: 0
   skillMinImage: {fileID: 21300000, guid: 1717606c8d4474c42a909b12b687aafe, type: 3}
   skillName: Guard
+  skillPriority: 1

@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: 70
   skillMinImage: {fileID: 21300000, guid: 10729ad0523ced744a1691f82be0c5d5, type: 3}
   skillName: Blade Dance
+  skillPriority: 2
