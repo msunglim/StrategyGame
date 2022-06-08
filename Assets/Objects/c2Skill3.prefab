@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: 40
   skillMinImage: {fileID: 21300000, guid: 192c68de4c1568c48bf0685580496870, type: 3}
   skillName: Merciless Knife
+  skillPriority: 2

@@ -50,3 +50,4 @@ MonoBehaviour:
   cost: 50
   skillMinImage: {fileID: 21300000, guid: 478e454b7ad0bae4bac69ec837a18079, type: 3}
   skillName: Sword Flow
+  skillPriority: 2
