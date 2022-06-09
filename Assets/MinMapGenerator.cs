@@ -22,7 +22,9 @@ public class MinMapGenerator : MonoBehaviour
 
             skillCardX,
             skillCardY;
-    public  int availableEN;
+
+    public int availableEN;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,7 @@ public class MinMapGenerator : MonoBehaviour
                 minMapY[GameMaster.p2y],
                 -2),
             Quaternion.identity);
-             p2min.transform.parent = gameObject.transform;
+        p2min.transform.parent = gameObject.transform;
         p2min.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         for (int i = 0; i < 3; i++)
         {
@@ -66,7 +68,7 @@ public class MinMapGenerator : MonoBehaviour
                     new Vector3(minMapX[j], minMapY[i], -1),
                     Quaternion.identity);
                 cellList[i, j] = minMapCell;
-                 minMapCell.transform.parent = gameObject.transform;
+                minMapCell.transform.parent = gameObject.transform;
             }
         }
 
@@ -78,7 +80,13 @@ public class MinMapGenerator : MonoBehaviour
                     Instantiate(skillCard,
                     new Vector3(skillCardX[j], skillCardY[i], -1),
                     Quaternion.identity);
-                skillcard.GetComponent<SkillCardManager>().setImage(5*i+j);
+                skillcard
+                    .GetComponent<SkillCardManager>()
+                    .setImage(GameMaster
+                        .p1c
+                        .getCharacter()
+                        .GetComponent<characterSetting>(),
+                    5 * i + j, true);
                 skillcard.transform.parent = gameObject.transform;
             }
         }
@@ -88,11 +96,14 @@ public class MinMapGenerator : MonoBehaviour
     void Update()
     {
     }
-    public int getAvailableEN(){
+
+    public int getAvailableEN()
+    {
         return availableEN;
     }
-    public void setAvailableEN(int a){
+
+    public void setAvailableEN(int a)
+    {
         availableEN = a;
     }
-    
 }

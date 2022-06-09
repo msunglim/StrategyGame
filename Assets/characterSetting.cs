@@ -191,7 +191,7 @@ public class characterSetting : MonoBehaviour
         anime.SetInteger(characterName + "useSkill", 0);
         anime.SetBool(characterName + "isHit", false);
         anime.SetBool(characterName + "isHeal", false);
-           anime.SetBool(characterName + "isGuard", false);
+        anime.SetBool(characterName + "isGuard", false);
         currSkill = null;
     }
 
