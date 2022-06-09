@@ -8,7 +8,8 @@ public class BattleManager : MonoBehaviour
     private GameObject
 
             battleField,
-            skillCard; //fieldGenerator 소유
+            skillCard,
+            switchSceneButton; //fieldGenerator 소유
 
     private GameObject
 
@@ -34,7 +35,7 @@ public class BattleManager : MonoBehaviour
 
     private GameObject[,] list;
 
-    private int someoneGuard; // 0  = player 1 guards, 1 = player 2 guards.
+    private bool p1guard, p2guard; // 0  = player 1 guards, 1 = player 2 guards.
 
     private GameObject[]
 
@@ -64,7 +65,8 @@ public class BattleManager : MonoBehaviour
         p2character = p2.GetComponent<characterSetting>();
         playerInfo = GameObject.Find("PlayerInfo");
 
-        someoneGuard = -1;
+        p1guard = false;
+        p2guard = false;
         p1skillCards = new GameObject[3];
         p2skillCards = new GameObject[3];
 
@@ -99,57 +101,37 @@ public class BattleManager : MonoBehaviour
                 false);
         }
 
-        // GameObject p1skillcard1 =
-        //     Instantiate(skillCard,
-        //     new Vector3(-scX1, scY, -2),
-        //     Quaternion.identity);
-        // p1skillcard1.GetComponent<SkillCardManager>().setImage(p1character, System.Array.IndexOf(p1character.getSkillList(), GameMaster.p1Skills[0]), false);
-        // GameObject p1skillcard2 =
-        //     Instantiate(skillCard,
-        //     new Vector3(-scX2, scY, -2),
-        //     Quaternion.identity);
-        // p1skillcard2.GetComponent<SkillCardManager>().setImage(p1character, System.Array.IndexOf(p1character.getSkillList(), GameMaster.p1Skills[1]), false);
-        // GameObject p1skillcard3 =
-        //     Instantiate(skillCard,
-        //     new Vector3(-scX3, scY, -2),
-        //     Quaternion.identity);
-        // p1skillcard3.GetComponent<SkillCardManager>().setImage(p1character, System.Array.IndexOf(p1character.getSkillList(), GameMaster.p1Skills[2]), false);
-        // GameObject p2skillcard1 =
-        //     Instantiate(skillCard,
-        //     new Vector3(scX1, scY, -2),
-        //     Quaternion.identity);
-        // p2skillcard1.GetComponent<SkillCardManager>().setImage(p2character, System.Array.IndexOf(p2character.getSkillList(), GameMaster.p2Skills[0]), false);
-        // GameObject p2skillcard2 =
-        //     Instantiate(skillCard,
-        //     new Vector3(scX2, scY, -2),
-        //     Quaternion.identity);
-        // p2skillcard2.GetComponent<SkillCardManager>().setImage(p2character, System.Array.IndexOf(p2character.getSkillList(), GameMaster.p2Skills[1]), false);
-        // GameObject p2skillcard3 =
-        //     Instantiate(skillCard,
-        //     new Vector3(scX3, scY, -2),
-        //     Quaternion.identity);
-        // p2skillcard3.GetComponent<SkillCardManager>().setImage(p2character, System.Array.IndexOf(p2character.getSkillList(), GameMaster.p2Skills[2]), false);
         StartCoroutine(activateSkill());
     }
 
     private IEnumerator activateSkill()
     {
-
-       
-
         for (int i = 0; i < 3; i++)
         {
-
-            p1skillCards[i].GetComponent<SkillCardManager>().setDestination(0 , skillCardY);
-            int numberOfnext = 2-i;
-            int xHelper = i;
-            while(numberOfnext>0){
-                 p1skillCards[xHelper+1].GetComponent<SkillCardManager>().setDestination(-skillCardXs[xHelper] , skillCardY);
-                 xHelper ++;
-                 numberOfnext--;
+            if (i != 0)
+            {
+                Destroy(p1skillCards[i - 1]);
+                Destroy(p2skillCards[i - 1]);
             }
-             yield return new WaitForSeconds(2);
+            p1skillCards[i]
+                .GetComponent<SkillCardManager>()
+                .setDestination(-0.8f, skillCardY);
+            p2skillCards[i]
+                .GetComponent<SkillCardManager>()
+                .setDestination(0.8f, skillCardY);
+            int count = 0;
+            for (int j = i + 1; j < 3; j++)
+            {
+                p1skillCards[j]
+                    .GetComponent<SkillCardManager>()
+                    .setDestination(-skillCardXs[count], skillCardY);
+                p2skillCards[j]
+                    .GetComponent<SkillCardManager>()
+                    .setDestination(skillCardXs[count], skillCardY);
+                count++;
+            }
 
+            yield return new WaitForSeconds(2);
 
             if (
                 GameMaster
@@ -173,7 +155,6 @@ public class BattleManager : MonoBehaviour
                 p2character,
                 p2controll,
                 p1controll));
-                yield return new WaitForSeconds(2);
             }
             else
             {
@@ -188,11 +169,14 @@ public class BattleManager : MonoBehaviour
                 p1character,
                 p1controll,
                 p2controll));
-                yield return new WaitForSeconds(2);
+             
             }
-            StartCoroutine(endPhase());
             yield return new WaitForSeconds(2);
+            StartCoroutine(endPhase());
+            
         }
+        GameObject button = (GameObject) Instantiate(switchSceneButton);
+          
     }
 
     private IEnumerator
@@ -305,7 +289,11 @@ public class BattleManager : MonoBehaviour
         //if current skill is not guard, then actioncomplete
         if (skills[i] == character.getSkillList()[4])
         {
-            someoneGuard = (activatercontroll == p1controll) ? 0 : 1;
+            if(activatercontroll == p1controll){
+                p1guard = true;
+            }else{
+                p2guard = true;
+            }
         }
     }
 
@@ -463,18 +451,19 @@ public class BattleManager : MonoBehaviour
     //if player's hp is less or equal to zero, it dies.
     private IEnumerator endPhase()
     {
-        if (someoneGuard >= 0)
-        {
-            if (someoneGuard == 0)
+   
+            if (p1guard)
             {
                 p1character.actionComplete();
+                p1guard = false;
             }
-            else
+            if(p2guard)
             {
                 p2character.actionComplete();
+                p2guard = false;
             }
-            someoneGuard = -1;
-        }
+    
+     
         yield return new WaitForSeconds(0.5f);
         updatePlayerInfoBar(p1controll, 0, true);
         updatePlayerInfoBar(p1controll, 0, false);
