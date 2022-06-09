@@ -31,14 +31,22 @@ public class SkillCardManager : MonoBehaviour
 
     private bool isFilterAdded = false;
 
+    private bool isUsedInCombatPanel = true;
+
+    private float
+
+            destinationX,
+            destinationY;
+
     // Start is called before the first frame update
     void Start()
     {
     }
 
-    public void setImage(int index)
+    public void setImage(characterSetting character, int index, bool tf)
     {
         spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        isUsedInCombatPanel = tf;
 
         //generate area cells
         float[] areaX = new float[] { -0.5f, -0.3f, -0.1f };
@@ -65,12 +73,7 @@ public class SkillCardManager : MonoBehaviour
         //if index is greater than the number of skills character currently have,
         //there will be error.
         // {
-        skill =
-            GameMaster
-                .p1c
-                .getCharacter()
-                .GetComponent<characterSetting>()
-                .getSkillList()[index];
+        skill = character.getSkillList()[index];
         currSkillManager = skill.GetComponent<skillManager>();
         spr.sprite = currSkillManager.getSkillMinImage();
 
@@ -102,37 +105,54 @@ public class SkillCardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (parent == null)
+        if (isUsedInCombatPanel)
         {
-            availableEN =
-                transform
-                    .parent
-                    .GetComponent<MinMapGenerator>()
-                    .getAvailableEN();
-            if (!isAdded && !isFilterAdded)
+            if (parent == null)
             {
-                if (currSkillManager.getCost() > availableEN)
+                availableEN =
+                    transform
+                        .parent
+                        .GetComponent<MinMapGenerator>()
+                        .getAvailableEN();
+                if (!isAdded && !isFilterAdded)
                 {
-                    addFilter();
+                    if (currSkillManager.getCost() > availableEN)
+                    {
+                        addFilter();
+                    }
                 }
-            }
-            else if (!isAdded && isFilterAdded)
+                else if (!isAdded && isFilterAdded)
+                {
+                    if (currSkillManager.getCost() <= availableEN)
+                    {
+                        removeFilter();
+                    }
+                }
+            } //since the object currently belongs to Combat Schedule, it can access to minmapgenerator through its parent.
+            else
             {
-                if (currSkillManager.getCost() <= availableEN)
-                {
-                    removeFilter();
-                }
+                availableEN =
+                    parent
+                        .transform
+                        .parent
+                        .GetComponent<MinMapGenerator>()
+                        .getAvailableEN();
             }
         }
-        else //since the object currently belongs to Combat Schedule, it can access to minmapgenerator through its parent.
+        else if (destinationY != 0)
         {
-            availableEN =
-                parent
-                    .transform
-                    .parent
-                    .GetComponent<MinMapGenerator>()
-                    .getAvailableEN();
+            transform.position =
+                Vector3
+                    .MoveTowards(transform.position,
+                    new Vector3(destinationX, destinationY, -2),
+                    Time.deltaTime * 5);
         }
+    }
+
+    public void setDestination(float x, float y)
+    {
+        destinationX = x;
+        destinationY = y;
     }
 
     public void setIsAdd(bool tf)
@@ -149,7 +169,9 @@ public class SkillCardManager : MonoBehaviour
     {
         parent = p;
     }
-    public GameObject getParent(){
+
+    public GameObject getParent()
+    {
         return parent;
     }
 

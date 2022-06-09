@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleField: {fileID: 2168352}
+  skillCard: {fileID: 6543018588243829030, guid: 8510a96903f40a14da5b42b69dbe6895, type: 3}
 --- !u!4 &142539503
 Transform:
   m_ObjectHideFlags: 0

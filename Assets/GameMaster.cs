@@ -71,6 +71,7 @@ public class GameMaster : MonoBehaviour
         if (p1Size == p1Skills.Length) return;
         GameObject combatSchedule = GameObject.Find("CombatSchedule");
         GameObject added = Instantiate(skillCard);
+       
         for (int i = 0; i < p1Skills.Length; i++)
         {
             if (p1Skills[i] == null)
