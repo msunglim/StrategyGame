@@ -16,10 +16,18 @@ public class skillManager : MonoBehaviour
     private string skillName;
      [SerializeField]
      private int skillPriority;
+     private bool isUsed;
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+    public void setIsUsed(bool tf){
+        
+        isUsed= tf;
+    }
+    public bool getIsUsed(){
+        return isUsed;
     }
     public int getSkillPriority(){
         return skillPriority;

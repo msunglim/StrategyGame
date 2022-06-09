@@ -30,10 +30,12 @@ public class BattleManager : MonoBehaviour
             y;
 
     private GameObject[,] list;
+    private int someoneGuard; // 0  = player 1 guards, 1 = player 2 guards.
 
     // Start is called before the first frame update
     void Start()
     {
+
         list = battleField.GetComponent<FieldGenerator>().getCellList();
         p1 = battleField.GetComponent<FieldGenerator>().getPlayer1();
         p2 = battleField.GetComponent<FieldGenerator>().getPlayer2();
@@ -50,6 +52,7 @@ public class BattleManager : MonoBehaviour
         p2character = p2.GetComponent<characterSetting>();
         playerInfo = GameObject.Find("PlayerInfo");
 
+        someoneGuard = -1;
         StartCoroutine(activateSkill());
     }
 
@@ -95,6 +98,9 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForSeconds(2);
                 
             }
+              StartCoroutine(endPhase());
+              yield return new WaitForSeconds(2);
+                
         }
     }
 
@@ -107,12 +113,14 @@ public class BattleManager : MonoBehaviour
         playerControll opponentcontroll
     )
     {
+        //adjust x coordinate depending on player.
+        float ax = (activatercontroll == p1controll) ? -0.5f : +0.5f;
         if (skills[i] == character.getSkillList()[0])
         {
             activatercontroll.moveUp();
 
             //  p2controll.moveUp();
-            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedX = x[activatercontroll.getX()] +ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
 
             character.move (adjustedX, adjustedY);
@@ -124,7 +132,7 @@ public class BattleManager : MonoBehaviour
         {
             activatercontroll.moveDown();
 
-            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedX = x[activatercontroll.getX()] +ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
             Debug.Log("move move");
@@ -133,7 +141,7 @@ public class BattleManager : MonoBehaviour
         {
             activatercontroll.moveLeft();
 
-            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedX = x[activatercontroll.getX()]+ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
             Debug.Log("move move");
@@ -142,7 +150,7 @@ public class BattleManager : MonoBehaviour
         {
             activatercontroll.moveRight();
 
-            float adjustedX = x[activatercontroll.getX()] - 0.5f;
+            float adjustedX = x[activatercontroll.getX()]+ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
             Debug.Log("move move");
@@ -183,11 +191,11 @@ public class BattleManager : MonoBehaviour
         {
             character.heal (activatercontroll);
 
-            //  p2character.heal (p2controll);
-            // updatePlayerInfoBar(p1controll, 0, false);
+            int playerCode = (activatercontroll == p1controll) ? 0: 1;
+         //   updatePlayerInfoBar(activatercontroll, playerCode, false);
             Debug.Log("heal heal");
         }
-
+        //if skill is attack skill,
         if (skill != null)
         {
             int[] targetArea =
@@ -197,10 +205,17 @@ public class BattleManager : MonoBehaviour
             activatercontroll,
             opponentcontroll));
 
-            StartCoroutine(endPhase());
+           
         }
-
+        skills[i].GetComponent<skillManager>().setIsUsed(false);
+        
         yield return new WaitForSeconds(2);
+        //if current skill is not guard, then actioncomplete
+        if(skills[i] == character.getSkillList()[4]){
+            
+            someoneGuard = (activatercontroll == p1controll)? 0 : 1;
+        }
+       
     }
 
     private IEnumerator
@@ -297,7 +312,7 @@ public class BattleManager : MonoBehaviour
             //update EN bar of a skill caster.
             //p2는 피격자다. 피격자가 p2가 아닐경우에는 p2가 스킬시전자란소리.
             int playerCode2 = (attackee != p2controll) ? 1 : 0;
-            updatePlayerInfoBar(attacker, playerCode2, false);
+//updatePlayerInfoBar(attacker, playerCode2, false);
 
             //if opponent is located in targeted area, reduce its hp by skill damage.
             if (skillX == opponentX && skillY == opponentY)
@@ -308,7 +323,7 @@ public class BattleManager : MonoBehaviour
 
                 //update HP bar of opponent of a skill caster.
                 int playerCode = (attackee == p2controll) ? 1 : 0;
-                updatePlayerInfoBar(attackee, playerCode, true);
+              //  updatePlayerInfoBar(attackee, playerCode, true);
 
                 //가드일경우 하지않는다!
                 //player 1 is hit by the skill
@@ -357,7 +372,20 @@ public class BattleManager : MonoBehaviour
     //if player's hp is less or equal to zero, it dies.
     private IEnumerator endPhase()
     {
+        if(someoneGuard >=0){
+            if(someoneGuard ==0){
+                p1character.actionComplete();
+            }else{
+                p2character.actionComplete();
+            }
+            someoneGuard = -1;
+        }
         yield return new WaitForSeconds(0.5f);
+         updatePlayerInfoBar(p1controll, 0, true);
+          updatePlayerInfoBar(p1controll, 0, false);
+           updatePlayerInfoBar(p2controll, 1, true);
+            updatePlayerInfoBar(p2controll, 1, false);
+
         if (p1controll.getHP() <= 0)
         {
             p1character.die();
@@ -366,5 +394,7 @@ public class BattleManager : MonoBehaviour
         {
             p2character.die();
         }
+          yield return new WaitForSeconds(10f);
+      
     }
 }

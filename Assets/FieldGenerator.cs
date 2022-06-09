@@ -111,14 +111,14 @@ public class FieldGenerator : MonoBehaviour
     }
 
 
-    private void movePlayer(float endX, float endY, GameObject player)
-    {
-        float adjustedX = (player == p1) ? endX - 0.5f : endX + 0.5f;
-        float adjustedY = endY + 0.8f;
+    // private void movePlayer(float endX, float endY, GameObject player)
+    // {
+    //     float adjustedX = (player == p1) ? endX - 0.5f : endX + 0.5f;
+    //     float adjustedY = endY + 0.8f;
 
-        GameObject skill =
-            p1.GetComponent<characterSetting>().move(adjustedX, adjustedY);
-    }
+    //     GameObject skill =
+    //         p1.GetComponent<characterSetting>().move(adjustedX, adjustedY);
+    // }
 
     // Update is called once per frame
     void Update()
