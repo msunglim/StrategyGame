@@ -37,6 +37,8 @@ public class GameMaster : MonoBehaviour
     public static GameObject[] p2Skills = new GameObject[3];
 
     public static int p2Size = 0;
+    
+    public static int round = 0;
 
     [SerializeField]
     public GameObject
@@ -95,7 +97,7 @@ public class GameMaster : MonoBehaviour
                             .GetChild(i)
                             .transform
                             .position
-                            .z );
+                            .z -1);
                 added.transform.parent = combatSchedule.transform.GetChild(i).transform;
                 p1Skills[i] = skill;
 

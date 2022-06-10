@@ -35,7 +35,10 @@ public class BattleManager : MonoBehaviour
 
     private GameObject[,] list;
 
-    private bool p1guard, p2guard; // 0  = player 1 guards, 1 = player 2 guards.
+    private bool
+
+            p1guard,
+            p2guard; // 0  = player 1 guards, 1 = player 2 guards.
 
     private GameObject[]
 
@@ -87,6 +90,7 @@ public class BattleManager : MonoBehaviour
                     .IndexOf(p1character.getSkillList(),
                     GameMaster.p1Skills[i]),
                 false);
+            p1skillCards[i].GetComponent<SkillCardManager>().tailOfCard();
             p2skillCards[i] =
                 Instantiate(skillCard,
                 new Vector3(skillCardXs[i], skillCardY, -2),
@@ -99,6 +103,7 @@ public class BattleManager : MonoBehaviour
                     .IndexOf(p2character.getSkillList(),
                     GameMaster.p2Skills[i]),
                 false);
+            p2skillCards[i].GetComponent<SkillCardManager>().tailOfCard();
         }
 
         StartCoroutine(activateSkill());
@@ -108,6 +113,7 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
+            yield return new WaitForSeconds(1);
             if (i != 0)
             {
                 Destroy(p1skillCards[i - 1]);
@@ -116,9 +122,11 @@ public class BattleManager : MonoBehaviour
             p1skillCards[i]
                 .GetComponent<SkillCardManager>()
                 .setDestination(-0.8f, skillCardY);
+            p1skillCards[i].GetComponent<SkillCardManager>().headOfCard();
             p2skillCards[i]
                 .GetComponent<SkillCardManager>()
                 .setDestination(0.8f, skillCardY);
+            p2skillCards[i].GetComponent<SkillCardManager>().headOfCard();
             int count = 0;
             for (int j = i + 1; j < 3; j++)
             {
@@ -169,14 +177,11 @@ public class BattleManager : MonoBehaviour
                 p1character,
                 p1controll,
                 p2controll));
-             
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1.5f);
             StartCoroutine(endPhase());
-            
         }
         GameObject button = (GameObject) Instantiate(switchSceneButton);
-          
     }
 
     private IEnumerator
@@ -201,7 +206,6 @@ public class BattleManager : MonoBehaviour
             character.move (adjustedX, adjustedY);
 
             // p2character.move (adjustedX, adjustedY);
-            Debug.Log("move move");
         }
         if (skills[i] == character.getSkillList()[1])
         {
@@ -210,7 +214,6 @@ public class BattleManager : MonoBehaviour
             float adjustedX = x[activatercontroll.getX()] + ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
-            Debug.Log("move move");
         }
         if (skills[i] == character.getSkillList()[2])
         {
@@ -219,7 +222,6 @@ public class BattleManager : MonoBehaviour
             float adjustedX = x[activatercontroll.getX()] + ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
-            Debug.Log("move move");
         }
         if (skills[i] == character.getSkillList()[3])
         {
@@ -228,14 +230,12 @@ public class BattleManager : MonoBehaviour
             float adjustedX = x[activatercontroll.getX()] + ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
-            Debug.Log("move move");
         }
         if (skills[i] == character.getSkillList()[4])
         {
             character.guard (p1controll);
 
             //   p2character.guard (p2controll);
-            Debug.Log("guard guard");
         }
 
         //attack skills
@@ -245,22 +245,18 @@ public class BattleManager : MonoBehaviour
             skill = character.useSkill(activatercontroll, 1);
 
             //   p2character.useSkill(p2controll, 1);
-            Debug.Log("attack attack");
         }
         if (skills[i] == character.getSkillList()[6])
         {
             skill = character.useSkill(activatercontroll, 2);
-            Debug.Log("attack attack");
         }
         if (skills[i] == character.getSkillList()[7])
         {
             skill = character.useSkill(activatercontroll, 3);
-            Debug.Log("attack attack");
         }
         if (skills[i] == character.getSkillList()[8])
         {
             skill = character.useSkill(activatercontroll, 4);
-            Debug.Log("attack attack");
         }
         if (skills[i] == character.getSkillList()[9])
         {
@@ -269,7 +265,6 @@ public class BattleManager : MonoBehaviour
             int playerCode = (activatercontroll == p1controll) ? 0 : 1;
 
             //   updatePlayerInfoBar(activatercontroll, playerCode, false);
-            Debug.Log("heal heal");
         }
 
         //if skill is attack skill,
@@ -284,14 +279,17 @@ public class BattleManager : MonoBehaviour
         }
         skills[i].GetComponent<skillManager>().setIsUsed(false);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.25f);
 
         //if current skill is not guard, then actioncomplete
         if (skills[i] == character.getSkillList()[4])
         {
-            if(activatercontroll == p1controll){
+            if (activatercontroll == p1controll)
+            {
                 p1guard = true;
-            }else{
+            }
+            else
+            {
                 p2guard = true;
             }
         }
@@ -451,19 +449,17 @@ public class BattleManager : MonoBehaviour
     //if player's hp is less or equal to zero, it dies.
     private IEnumerator endPhase()
     {
-   
-            if (p1guard)
-            {
-                p1character.actionComplete();
-                p1guard = false;
-            }
-            if(p2guard)
-            {
-                p2character.actionComplete();
-                p2guard = false;
-            }
-    
-     
+        if (p1guard)
+        {
+            p1character.actionComplete();
+            p1guard = false;
+        }
+        if (p2guard)
+        {
+            p2character.actionComplete();
+            p2guard = false;
+        }
+
         yield return new WaitForSeconds(0.5f);
         updatePlayerInfoBar(p1controll, 0, true);
         updatePlayerInfoBar(p1controll, 0, false);

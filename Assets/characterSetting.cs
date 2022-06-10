@@ -26,8 +26,9 @@ public class characterSetting : MonoBehaviour
     private Animator anime;
 
     [SerializeField]
+    private string characterCode;
+    [SerializeField]
     private string characterName;
-
     private float
 
             moveDirectionX,
@@ -45,7 +46,7 @@ public class characterSetting : MonoBehaviour
 
     void Update()
     {
-        if (anime.GetBool(characterName + "isMove") == true)
+        if (anime.GetBool(characterCode + "isMove") == true)
         //if(transform.position.x != adjustedX && transform.position.y != adjustedY)
         {
             int speed = (transform.position.x == adjustedX) ? 2 : 5; //2: move vertically 5: move horizontally
@@ -59,12 +60,14 @@ public class characterSetting : MonoBehaviour
                 transform.position.y == adjustedY
             )
             {
-                anime.SetBool(characterName + "isMove", false);
+                anime.SetBool(characterCode + "isMove", false);
             }
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-
+    public string getCharacterName(){
+        return characterName;
+    }
     public void setAnime(Animator ani)
     {
         anime = ani;
@@ -99,7 +102,7 @@ public class characterSetting : MonoBehaviour
             skillList[4 + skillindex].GetComponent<skillManager>().getCost()
         )
         {
-            anime.SetInteger(characterName + "useSkill", skillindex);
+            anime.SetInteger(characterCode + "useSkill", skillindex);
             pc
                 .setEN(pc.getEN() -
                 skillList[4 + skillindex]
@@ -160,25 +163,25 @@ public class characterSetting : MonoBehaviour
     public GameObject heal(playerControll pc)
     {
         pc.setEN(pc.getEN() + 15);
-        anime.SetBool(characterName + "isHeal", true);
+        anime.SetBool(characterCode + "isHeal", true);
         return skillList[9];
     }
 
     public GameObject guard(playerControll pc)
     {
         pc.setDEF(15);
-        anime.SetBool(characterName + "isGuard", true);
+        anime.SetBool(characterCode + "isGuard", true);
         return skillList[4];
     }
 
     public void getHit()
     {
-        anime.SetBool(characterName + "isHit", true);
+        anime.SetBool(characterCode + "isHit", true);
     }
 
     public void die()
     {
-        anime.SetBool(characterName + "isDead", true);
+        anime.SetBool(characterCode + "isDead", true);
     }
 
     public Sprite getSprite()
@@ -188,10 +191,10 @@ public class characterSetting : MonoBehaviour
 
     public void actionComplete()
     {
-        anime.SetInteger(characterName + "useSkill", 0);
-        anime.SetBool(characterName + "isHit", false);
-        anime.SetBool(characterName + "isHeal", false);
-        anime.SetBool(characterName + "isGuard", false);
+        anime.SetInteger(characterCode + "useSkill", 0);
+        anime.SetBool(characterCode + "isHit", false);
+        anime.SetBool(characterCode + "isHeal", false);
+        anime.SetBool(characterCode + "isGuard", false);
         currSkill = null;
     }
 
@@ -205,7 +208,7 @@ public class characterSetting : MonoBehaviour
     //aX,aY: destination of character location.
     public GameObject move(float aX, float aY)
     {
-        anime.SetBool(characterName + "isMove", true);
+        anime.SetBool(characterCode + "isMove", true);
         adjustedX = aX;
         adjustedY = aY;
 

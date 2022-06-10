@@ -33,6 +33,9 @@ public class SkillCardManager : MonoBehaviour
 
     private bool isUsedInCombatPanel = true;
 
+    [SerializeField]
+    private GameObject tailofcard;
+    private GameObject tail;
     private float
 
             destinationX,
@@ -145,7 +148,7 @@ public class SkillCardManager : MonoBehaviour
                 Vector3
                     .MoveTowards(transform.position,
                     new Vector3(destinationX, destinationY, -2),
-                    Time.deltaTime * 5);
+                    Time.deltaTime * 10);
         }
     }
 
@@ -191,7 +194,16 @@ public class SkillCardManager : MonoBehaviour
         isAdded = false;
         isFilterAdded = false;
     }
-
+    public void tailOfCard(){
+         tail =
+            Instantiate(tailofcard,
+            new Vector3(transform.position.x, transform.position.y, -4),
+            Quaternion.identity);
+        tail.transform.parent = gameObject.transform;
+    }
+    public void headOfCard(){
+        Destroy(tail);
+    }
     public GameObject getSkill()
     {
         return skill;
@@ -203,6 +215,7 @@ public class SkillCardManager : MonoBehaviour
         GameObject playerInfo = GameObject.Find("PlayerInfo");
         GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
 
+        Debug.Log("is added" + isAdded + "parent null"+ (parent!=null));
         //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
         //if it is true, then it can be removed by clicking out of combat schedule.
         if (
@@ -234,6 +247,7 @@ public class SkillCardManager : MonoBehaviour
         }
         else if (isAdded && parent != null)
         {
+            Debug.Log("hello");
             parent.GetComponent<SkillCardManager>().removeFilter();
             GameMaster
                 .removeToP1Skills(parent
