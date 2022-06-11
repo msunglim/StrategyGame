@@ -23,6 +23,13 @@ public class statManager : MonoBehaviour
 
     private GameObject player;
 
+    private bool updateBar;
+
+    private float
+
+            adjustedX,
+            adjustedY;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +38,14 @@ public class statManager : MonoBehaviour
             (playerNumber == 1)
                 ? GameMaster.p1c.getCharacterProfile()
                 : GameMaster.p2c.getCharacterProfile();
-         player.GetComponent<SpriteRenderer>().transform.localScale = new Vector2(1,1);
-        if(playerNumber ==-1){
-              player.GetComponent<SpriteRenderer>().transform.Rotate(new Vector3(0, 180, 0));
+        player.GetComponent<SpriteRenderer>().transform.localScale =
+            new Vector2(1, 1);
+        if (playerNumber == -1)
+        {
+            player
+                .GetComponent<SpriteRenderer>()
+                .transform
+                .Rotate(new Vector3(0, 180, 0));
         }
         defaultSize = 4.5f;
         startingX =
@@ -85,21 +97,78 @@ public class statManager : MonoBehaviour
     public void updateHPbar(int newHP)
     {
         currentSizeHP = defaultSize * (float)(newHP / 100.0);
-        transform.GetChild(1).transform.localScale =
-            new Vector2(currentSizeHP, gameObject.transform.localScale.y);
-        transform.GetChild(1).transform.position =
-            new Vector2(startingX + playerNumber * (currentSizeHP / 2),
-                transform.GetChild(1).transform.position.y);
+
+        // transform.GetChild(1).transform.localScale =
+        //     new Vector2(currentSizeHP, gameObject.transform.localScale.y);
+        // transform.GetChild(1).transform.position =
+        //     new Vector2(startingX + playerNumber * (currentSizeHP / 2),
+        //         transform.GetChild(1).transform.position.y);
+        updateBar = true;
+
+        transform.GetChild(3).GetComponent<TMPro.TextMeshPro>().text =
+            "HP" + newHP;
     }
 
     public void updateENbar(int newEN)
     {
         currentSizeEN = defaultSize * (float)(newEN / 100.0);
-        transform.GetChild(2).transform.localScale =
-            new Vector2(currentSizeEN,
-                transform.GetChild(2).transform.localScale.y);
-        transform.GetChild(2).transform.position =
-            new Vector2(startingX + playerNumber * (currentSizeEN / 2),
-                transform.GetChild(2).transform.position.y);
+
+        // transform.GetChild(2).transform.localScale =
+        //     new Vector2(currentSizeEN,
+        //         transform.GetChild(2).transform.localScale.y);
+        // transform.GetChild(2).transform.position =
+        //     new Vector2(startingX + playerNumber * (currentSizeEN / 2),
+        //         transform.GetChild(2).transform.position.y);
+        updateBar = true;
+
+        transform.GetChild(4).GetComponent<TMPro.TextMeshPro>().text =
+            "EN" + newEN;
+    }
+
+    void Update()
+    {
+        if (updateBar)
+        {
+            int newHP = (playerNumber == 1) ? GameMaster.p1HP : GameMaster.p2HP;
+
+            transform.GetChild(1).transform.localScale =
+                Vector3
+                    .Lerp(transform.GetChild(1).transform.localScale,
+                    new Vector2(defaultSize * (float)(newHP / 100.0), 1),
+                    2 * Time.deltaTime);
+            transform.GetChild(1).transform.position =
+                new Vector2(startingX +
+                    playerNumber * (defaultSize * (float)(newHP / 100.0) / 2),
+                    transform.GetChild(1).transform.position.y);
+
+            //EN update
+            int newEN = (playerNumber == 1) ? GameMaster.p1EN : GameMaster.p2EN;
+            transform.GetChild(2).transform.localScale =
+                Vector3
+                    .Lerp(transform.GetChild(2).transform.localScale,
+                    new Vector2(defaultSize * (float)(newEN / 100.0), 1),
+                    2 * Time.deltaTime);
+
+            transform.GetChild(2).transform.position =
+                new Vector2(startingX +
+                    playerNumber * (defaultSize * (float)(newEN / 100.0) / 2),
+                    transform.GetChild(2).transform.position.y);
+
+            if (
+                (
+                Mathf.Round(transform.GetChild(1).transform.localScale.x * 10) *
+                0.1f ==
+                Mathf.Round(defaultSize * (float)(newHP / 100.0) * 10) * 0.1f
+                ) &&
+                (
+                Mathf.Round(transform.GetChild(2).transform.localScale.x * 10) *
+                0.1f ==
+                Mathf.Round(defaultSize * (float)(newEN / 100.0) * 10) * 0.1f
+                )
+            )
+            {
+                updateBar = false;
+            }
+        }
     }
 }

@@ -76,6 +76,7 @@ public class BattleManager : MonoBehaviour
         //sc: skill card
         skillCardXs = new float[3] { 6.0f, 4.25f, 2.5f };
         skillCardY = -4.0f;
+        //display skillcards that will be used in this round
         for (int i = 0; i < 3; i++)
         {
             p1skillCards[i] =
@@ -113,6 +114,13 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
+
+            //if one of them dies, stop casting skills
+            if(GameMaster.p1HP <=0 || GameMaster.p2HP <=0){
+                Debug.Log("someone dies so stoping casting skills");
+                break;
+            }
+
             yield return new WaitForSeconds(1);
             if (i != 0)
             {
@@ -181,6 +189,8 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             StartCoroutine(endPhase());
         }
+        //display switchScenebutton (from battleField to combatPlanner)
+        yield return new WaitForSeconds(1.5f);
         GameObject button = (GameObject) Instantiate(switchSceneButton);
     }
 
@@ -474,6 +484,6 @@ public class BattleManager : MonoBehaviour
         {
             p2character.die();
         }
-        yield return new WaitForSeconds(10f);
+        
     }
 }
