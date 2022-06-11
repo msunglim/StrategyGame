@@ -42,7 +42,7 @@ public class FieldGenerator : MonoBehaviour
     {
         crossDirection = false;
         x = new float[] { -4.5f, -1.5f, 1.5f, 4.5f };
-        y = new float[] { 0.3f, -0.7f, -1.7f };
+        y = new float[] { -0.4f, -1.4f, -2.4f };
 
         //+-0.5f is to adjust player image and field.
         GameObject player1Character =

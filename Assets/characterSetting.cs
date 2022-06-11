@@ -27,14 +27,19 @@ public class characterSetting : MonoBehaviour
 
     [SerializeField]
     private string characterCode;
+
     [SerializeField]
     private string characterName;
+
     private float
 
             moveDirectionX,
             moveDirectionY,
             adjustedX,
             adjustedY;
+
+    [SerializeField]
+    private GameObject characterUlt;
 
     // Start is called before the first frame update
     void Awake()
@@ -65,9 +70,12 @@ public class characterSetting : MonoBehaviour
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-    public string getCharacterName(){
+
+    public string getCharacterName()
+    {
         return characterName;
     }
+
     public void setAnime(Animator ani)
     {
         anime = ani;
@@ -96,6 +104,10 @@ public class characterSetting : MonoBehaviour
     //return SKill object for instantiating skill effect in battle field
     public GameObject useSkill(playerControll pc, int skillindex)
     {
+        Debug
+            .Log("useSkill again..?" +
+            anime.GetInteger(characterCode + "useSkill"));
+
         //use skill if it has enough energy to cast.
         if (
             pc.getEN() >=
@@ -109,12 +121,27 @@ public class characterSetting : MonoBehaviour
                     .GetComponent<skillManager>()
                     .getCost());
             currSkill = skillList[4 + skillindex];
+            if (skillindex == 4)
+            {
+                StartCoroutine(displayUltImage());
+            }
             return skillList[4 + skillindex];
         }
         else
         {
             return null;
         }
+    }
+
+    private IEnumerator displayUltImage()
+    {
+        GameObject ult =
+            Instantiate(characterUlt,
+            new Vector3(-8 *direction, -1, 1),
+            Quaternion.identity);
+        ult.GetComponent<MoveToDirection>().setDirection(5* direction, 0);
+        yield return new WaitForSeconds(1);
+        Destroy (ult);
     }
 
     //animation에서 사용됨
@@ -192,6 +219,8 @@ public class characterSetting : MonoBehaviour
     public void actionComplete()
     {
         anime.SetInteger(characterCode + "useSkill", 0);
+        Debug
+            .Log("useSkill ..?" + anime.GetInteger(characterCode + "useSkill"));
         anime.SetBool(characterCode + "isHit", false);
         anime.SetBool(characterCode + "isHeal", false);
         anime.SetBool(characterCode + "isGuard", false);
