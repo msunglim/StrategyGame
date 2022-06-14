@@ -35,6 +35,9 @@ public class playerControll : MonoBehaviour
     {
         return character.GetComponent<characterSetting>().getMinProfile();
     }
+    public void setCharacter(GameObject c){
+        character = c;
+    }
     public void setDEF(int d){
         def = d;
     }

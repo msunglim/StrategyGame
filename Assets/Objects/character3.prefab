@@ -61,7 +61,7 @@ MonoBehaviour:
   - {fileID: 4082483347852188030, guid: d532ebd2e32583944b14e2603cc806a0, type: 3}
   minProfile: {fileID: 7864414139436921944, guid: 3694cbd0bbeb2804f92f329c9e49bb70, type: 3}
   characterCode: c3
-  characterName: Overcome
+  characterName: Transcend
   characterUlt: {fileID: 1482969577613707077, guid: 881182fad28dad64bb5364e8eaeb2f8b, type: 3}
 --- !u!212 &2311981914024374853
 SpriteRenderer:
