@@ -40,12 +40,16 @@ public class GameMaster : MonoBehaviour
     
     public static int round = 0;
 
+
     [SerializeField]
     public GameObject
 
             p1Serialize,
             p2Serialize;
 
+    //[SerializeField]
+    public static GameObject [] characterList;
+    
     void Awake()
     {
         if (gm != null)
@@ -55,10 +59,14 @@ public class GameMaster : MonoBehaviour
         }
         gm = this;
 
+        //below codes will be removed.
         p1 = p1Serialize;
         p2 = p2Serialize;
         p1c = p1Serialize.GetComponent<playerControll>();
         p2c = p2Serialize.GetComponent<playerControll>();
+
+        characterList = GetComponent<characterManager>().getCharacterList();    
+        
         DontDestroyOnLoad (gameObject);
     }
 
@@ -66,7 +74,7 @@ public class GameMaster : MonoBehaviour
     void Update()
     {
     }
-
+    
     //여기서 스킬은 캐릭터로부터 받은 스킬이지 스킬카드가아님. 스킬카드는 부모복제용으로만 사용됨.
     public static void addToP1Skills(GameObject skill, GameObject skillCard)
     {

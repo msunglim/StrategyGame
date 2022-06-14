@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetArea: 030000000400000005000000
   skillEffect: {fileID: 8103981942090560074, guid: d9c078a61bf580f48b623acedb2ebe84, type: 3}
-  damage: 25
-  cost: 40
+  damage: 40
+  cost: 15
   skillMinImage: {fileID: 21300000, guid: 77e8ffeb9457d21429d8c4bebd9ff923, type: 3}
   skillName: Finger Beam
   skillPriority: 2

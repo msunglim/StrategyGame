@@ -165,7 +165,7 @@ public class BattleManager : MonoBehaviour
                 p1character,
                 p1controll,
                 p2controll));
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(2.5f);
                 StartCoroutine(activateHelper(i,
                 GameMaster.p2Skills,
                 p2character,
@@ -179,14 +179,14 @@ public class BattleManager : MonoBehaviour
                 p2character,
                 p2controll,
                 p1controll));
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(2.5f);
                 StartCoroutine(activateHelper(i,
                 GameMaster.p1Skills,
                 p1character,
                 p1controll,
                 p2controll));
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2.5f);
             StartCoroutine(endPhase());
         }
         //display switchScenebutton (from battleField to combatPlanner)
@@ -243,7 +243,7 @@ public class BattleManager : MonoBehaviour
         }
         if (skills[i] == character.getSkillList()[4])
         {
-            character.guard (p1controll);
+            character.guard (activatercontroll);
 
             //   p2character.guard (p2controll);
         }
@@ -381,7 +381,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        //return the cell color to its original state.
+        //react if it hits
         yield return new WaitForSeconds(0.5f);
 
         int opponentX = attackee.getX();
@@ -424,12 +424,34 @@ public class BattleManager : MonoBehaviour
                 }
             }
 
-            //return the color of cell to white.
+        
+
+        }
+            //return the color of cell to white . return the cell color to its original state.
+           // StartCoroutine(changeColorBack(coordinateList));.
+             yield return new WaitForSeconds(1.5f);
+           for(int j = 0; j < coordinateList.Count; j++){
+            int[] cell = coordinateList[j];
+            int skillX = cell[1];
+            int skillY = cell[0];
+            
             list[skillY, skillX].GetComponent<SpriteRenderer>().color =
                 new Color(255, 255, 255, 0.5f);
         }
     }
-
+    //count: # of target cells.
+    private IEnumerator
+    changeColorBack( List<int[]> coordinateList){
+        yield return new WaitForSeconds(1.5f);
+        for(int j = 0; j < coordinateList.Count; j++){
+            int[] cell = coordinateList[j];
+            int skillX = cell[1];
+            int skillY = cell[0];
+            
+            list[skillY, skillX].GetComponent<SpriteRenderer>().color =
+                new Color(255, 255, 255, 0.5f);
+        }
+    }
     //playercode 0 = player 1 , playercode 1 = player 2
     private void updatePlayerInfoBar(
         playerControll pc,

@@ -145,7 +145,7 @@ public class characterSetting : MonoBehaviour
     }
 
     //animation에서 사용됨
-    //go to 1 direction
+    //go horizontally
     public void effect1()
     {
         currSkill
@@ -175,7 +175,7 @@ public class characterSetting : MonoBehaviour
             }
         }
     }
-
+    //go vertically.
     public void effect3()
     {
         currSkill
