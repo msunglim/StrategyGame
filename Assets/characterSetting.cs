@@ -132,7 +132,9 @@ public class characterSetting : MonoBehaviour
             return null;
         }
     }
-
+    public GameObject getUlt(){
+        return characterUlt;
+    }
     private IEnumerator displayUltImage()
     {
         GameObject ult =

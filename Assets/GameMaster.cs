@@ -40,7 +40,8 @@ public class GameMaster : MonoBehaviour
     
     public static int round = 0;
 
-
+    //how many characters this player has competed with. 
+    public static int match = 1;
     [SerializeField]
     public GameObject
 
