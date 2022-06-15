@@ -166,7 +166,7 @@ public class BattleManager : MonoBehaviour
                 p1character,
                 p1controll,
                 p2controll));
-                yield return new WaitForSeconds(2.5f);
+                yield return new WaitForSeconds(2.5f    );
                 StartCoroutine(activateHelper(i,
                 GameMaster.p2Skills,
                 p2character,
@@ -187,7 +187,7 @@ public class BattleManager : MonoBehaviour
                 p1controll,
                 p2controll));
             }
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2);
             StartCoroutine(endPhase());
         }
         //display switchScenebutton (from battleField to combatPlanner)
@@ -196,6 +196,7 @@ public class BattleManager : MonoBehaviour
         GameObject button = (GameObject) Instantiate(nextSceneButton);
     }
 
+    //required time : 0.75s
     private IEnumerator
     activateHelper(
         int i,
@@ -291,7 +292,7 @@ public class BattleManager : MonoBehaviour
         }
         skills[i].GetComponent<skillManager>().setIsUsed(false);
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.75f);
 
         //if current skill is not guard, then actioncomplete
         if (skills[i] == character.getSkillList()[4])
@@ -307,6 +308,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    //required time: 2s
     private IEnumerator
     applyAttackSkill(
         GameObject skill,
@@ -503,10 +505,12 @@ public class BattleManager : MonoBehaviour
         if (p1controll.getHP() <= 0)
         {
             p1character.die();
+            p2character.isVictory();
         }
         if (p2controll.getHP() <= 0)
         {
             p2character.die();
+            p1character.isVictory();
             GameMaster.match ++;
         }
         

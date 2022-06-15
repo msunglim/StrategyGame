@@ -202,7 +202,9 @@ public class characterSetting : MonoBehaviour
         anime.SetBool(characterCode + "isGuard", true);
         return skillList[4];
     }
-
+    public void isVictory(){
+        anime.SetBool(characterCode + "isVictory", true);
+    }
     public void getHit()
     {
         anime.SetBool(characterCode + "isHit", true);
