@@ -9,7 +9,8 @@ public class BattleManager : MonoBehaviour
 
             battleField,
             skillCard,
-            switchSceneButton; //fieldGenerator 소유
+            switchSceneButtonToCombatPlanner,
+            switchSceneButtonToMatchingBattle; //fieldGenerator 소유
 
     private GameObject
 
@@ -191,7 +192,8 @@ public class BattleManager : MonoBehaviour
         }
         //display switchScenebutton (from battleField to combatPlanner)
         yield return new WaitForSeconds(1.5f);
-        GameObject button = (GameObject) Instantiate(switchSceneButton);
+        GameObject nextSceneButton = (p1controll.getHP() <= 0 || p2controll.getHP() <=0) ? switchSceneButtonToMatchingBattle : switchSceneButtonToCombatPlanner;
+        GameObject button = (GameObject) Instantiate(nextSceneButton);
     }
 
     private IEnumerator
@@ -505,6 +507,7 @@ public class BattleManager : MonoBehaviour
         if (p2controll.getHP() <= 0)
         {
             p2character.die();
+            GameMaster.match ++;
         }
         
     }
