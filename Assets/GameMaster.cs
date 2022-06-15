@@ -38,7 +38,7 @@ public class GameMaster : MonoBehaviour
 
     public static int p2Size = 0;
     
-    public static int round = 0;
+    public static int round = 1;
 
     //how many characters this player has competed with. 
     public static int match = 1;

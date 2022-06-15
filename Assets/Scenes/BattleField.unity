@@ -228,7 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleField: {fileID: 2168352}
   skillCard: {fileID: 6543018588243829030, guid: 8510a96903f40a14da5b42b69dbe6895, type: 3}
-  switchSceneButton: {fileID: 8992416315013686035, guid: 1d6d968e6186d3c43a241a08206c9265, type: 3}
+  switchSceneButtonToCombatPlanner: {fileID: 3771100287817095989, guid: 8d9bfb43d6fcad34296b5051ff8ae755, type: 3}
+  switchSceneButtonToMatchingBattle: {fileID: 4017935113093145662, guid: fed10a39bf1c52a4c95582c0534ef8c3, type: 3}
 --- !u!4 &142539503
 Transform:
   m_ObjectHideFlags: 0
