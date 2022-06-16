@@ -104,10 +104,6 @@ public class characterSetting : MonoBehaviour
     //return SKill object for instantiating skill effect in battle field
     public GameObject useSkill(playerControll pc, int skillindex)
     {
-        Debug
-            .Log("useSkill again..?" +
-            anime.GetInteger(characterCode + "useSkill"));
-
         //use skill if it has enough energy to cast.
         if (
             pc.getEN() >=
@@ -132,16 +128,19 @@ public class characterSetting : MonoBehaviour
             return null;
         }
     }
-    public GameObject getUlt(){
+
+    public GameObject getUlt()
+    {
         return characterUlt;
     }
+
     private IEnumerator displayUltImage()
     {
         GameObject ult =
             Instantiate(characterUlt,
-            new Vector3(-8 *direction, -1, 1),
+            new Vector3(-8 * direction, -1, 1),
             Quaternion.identity);
-        ult.GetComponent<MoveToDirection>().setDirection(5* direction, 0);
+        ult.GetComponent<MoveToDirection>().setDirection(5 * direction, 0);
         yield return new WaitForSeconds(1);
         Destroy (ult);
     }
@@ -177,6 +176,7 @@ public class characterSetting : MonoBehaviour
             }
         }
     }
+
     //go vertically.
     public void effect3()
     {
@@ -189,22 +189,51 @@ public class characterSetting : MonoBehaviour
             -15);
     }
 
+    //one spot
+    public void effect4()
+    {
+        currSkill
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+    }
+
+    //from a to b point
+    public void effect5()
+    {
+        currSkill
+            .GetComponent<skillManager>()
+            .moveToward(transform.position.x, transform.position.y);
+    }
+
     public GameObject heal(playerControll pc)
     {
-        pc.setEN(pc.getEN() + 15);
+        int currEN = pc.getEN();
+        for (int i = 0 ; i < 3; i++){
+            if(currEN + 5 <=100){
+                currEN +=5;           
+            }else{
+                break;
+            }
+        }
+        pc.setEN(currEN);
+       
         anime.SetBool(characterCode + "isHeal", true);
         return skillList[9];
     }
 
     public GameObject guard(playerControll pc)
     {
+          
         pc.setDEF(15);
         anime.SetBool(characterCode + "isGuard", true);
         return skillList[4];
     }
-    public void isVictory(){
+
+    public void isVictory()
+    {
         anime.SetBool(characterCode + "isVictory", true);
     }
+
     public void getHit()
     {
         anime.SetBool(characterCode + "isHit", true);
@@ -223,8 +252,7 @@ public class characterSetting : MonoBehaviour
     public void actionComplete()
     {
         anime.SetInteger(characterCode + "useSkill", 0);
-        Debug
-            .Log("useSkill ..?" + anime.GetInteger(characterCode + "useSkill"));
+
         anime.SetBool(characterCode + "isHit", false);
         anime.SetBool(characterCode + "isHeal", false);
         anime.SetBool(characterCode + "isGuard", false);
@@ -270,5 +298,76 @@ public class characterSetting : MonoBehaviour
                 return skillList[3];
             }
         }
+    }
+
+    public GameObject restore(playerControll pc)
+    {
+        GameMaster
+            .additionalSkillList[0]
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+        pc
+            .setEN(pc.getEN() -
+            GameMaster
+                .additionalSkillList[0]
+                .GetComponent<skillManager>()
+                .getCost());
+        
+      
+        int currHP = pc.getHP();
+        for (int i = 0 ; i < 6; i++){
+            if(currHP + 5 <=100){
+                currHP +=5;           
+            }else{
+                break;
+            }
+        }
+        pc.setHP(currHP);
+        return GameMaster.additionalSkillList[0];
+    }
+
+    public GameObject defense(playerControll pc)
+    {
+        GameMaster
+            .additionalSkillList[1]
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+        pc
+            .setEN(pc.getEN() -
+            GameMaster
+                .additionalSkillList[1]
+                .GetComponent<skillManager>()
+                .getCost());
+        return GameMaster.additionalSkillList[1];
+    }
+
+    public GameObject missile(playerControll pc)
+    {
+        GameMaster
+            .additionalSkillList[2]
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+        pc
+            .setEN(pc.getEN() -
+            GameMaster
+                .additionalSkillList[2]
+                .GetComponent<skillManager>()
+                .getCost());
+        return GameMaster.additionalSkillList[2];
+    }
+
+    public GameObject smash(playerControll pc)
+    {
+        GameMaster
+            .additionalSkillList[3]
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+        pc
+            .setEN(pc.getEN() -
+            GameMaster
+                .additionalSkillList[3]
+                .GetComponent<skillManager>()
+                .getCost());
+        return GameMaster.additionalSkillList[3];
     }
 }

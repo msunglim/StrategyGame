@@ -77,6 +77,7 @@ public class BattleManager : MonoBehaviour
         //sc: skill card
         skillCardXs = new float[3] { 6.0f, 4.25f, 2.5f };
         skillCardY = -4.0f;
+
         //display skillcards that will be used in this round
         for (int i = 0; i < 3; i++)
         {
@@ -115,9 +116,9 @@ public class BattleManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-
             //if one of them dies, stop casting skills
-            if(GameMaster.p1HP <=0 || GameMaster.p2HP <=0){
+            if (GameMaster.p1HP <= 0 || GameMaster.p2HP <= 0)
+            {
                 Debug.Log("someone dies so stoping casting skills");
                 break;
             }
@@ -166,7 +167,7 @@ public class BattleManager : MonoBehaviour
                 p1character,
                 p1controll,
                 p2controll));
-                yield return new WaitForSeconds(2.5f    );
+                yield return new WaitForSeconds(2.5f);
                 StartCoroutine(activateHelper(i,
                 GameMaster.p2Skills,
                 p2character,
@@ -190,9 +191,13 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(2);
             StartCoroutine(endPhase());
         }
+
         //display switchScenebutton (from battleField to combatPlanner)
         yield return new WaitForSeconds(1.5f);
-        GameObject nextSceneButton = (p1controll.getHP() <= 0 || p2controll.getHP() <=0) ? switchSceneButtonToMatchingBattle : switchSceneButtonToCombatPlanner;
+        GameObject nextSceneButton =
+            (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
+                ? switchSceneButtonToMatchingBattle
+                : switchSceneButtonToCombatPlanner;
         GameObject button = (GameObject) Instantiate(nextSceneButton);
     }
 
@@ -206,13 +211,14 @@ public class BattleManager : MonoBehaviour
         playerControll opponentcontroll
     )
     {
+        //attack or additonal skills
+        GameObject skill = null;
+
         //adjust x coordinate depending on player.
         float ax = (activatercontroll == p1controll) ? -0.5f : +0.5f;
         if (skills[i] == character.getSkillList()[0])
         {
             activatercontroll.moveUp();
-
-            //  p2controll.moveUp();
             float adjustedX = x[activatercontroll.getX()] + ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
 
@@ -223,7 +229,6 @@ public class BattleManager : MonoBehaviour
         if (skills[i] == character.getSkillList()[1])
         {
             activatercontroll.moveDown();
-
             float adjustedX = x[activatercontroll.getX()] + ax;
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
@@ -251,25 +256,25 @@ public class BattleManager : MonoBehaviour
             //   p2character.guard (p2controll);
         }
 
-        //attack skills
-        GameObject skill = null;
         if (skills[i] == character.getSkillList()[5])
         {
-            skill = character.useSkill(activatercontroll, 1);
-
-            //   p2character.useSkill(p2controll, 1);
+            //skill = character.useSkill(activatercontroll, 1);
+            skill = character.restore(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[6])
         {
-            skill = character.useSkill(activatercontroll, 2);
+            //skill = character.useSkill(activatercontroll, 2);
+            skill = character.defense(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[7])
         {
-            skill = character.useSkill(activatercontroll, 3);
+            // skill = character.useSkill(activatercontroll, 3);
+            skill = character.missile(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[8])
         {
-            skill = character.useSkill(activatercontroll, 4);
+            //  skill = character.useSkill(activatercontroll, 4);
+            skill = character.smash(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[9])
         {
@@ -278,6 +283,70 @@ public class BattleManager : MonoBehaviour
             int playerCode = (activatercontroll == p1controll) ? 0 : 1;
 
             //   updatePlayerInfoBar(activatercontroll, playerCode, false);
+        }
+
+        //additional skill test
+        if (
+            character.getSkillList().Length > 10 &&
+            skills[i] == character.getSkillList()[10]
+        )
+        {
+            if (skills[i] == GameMaster.additionalSkillList[0])
+            {
+                skill = character.restore(activatercontroll);
+            }
+            else //defense
+            if (skills[i] == GameMaster.additionalSkillList[1])
+            {
+            }
+            else //missile
+            if (skills[i] == GameMaster.additionalSkillList[2])
+            {
+            }
+            else //smash
+            if (skills[i] == GameMaster.additionalSkillList[3])
+            {
+            }
+            else //up left
+            if (skills[i] == GameMaster.additionalSkillList[4])
+            {
+                activatercontroll.moveUp();
+                activatercontroll.moveLeft();
+                float adjustedX = x[activatercontroll.getX()] + ax;
+                float adjustedY = y[activatercontroll.getY()] + 0.8f;
+
+                character.move (adjustedX, adjustedY);
+            }
+            else //up right
+            if (skills[i] == GameMaster.additionalSkillList[5])
+            {
+                activatercontroll.moveUp();
+                activatercontroll.moveRight();
+                float adjustedX = x[activatercontroll.getX()] + ax;
+                float adjustedY = y[activatercontroll.getY()] + 0.8f;
+
+                character.move (adjustedX, adjustedY);
+            }
+            else //down left
+            if (skills[i] == GameMaster.additionalSkillList[6])
+            {
+                activatercontroll.moveDown();
+                activatercontroll.moveLeft();
+                float adjustedX = x[activatercontroll.getX()] + ax;
+                float adjustedY = y[activatercontroll.getY()] + 0.8f;
+
+                character.move (adjustedX, adjustedY);
+            }
+            else //down right
+            if (skills[i] == GameMaster.additionalSkillList[7])
+            {
+                activatercontroll.moveDown();
+                activatercontroll.moveRight();
+                float adjustedX = x[activatercontroll.getX()] + ax;
+                float adjustedY = y[activatercontroll.getY()] + 0.8f;
+
+                character.move (adjustedX, adjustedY);
+            }
         }
 
         //if skill is attack skill,
@@ -295,7 +364,10 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
 
         //if current skill is not guard, then actioncomplete
-        if (skills[i] == character.getSkillList()[4])
+        if (
+            skills[i] == character.getSkillList()[4] ||
+            skills[i] == GameMaster.additionalSkillList[1]
+        )
         {
             if (activatercontroll == p1controll)
             {
@@ -408,9 +480,14 @@ public class BattleManager : MonoBehaviour
             //if opponent is located in targeted area, reduce its hp by skill damage.
             if (skillX == opponentX && skillY == opponentY)
             {
-                attackee
-                    .setHP((attackee.getHP() + attackee.getDEF()) -
-                    skill.GetComponent<skillManager>().getDamage());
+                int dm =
+                    skill.GetComponent<skillManager>().getDamage() -
+                    attackee.getDEF();
+                if (dm < 0)
+                {
+                    dm = 0;
+                }
+                attackee.setHP(attackee.getHP() - dm);
 
                 //update HP bar of opponent of a skill caster.
                 int playerCode = (attackee == p2controll) ? 1 : 0;
@@ -427,35 +504,37 @@ public class BattleManager : MonoBehaviour
                     p2character.getHit();
                 }
             }
-
-        
-
         }
-            //return the color of cell to white . return the cell color to its original state.
-           // StartCoroutine(changeColorBack(coordinateList));.
-             yield return new WaitForSeconds(1.5f);
-           for(int j = 0; j < coordinateList.Count; j++){
-            int[] cell = coordinateList[j];
-            int skillX = cell[1];
-            int skillY = cell[0];
-            
-            list[skillY, skillX].GetComponent<SpriteRenderer>().color =
-                new Color(255, 255, 255, 0.5f);
-        }
-    }
-    //count: # of target cells.
-    private IEnumerator
-    changeColorBack( List<int[]> coordinateList){
+
+        //return the color of cell to white . return the cell color to its original state.
+        // StartCoroutine(changeColorBack(coordinateList));.
         yield return new WaitForSeconds(1.5f);
-        for(int j = 0; j < coordinateList.Count; j++){
+        for (int j = 0; j < coordinateList.Count; j++)
+        {
             int[] cell = coordinateList[j];
             int skillX = cell[1];
             int skillY = cell[0];
-            
+
             list[skillY, skillX].GetComponent<SpriteRenderer>().color =
                 new Color(255, 255, 255, 0.5f);
         }
     }
+
+    //count: # of target cells.
+    private IEnumerator changeColorBack(List<int[]> coordinateList)
+    {
+        yield return new WaitForSeconds(1.5f);
+        for (int j = 0; j < coordinateList.Count; j++)
+        {
+            int[] cell = coordinateList[j];
+            int skillX = cell[1];
+            int skillY = cell[0];
+
+            list[skillY, skillX].GetComponent<SpriteRenderer>().color =
+                new Color(255, 255, 255, 0.5f);
+        }
+    }
+
     //playercode 0 = player 1 , playercode 1 = player 2
     private void updatePlayerInfoBar(
         playerControll pc,
@@ -488,11 +567,13 @@ public class BattleManager : MonoBehaviour
         if (p1guard)
         {
             p1character.actionComplete();
+            p1controll.setDEF(0);
             p1guard = false;
         }
         if (p2guard)
         {
             p2character.actionComplete();
+            p2controll.setDEF(0);
             p2guard = false;
         }
 
@@ -511,8 +592,7 @@ public class BattleManager : MonoBehaviour
         {
             p2character.die();
             p1character.isVictory();
-            GameMaster.match ++;
+            GameMaster.match++;
         }
-        
     }
 }
