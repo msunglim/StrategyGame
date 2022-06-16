@@ -258,23 +258,23 @@ public class BattleManager : MonoBehaviour
 
         if (skills[i] == character.getSkillList()[5])
         {
-            //skill = character.useSkill(activatercontroll, 1);
-            skill = character.restore(activatercontroll);
+            skill = character.useSkill(activatercontroll, 1);
+            // skill = character.restore(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[6])
         {
-            //skill = character.useSkill(activatercontroll, 2);
-            skill = character.defense(activatercontroll);
+            skill = character.useSkill(activatercontroll, 2);
+            // skill = character.defense(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[7])
         {
-            // skill = character.useSkill(activatercontroll, 3);
-            skill = character.missile(activatercontroll);
+            skill = character.useSkill(activatercontroll, 3);
+            // skill = character.missile(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[8])
         {
-            //  skill = character.useSkill(activatercontroll, 4);
-            skill = character.smash(activatercontroll);
+             skill = character.useSkill(activatercontroll, 4);
+            // skill = character.smash(activatercontroll);
         }
         if (skills[i] == character.getSkillList()[9])
         {

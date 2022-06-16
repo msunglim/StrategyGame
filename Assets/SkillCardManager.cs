@@ -35,7 +35,9 @@ public class SkillCardManager : MonoBehaviour
 
     [SerializeField]
     private GameObject tailofcard;
+
     private GameObject tail;
+
     private float
 
             destinationX,
@@ -44,6 +46,11 @@ public class SkillCardManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    public void setIsUsedInCombatPanel(bool tf)
+    {
+        isUsedInCombatPanel = tf;
     }
 
     public void setImage(characterSetting character, int index, bool tf)
@@ -194,16 +201,23 @@ public class SkillCardManager : MonoBehaviour
         isAdded = false;
         isFilterAdded = false;
     }
-    public void tailOfCard(){
-         tail =
+
+    public void tailOfCard()
+    {
+        tail =
             Instantiate(tailofcard,
-            new Vector3(transform.position.x, transform.position.y, -4),
+            new Vector3(transform.position.x,
+                transform.position.y,
+                transform.position.z - 2),
             Quaternion.identity);
         tail.transform.parent = gameObject.transform;
     }
-    public void headOfCard(){
-        Destroy(tail);
+
+    public void headOfCard()
+    {
+        Destroy (tail);
     }
+
     public GameObject getSkill()
     {
         return skill;
@@ -220,18 +234,20 @@ public class SkillCardManager : MonoBehaviour
         if (
             !isAdded &&
             GameMaster.p1Size < GameMaster.p1Skills.Length &&
+            isUsedInCombatPanel &&
             availableEN >= currSkillManager.getCost()
         )
         {
             int newAvailableEN = availableEN - currSkillManager.getCost();
-              if (newAvailableEN > 100){
+            if (newAvailableEN > 100)
+            {
                 newAvailableEN = 100;
-            }else if(newAvailableEN < 0){
+            }
+            else if (newAvailableEN < 0)
+            {
                 newAvailableEN = 0;
             }
-            p1Stat
-                .GetComponent<statManager>()
-                .updateENbar(newAvailableEN);
+            p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
 
             transform
                 .parent
@@ -250,7 +266,9 @@ public class SkillCardManager : MonoBehaviour
             addFilter();
             isAdded = true;
         }
-        else if (isAdded && parent != null)
+        else if (
+            isAdded && parent != null //when it is at the combat schedule
+        )
         {
             parent.GetComponent<SkillCardManager>().removeFilter();
             GameMaster
@@ -261,26 +279,55 @@ public class SkillCardManager : MonoBehaviour
 
             //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
             //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
-            int newAvailableEN = availableEN +
+            int newAvailableEN =
+                availableEN +
                 parent
                     .GetComponent<SkillCardManager>()
                     .getSkill()
                     .GetComponent<skillManager>()
                     .getCost();
-            if (newAvailableEN > 100){
+            if (newAvailableEN > 100)
+            {
                 newAvailableEN = 100;
-            }else if(newAvailableEN < 0){
+            }
+            else if (newAvailableEN < 0)
+            {
                 newAvailableEN = 0;
             }
-            p1Stat
-                .GetComponent<statManager>()
-                .updateENbar(newAvailableEN);
+            p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
 
             parent
                 .transform
                 .parent
                 .GetComponent<MinMapGenerator>()
                 .setAvailableEN(newAvailableEN);
+        }
+        else if (!isUsedInCombatPanel && !isAdded)
+        {
+            // when it is at the additional card panel.
+            characterSetting character =
+                GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
+            
+
+
+            character.addToSkillList(GameMaster.additionalSkillList[Random.Range(0, 8)]);
+
+            headOfCard();
+            
+            setImage(character, character.getSkillList().Length - 1, false);
+            Destroy(transform.parent.gameObject, 2.0f);
+
+            GameObject minmap = GameObject.Find("MinMap");
+            GameObject card =
+                Instantiate(gameObject,
+                new Vector3(6.8f, 0, -1),
+                Quaternion.identity);
+      
+            card
+                .GetComponent<SkillCardManager>()
+                .setImage(character, character.getSkillList().Length - 1, true);
+            Destroy(card.transform.GetChild(3).gameObject);
+            card.transform.parent = minmap.transform;
         }
     }
 }

@@ -24,7 +24,7 @@ public class MinMapGenerator : MonoBehaviour
             skillCardY;
 
     public int availableEN;
-
+    
     // Start is called before the first frame update
     void Start()
     {
