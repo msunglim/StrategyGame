@@ -44,6 +44,7 @@ public class characterSetting : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        
         anime = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = sp;
@@ -70,7 +71,14 @@ public class characterSetting : MonoBehaviour
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-
+    public void addToSkillList(GameObject s){
+          GameObject [] newCharacterSkillList = new GameObject[ skillList.Length + 1];
+            for(int i = 0; i < skillList.Length ; i++){
+                newCharacterSkillList[i] = skillList[i];
+            }
+            newCharacterSkillList[skillList.Length] = s;
+            skillList = newCharacterSkillList;
+    }
     public string getCharacterName()
     {
         return characterName;
