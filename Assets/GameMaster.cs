@@ -42,6 +42,8 @@ public class GameMaster : MonoBehaviour
 
     //how many characters this player has competed with. 
     public static int match = 0;
+
+    
     [SerializeField]
     public GameObject
 
@@ -50,6 +52,14 @@ public class GameMaster : MonoBehaviour
 
     //[SerializeField]
     public static GameObject [] characterList;
+    /*
+    0: restore
+    1: defense
+    2: missle
+    3: smash
+
+    */ 
+    public static GameObject [] additionalSkillList;
     
     void Awake()
     {
@@ -67,7 +77,7 @@ public class GameMaster : MonoBehaviour
         p2c = p2Serialize.GetComponent<playerControll>();
 
         characterList = GetComponent<characterManager>().getCharacterList();    
-        
+        additionalSkillList = GetComponent<additionalSkillManager>().getAdditionalSkills();
         DontDestroyOnLoad (gameObject);
     }
 

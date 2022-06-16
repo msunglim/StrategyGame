@@ -17,6 +17,7 @@ public class skillManager : MonoBehaviour
      [SerializeField]
      private int skillPriority;
      private bool isUsed;
+     private GameObject currEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,17 @@ public class skillManager : MonoBehaviour
     {
         GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
         effect.GetComponent<MoveToDirection>().setDirection(direction * dx, dy); //10 is speed of skill
+    }
+
+    public void create(float x, float y){
+        currEffect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);      
+      
+        Destroy(currEffect, 2.0f);
+        
+    }
+    public void moveToward(float x, float y){
+         currEffect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
+          Destroy(currEffect, 2.0f);
     }
     public int getDamage(){
         return damage;

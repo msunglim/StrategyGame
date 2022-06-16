@@ -215,7 +215,6 @@ public class SkillCardManager : MonoBehaviour
         GameObject playerInfo = GameObject.Find("PlayerInfo");
         GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
 
-        Debug.Log("is added" + isAdded + "parent null"+ (parent!=null));
         //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
         //if it is true, then it can be removed by clicking out of combat schedule.
         if (
@@ -224,14 +223,20 @@ public class SkillCardManager : MonoBehaviour
             availableEN >= currSkillManager.getCost()
         )
         {
+            int newAvailableEN = availableEN - currSkillManager.getCost();
+              if (newAvailableEN > 100){
+                newAvailableEN = 100;
+            }else if(newAvailableEN < 0){
+                newAvailableEN = 0;
+            }
             p1Stat
                 .GetComponent<statManager>()
-                .updateENbar(availableEN - currSkillManager.getCost());
+                .updateENbar(newAvailableEN);
 
             transform
                 .parent
                 .GetComponent<MinMapGenerator>()
-                .setAvailableEN(availableEN - currSkillManager.getCost());
+                .setAvailableEN(newAvailableEN);
 
             //여기서 가능한곳에 넣어야합니다. 지금은 사이즈에 따라 하고있음.. ㅜ
             GameMaster.addToP1Skills (skill, gameObject);
@@ -247,7 +252,6 @@ public class SkillCardManager : MonoBehaviour
         }
         else if (isAdded && parent != null)
         {
-            Debug.Log("hello");
             parent.GetComponent<SkillCardManager>().removeFilter();
             GameMaster
                 .removeToP1Skills(parent
@@ -257,25 +261,26 @@ public class SkillCardManager : MonoBehaviour
 
             //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
             //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
-            p1Stat
-                .GetComponent<statManager>()
-                .updateENbar(availableEN +
+            int newAvailableEN = availableEN +
                 parent
                     .GetComponent<SkillCardManager>()
                     .getSkill()
                     .GetComponent<skillManager>()
-                    .getCost());
+                    .getCost();
+            if (newAvailableEN > 100){
+                newAvailableEN = 100;
+            }else if(newAvailableEN < 0){
+                newAvailableEN = 0;
+            }
+            p1Stat
+                .GetComponent<statManager>()
+                .updateENbar(newAvailableEN);
 
             parent
                 .transform
                 .parent
                 .GetComponent<MinMapGenerator>()
-                .setAvailableEN(availableEN +
-                parent
-                    .GetComponent<SkillCardManager>()
-                    .getSkill()
-                    .GetComponent<skillManager>()
-                    .getCost());
+                .setAvailableEN(newAvailableEN);
         }
     }
 }
