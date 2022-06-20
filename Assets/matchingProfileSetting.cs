@@ -31,7 +31,7 @@ public class matchingProfileSetting : MonoBehaviour
         }
         else
         {
-            //current enemy
+            //set current enemy
             int enemeyIndex =
                 (
                 (
@@ -68,7 +68,7 @@ public class matchingProfileSetting : MonoBehaviour
               ult.GetComponent<SpriteRenderer>()
                 .transform
                 .Rotate(new Vector3(0, 180, 0));
-        
+                GameMaster.p2SkillList =  GameMaster.characterList[enemeyIndex].GetComponent<characterSetting>().getSkillList();
             }
         }
 

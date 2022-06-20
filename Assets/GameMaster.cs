@@ -30,6 +30,8 @@ public class GameMaster : MonoBehaviour
 
     public static GameObject p2;
 
+    public static GameObject[] p1SkillList;
+    public static GameObject[] p2SkillList;
     public static GameObject[] p1Skills = new GameObject[3];
 
     public static int p1Size = 0;
@@ -84,6 +86,14 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+    public static void addToP1SkillList(GameObject s){
+            GameObject [] newCharacterSkillList = new GameObject[ p1SkillList.Length + 1];
+            for(int i = 0; i < p1SkillList.Length ; i++){
+                newCharacterSkillList[i] = p1SkillList[i];
+            }
+            newCharacterSkillList[p1SkillList.Length] = s;
+            p1SkillList = newCharacterSkillList;
     }
     
     //여기서 스킬은 캐릭터로부터 받은 스킬이지 스킬카드가아님. 스킬카드는 부모복제용으로만 사용됨.

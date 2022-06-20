@@ -10,7 +10,7 @@ public class playerControll : MonoBehaviour
 
     [SerializeField]
     private GameObject character;
-
+    
     private int hp;
 
     private int en;
@@ -26,6 +26,7 @@ public class playerControll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    
     }
 
     public Sprite getCharacterProfile(){
@@ -36,7 +37,8 @@ public class playerControll : MonoBehaviour
         return character.GetComponent<characterSetting>().getMinProfile();
     }
     public void setCharacter(GameObject c){
-        character = c;
+        
+        character =  c;
     }
     public void setDEF(int d){
         def = d;

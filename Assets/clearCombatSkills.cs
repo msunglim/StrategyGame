@@ -19,7 +19,7 @@ public class clearCombatSkills : MonoBehaviour
             if(currSkill!=null){
                 GameObject skillcardchild = combatSchedule.transform.GetChild(i).transform.GetChild(0).gameObject; 
                 GameObject parent = skillcardchild.GetComponent<SkillCardManager>().getParent();
-                Debug.Log("parent is nu? " + (parent==null));
+              
                 parent.GetComponent<SkillCardManager>().removeFilter();
                 Destroy(skillcardchild);
 

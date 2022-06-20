@@ -35,6 +35,8 @@ public class MinMapGenerator : MonoBehaviour
         minMapX = new float[] { 2.3f, 3.8f, 5.3f, 6.8f };
         minMapY = new float[] { -2.9f, -3.6f, -4.3f };
 
+        //increase this if size of skill list reaches certain amount
+        float xLocationHelper = GameMaster.p1SkillList.Length == 10 ? 0.0f : (GameMaster.p1SkillList.Length <13 ? 1.8f: 3.6f ) ;
         skillCardX = new float[] { -3.6f, -1.8f, 0.0f, 1.8f, 3.6f };
         skillCardY = new float[] { 0.8f, -1.3f };
 
@@ -78,18 +80,36 @@ public class MinMapGenerator : MonoBehaviour
             {
                 GameObject skillcard =
                     Instantiate(skillCard,
-                    new Vector3(skillCardX[j], skillCardY[i], -1),
+                    new Vector3(skillCardX[j] -xLocationHelper, skillCardY[i], -1),
                     Quaternion.identity);
                 skillcard
                     .GetComponent<SkillCardManager>()
-                    .setImage(GameMaster
-                        .p1c
-                        .getCharacter()
-                        .GetComponent<characterSetting>(),
+                    .setImage(1,
                     5 * i + j, true);
                 skillcard.transform.parent = gameObject.transform;
             }
         }
+
+        //count for adding additional skills
+        int count = 0;
+        float additionalX = 1.8f;
+        while( count < GameMaster.p1SkillList.Length - 10){
+            Debug.Log("c" + (GameMaster.p1SkillList.Length - 10));
+             GameObject skillcard =
+                    Instantiate(skillCard,
+                    new Vector3( skillCardX[4] -xLocationHelper + additionalX, skillCardY[count%2], -1),
+                    Quaternion.identity);
+                skillcard
+                    .GetComponent<SkillCardManager>()
+                    .setImage(1,
+                    10+count, true);
+                skillcard.transform.parent = gameObject.transform;
+            count ++; 
+            if(count == 2){
+                additionalX *=2;
+            }
+        }
+        
     }
 
     // Update is called once per frame

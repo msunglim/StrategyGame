@@ -30,7 +30,8 @@ public class characterSelectionButton : MonoBehaviour
         
     }
     private void OnMouseDown(){
-        GameMaster.p1c.setCharacter( GameMaster.characterList[characterIndex]);
+        GameMaster.p1c.setCharacter(GameMaster.characterList[characterIndex]);
+        GameMaster.p1SkillList = GameMaster.characterList[characterIndex].GetComponent<characterSetting>().getSkillList();
         GetComponent<switchScene>().SwitchScene();
 
     }

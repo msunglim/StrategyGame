@@ -53,7 +53,7 @@ public class SkillCardManager : MonoBehaviour
         isUsedInCombatPanel = tf;
     }
 
-    public void setImage(characterSetting character, int index, bool tf)
+    public void setImage(int characterCode, int index, bool tf)
     {
         spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         isUsedInCombatPanel = tf;
@@ -83,7 +83,12 @@ public class SkillCardManager : MonoBehaviour
         //if index is greater than the number of skills character currently have,
         //there will be error.
         // {
-        skill = character.getSkillList()[index];
+        
+        //캐릭터 코드를 쓸까..
+        //skill = character.getSkillList()[index];
+        //character code 1 = player 1 , 2 = player 2
+        skill = (characterCode == 1) ? GameMaster.p1SkillList[index] : GameMaster.p2SkillList[index] ;
+
         currSkillManager = skill.GetComponent<skillManager>();
         spr.sprite = currSkillManager.getSkillMinImage();
 
@@ -307,14 +312,9 @@ public class SkillCardManager : MonoBehaviour
             // when it is at the additional card panel.
             characterSetting character =
                 GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
-            
-
-
-            character.addToSkillList(GameMaster.additionalSkillList[Random.Range(0, 8)]);
-
+            GameMaster.addToP1SkillList(GameMaster.additionalSkillList[Random.Range(0, 8)]);
             headOfCard();
-            
-            setImage(character, character.getSkillList().Length - 1, false);
+            setImage(1, GameMaster.p1SkillList.Length - 1, false);
             Destroy(transform.parent.gameObject, 2.0f);
 
             GameObject minmap = GameObject.Find("MinMap");
@@ -322,10 +322,9 @@ public class SkillCardManager : MonoBehaviour
                 Instantiate(gameObject,
                 new Vector3(6.8f, 0, -1),
                 Quaternion.identity);
-      
             card
                 .GetComponent<SkillCardManager>()
-                .setImage(character, character.getSkillList().Length - 1, true);
+                .setImage(1, GameMaster.p1SkillList.Length  - 1, true);
             Destroy(card.transform.GetChild(3).gameObject);
             card.transform.parent = minmap.transform;
         }

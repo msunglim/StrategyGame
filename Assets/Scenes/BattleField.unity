@@ -420,6 +420,10 @@ PrefabInstance:
       value: PlayerInfo
       objectReference: {fileID: 0}
     - target: {fileID: 5555154472925080150, guid: 052cc58b720dcd24cb80ef661bc8834d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.017
+      objectReference: {fileID: 0}
+    - target: {fileID: 5555154472925080150, guid: 052cc58b720dcd24cb80ef661bc8834d, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1
       objectReference: {fileID: 0}

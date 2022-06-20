@@ -47,18 +47,18 @@ public class skillManager : MonoBehaviour
     //dx,dy: where the effect will be headed
     public void effect(int direction, float x, float y, int dx, int dy)
     {
-        GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
+        GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);
         effect.GetComponent<MoveToDirection>().setDirection(direction * dx, dy); //10 is speed of skill
     }
 
     public void create(float x, float y){
-        currEffect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);      
+        currEffect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);      
       
         Destroy(currEffect, 2.0f);
         
     }
     public void moveToward(float x, float y){
-         currEffect = Instantiate(skillEffect, new Vector3(x, y, -2), Quaternion.identity);
+         currEffect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);
           Destroy(currEffect, 2.0f);
     }
     public int getDamage(){
