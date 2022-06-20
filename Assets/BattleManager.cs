@@ -293,11 +293,9 @@ public class BattleManager : MonoBehaviour
 
         //additional skill test
         if (
-            skillList.Length > 10 &&
-            skills[i] == skillList[10]
+            skillList.Length > 10
         )
         {
-            Debug.Log(">10");
 
             if (skills[i] == GameMaster.additionalSkillList[0])
             {
@@ -321,7 +319,6 @@ public class BattleManager : MonoBehaviour
             else //up left
             if (skills[i] == GameMaster.additionalSkillList[4])
             {
-                Debug.Log("...");
                 activatercontroll.moveUp();
                 activatercontroll.moveLeft();
                 float adjustedX = x[activatercontroll.getX()] + ax;
@@ -332,7 +329,6 @@ public class BattleManager : MonoBehaviour
             else //up right
             if (skills[i] == GameMaster.additionalSkillList[5])
             {
-                Debug.Log("...");
                 activatercontroll.moveUp();
                 activatercontroll.moveRight();
                 float adjustedX = x[activatercontroll.getX()] + ax;
@@ -343,7 +339,6 @@ public class BattleManager : MonoBehaviour
             else //down left
             if (skills[i] == GameMaster.additionalSkillList[6])
             {
-                Debug.Log("...");
                 activatercontroll.moveDown();
                 activatercontroll.moveLeft();
                 float adjustedX = x[activatercontroll.getX()] + ax;
@@ -354,7 +349,7 @@ public class BattleManager : MonoBehaviour
             else //down right
             if (skills[i] == GameMaster.additionalSkillList[7])
             {
-                Debug.Log("...");
+            
                 activatercontroll.moveDown();
                 activatercontroll.moveRight();
                 float adjustedX = x[activatercontroll.getX()] + ax;
@@ -607,7 +602,10 @@ public class BattleManager : MonoBehaviour
         {
             p2character.die();
             p1character.isVictory();
-            GameMaster.match++;
+            if(p1controll.getHP() > 0){
+                GameMaster.match++;
+            }
+            
         }
     }
 }

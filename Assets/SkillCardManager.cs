@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Random=UnityEngine.Random;
 
 public class SkillCardManager : MonoBehaviour
 {
@@ -312,7 +314,15 @@ public class SkillCardManager : MonoBehaviour
             // when it is at the additional card panel.
             characterSetting character =
                 GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
-            GameMaster.addToP1SkillList(GameMaster.additionalSkillList[Random.Range(0, 8)]);
+            
+            int randomInt = Random.Range(0, 8);
+            
+            //reset random int if the skill is already added to p1skilllist
+            while(Array.IndexOf(GameMaster.p1SkillList, GameMaster.additionalSkillList[randomInt])>-1){
+                randomInt = Random.Range(0, 8);
+            }
+            GameMaster.addToP1SkillList(GameMaster.additionalSkillList[randomInt]);
+            
             headOfCard();
             setImage(1, GameMaster.p1SkillList.Length - 1, false);
             Destroy(transform.parent.gameObject, 2.0f);

@@ -36,6 +36,7 @@ public class MinMapGenerator : MonoBehaviour
         minMapY = new float[] { -2.9f, -3.6f, -4.3f };
 
         //increase this if size of skill list reaches certain amount
+        //The case that a player has more than 13 skills is already considered below code. However, with current code, it is impossible.
         float xLocationHelper = GameMaster.p1SkillList.Length == 10 ? 0.0f : (GameMaster.p1SkillList.Length <13 ? 1.8f: 3.6f ) ;
         skillCardX = new float[] { -3.6f, -1.8f, 0.0f, 1.8f, 3.6f };
         skillCardY = new float[] { 0.8f, -1.3f };
