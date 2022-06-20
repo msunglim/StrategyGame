@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetArea: 06000000
+  targetArea: 08000000
   skillEffect: {fileID: 0}
   damage: 0
   cost: 0
   skillMinImage: {fileID: 1945814127, guid: cf7cd066e137d09419e327f6c4efb9f4, type: 3}
-  skillName: MoveDownLeft
+  skillName: MoveDownRight
   skillPriority: 0

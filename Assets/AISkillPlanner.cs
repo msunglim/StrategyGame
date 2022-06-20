@@ -8,17 +8,15 @@ public class AISkillPlanner : MonoBehaviour
     void Start()
     {
         int availableEN = GameMaster.p2EN;
-        GameObject[] skillList =
-            GameMaster
-                .p2c
-                .getCharacter()
-                .GetComponent<characterSetting>()
-                .getSkillList();
+        GameObject[] skillList = GameMaster.p2SkillList;
 
         GameObject[] p2skillList = new GameObject[3];
         for (int i = 0; i < 3; i++)
         {
-            if (availableEN <= 20 &&  !skillList[9].GetComponent<skillManager>().getIsUsed())
+            if (
+                availableEN <= 20 &&
+                !skillList[9].GetComponent<skillManager>().getIsUsed()
+            )
             {
                 availableEN -=
                     skillList[9].GetComponent<skillManager>().getCost();
@@ -33,48 +31,23 @@ public class AISkillPlanner : MonoBehaviour
                     skillList[rnd].GetComponent<skillManager>().getIsUsed() ||
                     (
                     availableEN == 100 &&
-                    skillList[rnd] ==
-                    GameMaster
-                        .p2c
-                        .getCharacter()
-                        .GetComponent<characterSetting>()
-                        .getSkillList()[9]
+                    skillList[rnd] == GameMaster.p2SkillList[9]
                     ) ||
                     (
                     GameMaster.p2y == 0 &&
-                    skillList[rnd] ==
-                    GameMaster
-                        .p2c
-                        .getCharacter()
-                        .GetComponent<characterSetting>()
-                        .getSkillList()[0]
+                    skillList[rnd] == GameMaster.p2SkillList[0]
                     ) ||
                     (
                     GameMaster.p2y == 2 &&
-                    skillList[rnd] ==
-                    GameMaster
-                        .p2c
-                        .getCharacter()
-                        .GetComponent<characterSetting>()
-                        .getSkillList()[1]
+                    skillList[rnd] == GameMaster.p2SkillList[1]
                     ) ||
                     (
                     GameMaster.p2x == 0 &&
-                    skillList[rnd] ==
-                    GameMaster
-                        .p2c
-                        .getCharacter()
-                        .GetComponent<characterSetting>()
-                        .getSkillList()[2]
+                    skillList[rnd] == GameMaster.p2SkillList[2]
                     ) ||
                     (
                     GameMaster.p2x == 3 &&
-                    skillList[rnd] ==
-                    GameMaster
-                        .p2c
-                        .getCharacter()
-                        .GetComponent<characterSetting>()
-                        .getSkillList()[3]
+                    skillList[rnd] == GameMaster.p2SkillList[3]
                     )
                 )
                 {

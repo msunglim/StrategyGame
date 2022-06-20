@@ -46,13 +46,13 @@ public class FieldGenerator : MonoBehaviour
 
         //+-0.5f is to adjust player image and field.
         GameObject player1Character =
-            player1.GetComponent<playerControll>().getCharacter();
+            GameMaster.p1.GetComponent<playerControll>().getCharacter();
         p1 =
             Instantiate(player1Character,
             new Vector3(x[GameMaster.p1x] - 0.5f, y[GameMaster.p1y] + 0.8f, -2),
             Quaternion.identity);
 
-        p1controll = player1.GetComponent<playerControll>();
+        p1controll = GameMaster.p1.GetComponent<playerControll>();
         p1controll.setXY(GameMaster.p1x, GameMaster.p1y);
         p1controll.setHP(GameMaster.p1HP);
         p1controll.setEN(GameMaster.p1EN);
@@ -60,12 +60,12 @@ public class FieldGenerator : MonoBehaviour
         p1.GetComponent<characterSetting>().setDirection(1);
 
         GameObject player2Character =
-            player2.GetComponent<playerControll>().getCharacter();
+            GameMaster.p2.GetComponent<playerControll>().getCharacter();
         p2 =
             Instantiate(player2Character,
             new Vector3(x[GameMaster.p2x] + 0.5f, y[GameMaster.p2y] + 0.8f, -2),
             Quaternion.identity);
-        p2controll = player2.GetComponent<playerControll>();
+        p2controll = GameMaster.p2.GetComponent<playerControll>();
         p2controll.setXY(GameMaster.p2x, GameMaster.p2y);
         p2controll.setHP(GameMaster.p2HP);
         p2controll.setDEF(0);

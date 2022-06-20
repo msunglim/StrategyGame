@@ -12,7 +12,7 @@ public class addtionalCardListManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(GameMaster.match == 0 && GameMaster.round == 1){
+        if(GameMaster.match > 0 && GameMaster.round == 1){
             GameObject p = Instantiate(panel, new Vector3(0,1,-4),
                     Quaternion.identity);
             p.transform.parent = gameObject.transform;
