@@ -8,7 +8,6 @@ public class switchScene : MonoBehaviour
     private Object destination;
 
     public void SwitchScene(){
-        // SceneManager.UnloadScene( SceneManager.GetActiveScene());
         SceneManager.LoadScene(destination.name);
         
     }

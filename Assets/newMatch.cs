@@ -33,5 +33,8 @@ public class newMatch : MonoBehaviour
         GameMaster.p2y = 1;
 
         GameMaster.round = 1;
+       
+   
     }
+    
 }

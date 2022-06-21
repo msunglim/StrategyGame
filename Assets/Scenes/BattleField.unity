@@ -130,9 +130,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 444052057200854869, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ac47d754db02de40ac432b6e471b8be, type: 3}
     - target: {fileID: 1034526386024139501, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
       propertyPath: m_Name
       value: Battlefield
+      objectReference: {fileID: 0}
+    - target: {fileID: 1330291266988337656, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d10a5fcd3ec18954688eba1a60145191, type: 3}
+    - target: {fileID: 4862520241562838247, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
+      propertyPath: m_Name
+      value: BackgroundOfBackground
       objectReference: {fileID: 0}
     - target: {fileID: 7398161181726598377, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
       propertyPath: player2
@@ -197,6 +209,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1034526386024139501, guid: 1852733f59c870b4c8c4e07e232a081f, type: 3}
   m_PrefabInstance: {fileID: 2168351}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2168353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58db2e0359fc1744eac045d32b438b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldList:
+  - {fileID: 21300000, guid: ffed20f280494c4418dda84a67805da4, type: 3}
+  - {fileID: 21300000, guid: d10a5fcd3ec18954688eba1a60145191, type: 3}
+  - {fileID: 21300000, guid: e33f709cf33784540869d76175165413, type: 3}
+  backgroundList:
+  - {fileID: 21300000, guid: c1668fb7bb31b0c47bd50adb909c9dfe, type: 3}
+  - {fileID: 21300000, guid: 0ac47d754db02de40ac432b6e471b8be, type: 3}
+  - {fileID: 21300000, guid: 7fa1f9f87a9594b4294fa959d2a0d698, type: 3}
 --- !u!1 &142539501
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +262,7 @@ MonoBehaviour:
   skillCard: {fileID: 6543018588243829030, guid: 8510a96903f40a14da5b42b69dbe6895, type: 3}
   switchSceneButtonToCombatPlanner: {fileID: 3771100287817095989, guid: 8d9bfb43d6fcad34296b5051ff8ae755, type: 3}
   switchSceneButtonToMatchingBattle: {fileID: 4017935113093145662, guid: fed10a39bf1c52a4c95582c0534ef8c3, type: 3}
+  victoryScene: {fileID: 102900000, guid: 8fa18b0e8a0339648907c2132cad78de, type: 3}
 --- !u!4 &142539503
 Transform:
   m_ObjectHideFlags: 0

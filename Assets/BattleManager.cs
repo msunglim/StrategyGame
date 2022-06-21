@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class BattleManager : MonoBehaviour
 
     private float skillCardY;
 
+    [SerializeField]
+    private Object victoryScene;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,8 +94,7 @@ public class BattleManager : MonoBehaviour
                 .setImage(1,
                 System
                     .Array
-                    .IndexOf(GameMaster.p1SkillList,
-                    GameMaster.p1Skills[i]),
+                    .IndexOf(GameMaster.p1SkillList, GameMaster.p1Skills[i]),
                 false);
             p1skillCards[i].GetComponent<SkillCardManager>().tailOfCard();
             p2skillCards[i] =
@@ -103,8 +106,7 @@ public class BattleManager : MonoBehaviour
                 .setImage(2,
                 System
                     .Array
-                    .IndexOf(GameMaster.p2SkillList,
-                    GameMaster.p2Skills[i]),
+                    .IndexOf(GameMaster.p2SkillList, GameMaster.p2Skills[i]),
                 false);
             p2skillCards[i].GetComponent<SkillCardManager>().tailOfCard();
         }
@@ -119,7 +121,6 @@ public class BattleManager : MonoBehaviour
             //if one of them dies, stop casting skills
             if (GameMaster.p1HP <= 0 || GameMaster.p2HP <= 0)
             {
-                Debug.Log("someone dies so stoping casting skills");
                 break;
             }
 
@@ -183,8 +184,7 @@ public class BattleManager : MonoBehaviour
                 p2character,
                 p2controll,
                 p1controll,
-                GameMaster.p2SkillList
-                ));
+                GameMaster.p2SkillList));
                 yield return new WaitForSeconds(2.5f);
                 StartCoroutine(activateHelper(i,
                 GameMaster.p1Skills,
@@ -255,31 +255,31 @@ public class BattleManager : MonoBehaviour
             float adjustedY = y[activatercontroll.getY()] + 0.8f;
             character.move (adjustedX, adjustedY);
         }
-        if (skills[i] ==skillList[4])
+        if (skills[i] == skillList[4])
         {
             character.guard (activatercontroll);
 
             //   p2character.guard (p2controll);
         }
 
-        if (skills[i] ==skillList[5])
+        if (skills[i] == skillList[5])
         {
             skill = character.useSkill(activatercontroll, 1);
             // skill = character.restore(activatercontroll);
         }
-        if (skills[i] ==skillList[6])
+        if (skills[i] == skillList[6])
         {
             skill = character.useSkill(activatercontroll, 2);
             // skill = character.defense(activatercontroll);
         }
-        if (skills[i] ==skillList[7])
+        if (skills[i] == skillList[7])
         {
             skill = character.useSkill(activatercontroll, 3);
             // skill = character.missile(activatercontroll);
         }
         if (skills[i] == skillList[8])
         {
-             skill = character.useSkill(activatercontroll, 4);
+            skill = character.useSkill(activatercontroll, 4);
             // skill = character.smash(activatercontroll);
         }
         if (skills[i] == skillList[9])
@@ -292,32 +292,25 @@ public class BattleManager : MonoBehaviour
         }
 
         //additional skill test
-        if (
-            skillList.Length > 10
-        )
+        if (skillList.Length > 10)
         {
-
             if (skills[i] == GameMaster.additionalSkillList[0])
             {
                 skill = character.restore(activatercontroll);
-            }
-            else //defense
-            if (skills[i] == GameMaster.additionalSkillList[1])
+            } //defense
+            else if (skills[i] == GameMaster.additionalSkillList[1])
             {
                 skill = character.defense(activatercontroll);
-            }
-            else //missile
-            if (skills[i] == GameMaster.additionalSkillList[2])
+            } //missile
+            else if (skills[i] == GameMaster.additionalSkillList[2])
             {
                 skill = character.missile(activatercontroll);
-            }
-            else //smash
-            if (skills[i] == GameMaster.additionalSkillList[3])
+            } //smash
+            else if (skills[i] == GameMaster.additionalSkillList[3])
             {
                 skill = character.smash(activatercontroll);
-            }
-            else //up left
-            if (skills[i] == GameMaster.additionalSkillList[4])
+            } //up left
+            else if (skills[i] == GameMaster.additionalSkillList[4])
             {
                 activatercontroll.moveUp();
                 activatercontroll.moveLeft();
@@ -325,9 +318,8 @@ public class BattleManager : MonoBehaviour
                 float adjustedY = y[activatercontroll.getY()] + 0.8f;
 
                 character.move (adjustedX, adjustedY);
-            }
-            else //up right
-            if (skills[i] == GameMaster.additionalSkillList[5])
+            } //up right
+            else if (skills[i] == GameMaster.additionalSkillList[5])
             {
                 activatercontroll.moveUp();
                 activatercontroll.moveRight();
@@ -335,9 +327,8 @@ public class BattleManager : MonoBehaviour
                 float adjustedY = y[activatercontroll.getY()] + 0.8f;
 
                 character.move (adjustedX, adjustedY);
-            }
-            else //down left
-            if (skills[i] == GameMaster.additionalSkillList[6])
+            } //down left
+            else if (skills[i] == GameMaster.additionalSkillList[6])
             {
                 activatercontroll.moveDown();
                 activatercontroll.moveLeft();
@@ -345,11 +336,9 @@ public class BattleManager : MonoBehaviour
                 float adjustedY = y[activatercontroll.getY()] + 0.8f;
 
                 character.move (adjustedX, adjustedY);
-            }
-            else //down right
-            if (skills[i] == GameMaster.additionalSkillList[7])
+            } //down right
+            else if (skills[i] == GameMaster.additionalSkillList[7])
             {
-            
                 activatercontroll.moveDown();
                 activatercontroll.moveRight();
                 float adjustedX = x[activatercontroll.getX()] + ax;
@@ -602,10 +591,16 @@ public class BattleManager : MonoBehaviour
         {
             p2character.die();
             p1character.isVictory();
-            if(p1controll.getHP() > 0){
+            if (p1controll.getHP() > 0)
+            {
                 GameMaster.match++;
             }
-            
+
+            if (GameMaster.match == 3)
+            {
+                yield return new WaitForSeconds(3f);
+                SceneManager.LoadScene(victoryScene.name);
+            }
         }
     }
 }

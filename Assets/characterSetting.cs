@@ -185,7 +185,7 @@ public class characterSetting : MonoBehaviour
             .GetComponent<skillManager>()
             .effect(direction,
             transform.position.x,
-            transform.position.y + 10,
+            transform.position.y + 20,
             0,
             -15);
     }

@@ -12,8 +12,8 @@ public class addtionalCardListManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // && GameMaster.p1SkillList.Length < GameMaster.match + 10
-        if(GameMaster.match > -1 && GameMaster.round == 1){
+   
+        if(GameMaster.match > -1 && GameMaster.round == 1 && GameMaster.p1SkillList.Length < GameMaster.match + 10){
             GameObject p = Instantiate(panel, new Vector3(0,1,-4),
                     Quaternion.identity);
             p.transform.parent = gameObject.transform;
