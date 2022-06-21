@@ -50,17 +50,21 @@ public class skillManager : MonoBehaviour
         GameObject effect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);
         effect.GetComponent<MoveToDirection>().setDirection(direction * dx, dy); //10 is speed of skill
     }
-
+    //animation과 병행하면좋음
     public void create(float x, float y){
         currEffect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);      
       
         Destroy(currEffect, 2.0f);
         
     }
-    public void moveToward(float x, float y){
-         currEffect = Instantiate(skillEffect, new Vector3(x, y, -3), Quaternion.identity);
-          Destroy(currEffect, 2.0f);
+    public void moveToward(int x, int y){
+         GameObject field = GameObject.Find("Battlefield");
+        
+       currEffect
+            .GetComponent<MoveToDestination>()
+            .setDestination(field.GetComponent<FieldGenerator>().getXList()[x], field.GetComponent<FieldGenerator>().getYList()[y]);
     }
+ 
     public int getDamage(){
         return damage;
     }

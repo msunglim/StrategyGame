@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetArea: 00000000020000000300000004000000050000000600000008000000
   skillEffect: {fileID: 4060725292437241961, guid: 3ddb2cd03be826d4bb8e606d6e9f208e, type: 3}
-  damage: 15
-  cost: 10
+  damage: 30
+  cost: 25
   skillMinImage: {fileID: 21300000, guid: d7b84f5fdf8b1d14a8aedf5e51855519, type: 3}
   skillName: Energy bolt
   skillPriority: 2

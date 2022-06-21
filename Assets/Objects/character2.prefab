@@ -63,6 +63,7 @@ MonoBehaviour:
   characterCode: c2
   characterName: Aristeros
   characterUlt: {fileID: 1482969577613707077, guid: 60ae573e7eb4b744781d30dc9a04ca61, type: 3}
+  victoryPose: {fileID: 21300000, guid: aeae205d80bad914f8b5fe5799bb00ec, type: 3}
 --- !u!212 &2311981914024374853
 SpriteRenderer:
   m_ObjectHideFlags: 0

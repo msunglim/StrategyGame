@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 04000000060000000700000008000000
   skillEffect: {fileID: 0}
   damage: 45
-  cost: 70
+  cost: 35
   skillMinImage: {fileID: 21300000, guid: 10729ad0523ced744a1691f82be0c5d5, type: 3}
   skillName: Blade Dance
   skillPriority: 2
