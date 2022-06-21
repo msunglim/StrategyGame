@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 010000000400000007000000
   skillEffect: {fileID: 8103981942090560074, guid: 1c153364acdea7145b7550946531f6d2, type: 3}
   damage: 30
-  cost: 50
+  cost: 20
   skillMinImage: {fileID: 21300000, guid: 478e454b7ad0bae4bac69ec837a18079, type: 3}
   skillName: Sword Flow
   skillPriority: 2

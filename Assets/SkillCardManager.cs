@@ -316,7 +316,6 @@ public class SkillCardManager : MonoBehaviour
                 GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
             
             int randomInt = Random.Range(0, 8);
-            
             //reset random int if the skill is already added to p1skilllist
             while(Array.IndexOf(GameMaster.p1SkillList, GameMaster.additionalSkillList[randomInt])>-1){
                 randomInt = Random.Range(0, 8);

@@ -40,7 +40,8 @@ public class characterSetting : MonoBehaviour
 
     [SerializeField]
     private GameObject characterUlt;
-
+    [SerializeField]
+    private Sprite victoryPose;
     // Start is called before the first frame update
     void Awake()
     {
@@ -71,7 +72,9 @@ public class characterSetting : MonoBehaviour
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-
+    public Sprite getVictoryPose(){
+        return victoryPose;
+    }
     public string getCharacterName()
     {
         return characterName;
@@ -201,9 +204,9 @@ public class characterSetting : MonoBehaviour
     //from a to b point
     public void effect5()
     {
-        currSkill
-            .GetComponent<skillManager>()
-            .moveToward(transform.position.x, transform.position.y);
+        // currSkill
+        //     .GetComponent<skillManager>()
+        //     .moveToward(transform.position.x, transform.position.y);
     }
 
     public GameObject heal(playerControll pc)
@@ -342,12 +345,17 @@ public class characterSetting : MonoBehaviour
         return GameMaster.additionalSkillList[1];
     }
 
-    public GameObject missile(playerControll pc)
+    public GameObject missile(playerControll pc , playerControll destinationPC)
     {
         GameMaster
             .additionalSkillList[2]
             .GetComponent<skillManager>()
             .create(transform.position.x, transform.position.y);
+                GameMaster
+            .additionalSkillList[2]
+            .GetComponent<skillManager>()
+            .moveToward(destinationPC.getX(), destinationPC.getY());
+         Debug.Log("x: "+ destinationPC.getX() + " y: "+ destinationPC.getY() + " p2 x"+ GameMaster.p2x + " y "+ GameMaster.p2y);
         pc
             .setEN(pc.getEN() -
             GameMaster

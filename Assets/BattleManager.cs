@@ -199,11 +199,14 @@ public class BattleManager : MonoBehaviour
 
         //display switchScenebutton (from battleField to combatPlanner)
         yield return new WaitForSeconds(1.5f);
-        GameObject nextSceneButton =
+        if(GameMaster.match != 3){
+            GameObject nextSceneButton =
             (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
                 ? switchSceneButtonToMatchingBattle
                 : switchSceneButtonToCombatPlanner;
         GameObject button = (GameObject) Instantiate(nextSceneButton);
+        }
+        
     }
 
     //required time : 0.75s
@@ -300,11 +303,12 @@ public class BattleManager : MonoBehaviour
             } //defense
             else if (skills[i] == GameMaster.additionalSkillList[1])
             {
+
                 skill = character.defense(activatercontroll);
             } //missile
             else if (skills[i] == GameMaster.additionalSkillList[2])
             {
-                skill = character.missile(activatercontroll);
+                skill = character.missile(activatercontroll, opponentcontroll);
             } //smash
             else if (skills[i] == GameMaster.additionalSkillList[3])
             {
