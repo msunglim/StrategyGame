@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetArea: 000000000100000002000000030000000400000005000000060000000700000008000000
   skillEffect: {fileID: 8103981942090560074, guid: 9e2dd8358fafd614ca5019f742939f41, type: 3}
-  damage: 100
+  damage: 120
   cost: 30
   skillMinImage: {fileID: 21300000, guid: cd662a0fdca5a714b8dc83627bd73980, type: 3}
   skillName: Twist Slice

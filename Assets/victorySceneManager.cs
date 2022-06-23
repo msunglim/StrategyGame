@@ -23,7 +23,7 @@ public class victorySceneManager : MonoBehaviour
         characterPose.transform.localScale =
             new Vector3(profileSizeWidth, profileSizeHeight, 1);
 
-        characterPose.GetComponent<MoveToDestination>().setDestination(0, 0);
+        characterPose.GetComponent<MoveToDestination>().setDestination(0, 0, 1, false);
 
 
     }

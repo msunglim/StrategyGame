@@ -51,6 +51,8 @@ public class AISkillPlanner : MonoBehaviour
                     )
                 )
                 {
+                    //0~ 10
+
                     rnd = Random.Range(0, 10);
                 }
 
