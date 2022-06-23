@@ -17,7 +17,7 @@ public class characterSetting : MonoBehaviour
     [SerializeField]
     private GameObject[] skillList;
 
-    private GameObject  currSkill;
+    private GameObject currSkill;
 
     [SerializeField]
     private GameObject minProfile;
@@ -40,12 +40,14 @@ public class characterSetting : MonoBehaviour
 
     [SerializeField]
     private GameObject characterUlt;
+
     [SerializeField]
     private Sprite victoryPose;
+
+    private playerControll currPlayer; //which player is activating this character's skill now.
     // Start is called before the first frame update
     void Awake()
     {
-        
         anime = GetComponent<Animator>();
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = sp;
@@ -72,9 +74,12 @@ public class characterSetting : MonoBehaviour
             // transform.position += new Vector3(moveDirectionX, moveDirectionY, 0)* 4* Time.deltaTime;
         }
     }
-    public Sprite getVictoryPose(){
+
+    public Sprite getVictoryPose()
+    {
         return victoryPose;
     }
+
     public string getCharacterName()
     {
         return characterName;
@@ -114,6 +119,7 @@ public class characterSetting : MonoBehaviour
             skillList[4 + skillindex].GetComponent<skillManager>().getCost()
         )
         {
+            currPlayer = pc;
             anime.SetInteger(characterCode + "useSkill", skillindex);
             pc
                 .setEN(pc.getEN() -
@@ -159,6 +165,7 @@ public class characterSetting : MonoBehaviour
             transform.position.x,
             transform.position.y,
             15,
+            0,
             0);
     }
 
@@ -170,13 +177,28 @@ public class characterSetting : MonoBehaviour
             for (int j = -1; j < 2; j++)
             {
                 if (i == 0 && j == 0) continue;
-                currSkill
-                    .GetComponent<skillManager>()
-                    .effect(direction,
-                    transform.position.x,
-                    transform.position.y,
-                    5 * i,
-                    5 * j);
+                if (i != 0)
+                {
+                    currSkill
+                        .GetComponent<skillManager>()
+                        .effect(direction,
+                        transform.position.x,
+                        transform.position.y,
+                        5 * i,
+                        5 * j,
+                        j * 45);
+                }
+                else
+                {
+                    currSkill
+                        .GetComponent<skillManager>()
+                        .effect(direction,
+                        transform.position.x,
+                        transform.position.y,
+                        5 * i,
+                        5 * j,
+                        90*j);
+                }
             }
         }
     }
@@ -190,7 +212,8 @@ public class characterSetting : MonoBehaviour
             transform.position.x,
             transform.position.y + 20,
             0,
-            -15);
+            -15,
+            0);
     }
 
     //one spot
@@ -204,30 +227,74 @@ public class characterSetting : MonoBehaviour
     //from a to b point
     public void effect5()
     {
-        // currSkill
-        //     .GetComponent<skillManager>()
-        //     .moveToward(transform.position.x, transform.position.y);
+        GameMaster
+            .additionalSkillList[2]
+            .GetComponent<skillManager>()
+            .create(transform.position.x, transform.position.y);
+
+        playerControll pc = (currPlayer == GameMaster.p1c) ? GameMaster.p1c : GameMaster.p2c;
+        playerControll destinationPC = (currPlayer == GameMaster.p1c) ? GameMaster.p2c : GameMaster.p1c;
+        if (//enemy is out of range
+            Mathf.Abs(pc.getX() - destinationPC.getX()) >= 2 ||
+            Mathf.Abs(pc.getY() - destinationPC.getY()) >= 2
+        )
+        {
+                  GameMaster
+                .additionalSkillList[2]
+                .GetComponent<skillManager>()
+                .moveToward(pc.getX(), pc.getY() + 10, direction, 90); 
+        }
+        else
+        {
+            int rotation = 0;
+            if(pc.getY() > destinationPC.getY()){
+                if(pc.getX() != destinationPC.getX()){
+                    rotation = 45;
+                }else{
+                    rotation =90;
+                }
+            }
+            if(pc.getY() < destinationPC.getY()){
+                
+                if(pc.getX() != destinationPC.getX()){
+                    rotation = -45;
+                }else{
+                    rotation =-90;
+                }
+                
+            }
+            GameMaster
+                .additionalSkillList[2]
+                .GetComponent<skillManager>()
+                .moveToward(destinationPC.getX(),
+                destinationPC.getY(),
+                direction,
+                rotation);
+        }
     }
 
     public GameObject heal(playerControll pc)
     {
         int currEN = pc.getEN();
-        for (int i = 0 ; i < 3; i++){
-            if(currEN + 5 <=100){
-                currEN +=5;           
-            }else{
+        for (int i = 0; i < 3; i++)
+        {
+            if (currEN + 5 <= 100)
+            {
+                currEN += 5;
+            }
+            else
+            {
                 break;
             }
         }
-        pc.setEN(currEN);
-       
+        pc.setEN (currEN);
+
         anime.SetBool(characterCode + "isHeal", true);
         return skillList[9];
     }
 
     public GameObject guard(playerControll pc)
     {
-          
         pc.setDEF(15);
         anime.SetBool(characterCode + "isGuard", true);
         return skillList[4];
@@ -261,6 +328,7 @@ public class characterSetting : MonoBehaviour
         anime.SetBool(characterCode + "isHeal", false);
         anime.SetBool(characterCode + "isGuard", false);
         currSkill = null;
+        currPlayer = null;
     }
 
     public void changeDirection()
@@ -316,17 +384,20 @@ public class characterSetting : MonoBehaviour
                 .additionalSkillList[0]
                 .GetComponent<skillManager>()
                 .getCost());
-        
-      
+
         int currHP = pc.getHP();
-        for (int i = 0 ; i < 6; i++){
-            if(currHP + 5 <=100){
-                currHP +=5;           
-            }else{
+        for (int i = 0; i < 6; i++)
+        {
+            if (currHP + 5 <= 100)
+            {
+                currHP += 5;
+            }
+            else
+            {
                 break;
             }
         }
-        pc.setHP(currHP);
+        pc.setHP (currHP);
         return GameMaster.additionalSkillList[0];
     }
 
@@ -345,17 +416,53 @@ public class characterSetting : MonoBehaviour
         return GameMaster.additionalSkillList[1];
     }
 
-    public GameObject missile(playerControll pc , playerControll destinationPC)
+    public GameObject missile(playerControll pc, playerControll destinationPC)
     {
         GameMaster
             .additionalSkillList[2]
             .GetComponent<skillManager>()
             .create(transform.position.x, transform.position.y);
-                GameMaster
-            .additionalSkillList[2]
-            .GetComponent<skillManager>()
-            .moveToward(destinationPC.getX(), destinationPC.getY());
-         Debug.Log("x: "+ destinationPC.getX() + " y: "+ destinationPC.getY() + " p2 x"+ GameMaster.p2x + " y "+ GameMaster.p2y);
+
+        
+        if (//enemy is out of range
+            Mathf.Abs(pc.getX() - destinationPC.getX()) >= 2 ||
+            Mathf.Abs(pc.getY() - destinationPC.getY()) >= 2
+        )
+        {
+                  GameMaster
+                .additionalSkillList[2]
+                .GetComponent<skillManager>()
+                .moveToward(pc.getX(), pc.getY() + 10, direction, 90); 
+        }
+        else
+        {
+            int rotation = 0;
+            if(pc.getY() > destinationPC.getY()){
+                if(pc.getX() != destinationPC.getX()){
+                    rotation = 45;
+                }else{
+                    rotation =90;
+                }
+            }
+            if(pc.getY() < destinationPC.getY()){
+                
+                if(pc.getX() != destinationPC.getX()){
+                    rotation = -45;
+                }else{
+                    rotation =-90;
+                }
+                
+            }
+            GameMaster
+                .additionalSkillList[2]
+                .GetComponent<skillManager>()
+                .moveToward(destinationPC.getX(),
+                destinationPC.getY(),
+                direction,
+                rotation);
+        }
+
+        //decrease EN by its cost
         pc
             .setEN(pc.getEN() -
             GameMaster
