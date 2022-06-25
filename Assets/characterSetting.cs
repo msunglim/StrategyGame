@@ -227,8 +227,7 @@ public class characterSetting : MonoBehaviour
     //from a to b point
     public void effect5()
     {
-        GameMaster
-            .additionalSkillList[2]
+        currSkill
             .GetComponent<skillManager>()
             .create(transform.position.x, transform.position.y);
 
@@ -239,8 +238,7 @@ public class characterSetting : MonoBehaviour
             Mathf.Abs(pc.getY() - destinationPC.getY()) >= 2
         )
         {
-                  GameMaster
-                .additionalSkillList[2]
+                 currSkill
                 .GetComponent<skillManager>()
                 .moveToward(pc.getX(), pc.getY() + 10, direction, 90); 
         }
@@ -263,8 +261,7 @@ public class characterSetting : MonoBehaviour
                 }
                 
             }
-            GameMaster
-                .additionalSkillList[2]
+            currSkill
                 .GetComponent<skillManager>()
                 .moveToward(destinationPC.getX(),
                 destinationPC.getY(),
