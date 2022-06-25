@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9154958056925115630}
   - component: {fileID: 4807805121255429388}
   m_Layer: 0
-  m_Name: c1Skill2
+  m_Name: c4Skill3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetArea: 000000000100000002000000030000000400000005000000060000000700000008000000
-  skillEffect: {fileID: 8103981942090560074, guid: 9e2dd8358fafd614ca5019f742939f41, type: 3}
-  damage: 20
-  cost: 30
-  skillMinImage: {fileID: 21300000, guid: cd662a0fdca5a714b8dc83627bd73980, type: 3}
-  skillName: Twist Slice
+  targetArea: 010000000400000007000000
+  skillEffect: {fileID: 8103981942090560074, guid: 90ae7f59002b48847b6a19bf61058134, type: 3}
+  damage: 30
+  cost: 20
+  skillMinImage: {fileID: 1287160543, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
+  skillName: Sword Flow
   skillPriority: 2
