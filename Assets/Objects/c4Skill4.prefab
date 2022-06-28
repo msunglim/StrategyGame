@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 000000000200000003000000050000000600000008000000
   skillEffect: {fileID: 0}
   damage: 45
-  cost: 35
+  cost: 40
   skillMinImage: {fileID: 281127904, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
   skillName: Dark Lightning
   skillPriority: 2

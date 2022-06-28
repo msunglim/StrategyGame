@@ -45,6 +45,7 @@ public class characterSetting : MonoBehaviour
     private Sprite victoryPose;
 
     private playerControll currPlayer; //which player is activating this character's skill now.
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -62,7 +63,7 @@ public class characterSetting : MonoBehaviour
             transform.position =
                 Vector3
                     .MoveTowards(transform.position,
-                    new Vector3(adjustedX, adjustedY, -2),
+                    new Vector3(adjustedX, adjustedY, transform.position.z),
                     Time.deltaTime * speed);
             if (
                 transform.position.x == adjustedX &&
@@ -151,6 +152,7 @@ public class characterSetting : MonoBehaviour
             new Vector3(-8 * direction, -1, 1),
             Quaternion.identity);
         ult.GetComponent<MoveToDirection>().setDirection(5 * direction, 0);
+        ult.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(1);
         Destroy (ult);
     }
@@ -197,7 +199,7 @@ public class characterSetting : MonoBehaviour
                         transform.position.y,
                         5 * i,
                         5 * j,
-                        90*j);
+                        90 * j);
                 }
             }
         }
@@ -231,35 +233,44 @@ public class characterSetting : MonoBehaviour
             .GetComponent<skillManager>()
             .create(transform.position.x, transform.position.y);
 
-        playerControll pc = (currPlayer == GameMaster.p1c) ? GameMaster.p1c : GameMaster.p2c;
-        playerControll destinationPC = (currPlayer == GameMaster.p1c) ? GameMaster.p2c : GameMaster.p1c;
-        if (//enemy is out of range
+        playerControll pc =
+            (currPlayer == GameMaster.p1c) ? GameMaster.p1c : GameMaster.p2c;
+        playerControll destinationPC =
+            (currPlayer == GameMaster.p1c) ? GameMaster.p2c : GameMaster.p1c;
+        if (
+            //enemy is out of range
             Mathf.Abs(pc.getX() - destinationPC.getX()) >= 2 ||
             Mathf.Abs(pc.getY() - destinationPC.getY()) >= 2
         )
         {
-                 currSkill
+            currSkill
                 .GetComponent<skillManager>()
-                .moveToward(pc.getX(), pc.getY() + 10, direction, 90); 
+                .moveToward(pc.getX(), pc.getY() + 10, direction, 90);
         }
         else
         {
             int rotation = 0;
-            if(pc.getY() > destinationPC.getY()){
-                if(pc.getX() != destinationPC.getX()){
+            if (pc.getY() > destinationPC.getY())
+            {
+                if (pc.getX() != destinationPC.getX())
+                {
                     rotation = 45;
-                }else{
-                    rotation =90;
+                }
+                else
+                {
+                    rotation = 90;
                 }
             }
-            if(pc.getY() < destinationPC.getY()){
-                
-                if(pc.getX() != destinationPC.getX()){
+            if (pc.getY() < destinationPC.getY())
+            {
+                if (pc.getX() != destinationPC.getX())
+                {
                     rotation = -45;
-                }else{
-                    rotation =-90;
                 }
-                
+                else
+                {
+                    rotation = -90;
+                }
             }
             currSkill
                 .GetComponent<skillManager>()
@@ -306,11 +317,13 @@ public class characterSetting : MonoBehaviour
 
     public void getHit()
     {
+        GetComponent<audioManager>().playAudio(3);
         anime.SetBool(characterCode + "isHit", true);
     }
 
     public void die()
     {
+        GetComponent<audioManager>().playAudio(4);
         anime.SetBool(characterCode + "isDead", true);
     }
 
@@ -370,11 +383,11 @@ public class characterSetting : MonoBehaviour
                 return skillList[3];
             }
         }
-       
     }
 
     public GameObject restore(playerControll pc)
     {
+         GetComponent<audioManager>().playAudio(1);
         GameMaster
             .additionalSkillList[0]
             .GetComponent<skillManager>()
@@ -404,6 +417,7 @@ public class characterSetting : MonoBehaviour
 
     public GameObject defense(playerControll pc)
     {
+         GetComponent<audioManager>().playAudio(2);
         GameMaster
             .additionalSkillList[1]
             .GetComponent<skillManager>()
@@ -424,35 +438,41 @@ public class characterSetting : MonoBehaviour
             .GetComponent<skillManager>()
             .create(transform.position.x, transform.position.y);
 
-        
-        if (//enemy is out of range
+        if (
+            //enemy is out of range
             Mathf.Abs(pc.getX() - destinationPC.getX()) >= 2 ||
             Mathf.Abs(pc.getY() - destinationPC.getY()) >= 2
         )
         {
-                  GameMaster
+            GameMaster
                 .additionalSkillList[2]
                 .GetComponent<skillManager>()
-                .moveToward(pc.getX(), pc.getY() + 10, direction, 90); 
+                .moveToward(pc.getX(), pc.getY() + 10, direction, 90);
         }
         else
         {
             int rotation = 0;
-            if(pc.getY() > destinationPC.getY()){
-                if(pc.getX() != destinationPC.getX()){
+            if (pc.getY() > destinationPC.getY())
+            {
+                if (pc.getX() != destinationPC.getX())
+                {
                     rotation = 45;
-                }else{
-                    rotation =90;
+                }
+                else
+                {
+                    rotation = 90;
                 }
             }
-            if(pc.getY() < destinationPC.getY()){
-                
-                if(pc.getX() != destinationPC.getX()){
+            if (pc.getY() < destinationPC.getY())
+            {
+                if (pc.getX() != destinationPC.getX())
+                {
                     rotation = -45;
-                }else{
-                    rotation =-90;
                 }
-                
+                else
+                {
+                    rotation = -90;
+                }
             }
             GameMaster
                 .additionalSkillList[2]

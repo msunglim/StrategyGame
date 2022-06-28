@@ -263,6 +263,7 @@ MonoBehaviour:
   switchSceneButtonToCombatPlanner: {fileID: 3771100287817095989, guid: 8d9bfb43d6fcad34296b5051ff8ae755, type: 3}
   switchSceneButtonToMatchingBattle: {fileID: 4017935113093145662, guid: fed10a39bf1c52a4c95582c0534ef8c3, type: 3}
   victoryScene: {fileID: 102900000, guid: 8fa18b0e8a0339648907c2132cad78de, type: 3}
+  updateStatText: {fileID: 9178510586188253011, guid: dd1fee13e67701c40b815ba2d3c43f46, type: 3}
 --- !u!4 &142539503
 Transform:
   m_ObjectHideFlags: 0

@@ -49,7 +49,7 @@ public class FieldGenerator : MonoBehaviour
             GameMaster.p1.GetComponent<playerControll>().getCharacter();
         p1 =
             Instantiate(player1Character,
-            new Vector3(x[GameMaster.p1x] - 0.5f, y[GameMaster.p1y] + 0.8f, -2),
+            new Vector3(x[GameMaster.p1x] - 0.5f, y[GameMaster.p1y] + 0.8f, -1.5f),
             Quaternion.identity);
 
         p1controll = GameMaster.p1.GetComponent<playerControll>();
@@ -63,7 +63,7 @@ public class FieldGenerator : MonoBehaviour
             GameMaster.p2.GetComponent<playerControll>().getCharacter();
         p2 =
             Instantiate(player2Character,
-            new Vector3(x[GameMaster.p2x] + 0.5f, y[GameMaster.p2y] + 0.8f, -2),
+            new Vector3(x[GameMaster.p2x] + 0.5f, y[GameMaster.p2y] + 0.8f, -1.5f),
             Quaternion.identity);
         p2controll = GameMaster.p2.GetComponent<playerControll>();
         p2controll.setXY(GameMaster.p2x, GameMaster.p2y);

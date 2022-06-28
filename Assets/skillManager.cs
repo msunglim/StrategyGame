@@ -71,7 +71,7 @@ public class skillManager : MonoBehaviour
     {
         GameObject effect =
             Instantiate(skillEffect,
-            new Vector3(x, y, -3),
+            new Vector3(x, y, -1.55f),
             Quaternion.identity);
         effect.GetComponent<MoveToDirection>().setDirection(direction * dx, dy); //10 is speed of skill
         if(rotate != 0){
@@ -84,7 +84,7 @@ public class skillManager : MonoBehaviour
     {
         currEffect =
             Instantiate(skillEffect,
-            new Vector3(x, y, -3),
+            new Vector3(x, y, -1.55f),
             Quaternion.identity);
         Destroy(currEffect, 2.0f);
     }

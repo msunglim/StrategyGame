@@ -27,7 +27,8 @@ public class matchingProfileSetting : MonoBehaviour
                 new Vector3(-10, 0, 2),
                 Quaternion.identity);
             ult.transform.localScale =
-            new Vector3(3, 3, 2);              
+            new Vector3(3, 3, 2);        
+         
         }
         else
         {
