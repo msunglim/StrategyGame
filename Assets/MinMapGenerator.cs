@@ -28,6 +28,8 @@ public class MinMapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioMaster.playCombatPlannerAudio();
+
         GameMaster.p1Skills = new GameObject[3];
         GameMaster.p1Size = 0;
         GameMaster.p2Skills = new GameObject[3];
@@ -95,7 +97,6 @@ public class MinMapGenerator : MonoBehaviour
         int count = 0;
         float additionalX = 1.8f;
         while( count < GameMaster.p1SkillList.Length - 10){
-            Debug.Log("c" + (GameMaster.p1SkillList.Length - 10));
              GameObject skillcard =
                     Instantiate(skillCard,
                     new Vector3( skillCardX[4] -xLocationHelper + additionalX, skillCardY[count%2], -1),

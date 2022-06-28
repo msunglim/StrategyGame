@@ -80,6 +80,8 @@ public class GameMaster : MonoBehaviour
 
         characterList = GetComponent<characterManager>().getCharacterList();    
         additionalSkillList = GetComponent<additionalSkillManager>().getAdditionalSkills();
+
+  
         DontDestroyOnLoad (gameObject);
     }
 

@@ -16,7 +16,7 @@ public class buttonInactivater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("lengt"+ GameMaster.p1Size);
+ 
         if(GameMaster.p1Size < 3){
             button.interactable = false;
         }else{

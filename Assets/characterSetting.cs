@@ -273,6 +273,7 @@ public class characterSetting : MonoBehaviour
     public GameObject heal(playerControll pc)
     {
         int currEN = pc.getEN();
+        GetComponent<audioManager>().playAudio(1);
         for (int i = 0; i < 3; i++)
         {
             if (currEN + 5 <= 100)
@@ -292,6 +293,7 @@ public class characterSetting : MonoBehaviour
 
     public GameObject guard(playerControll pc)
     {
+        GetComponent<audioManager>().playAudio(2);
         pc.setDEF(15);
         anime.SetBool(characterCode + "isGuard", true);
         return skillList[4];
@@ -345,6 +347,7 @@ public class characterSetting : MonoBehaviour
         float currX = transform.position.x;
         float currY = transform.position.y;
 
+        GetComponent<audioManager>().playAudio(0);
         if (currX == adjustedX)
         {
             if (currY < adjustedY)
@@ -367,6 +370,7 @@ public class characterSetting : MonoBehaviour
                 return skillList[3];
             }
         }
+       
     }
 
     public GameObject restore(playerControll pc)

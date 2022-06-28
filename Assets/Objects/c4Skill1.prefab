@@ -49,5 +49,5 @@ MonoBehaviour:
   damage: 25
   cost: 15
   skillMinImage: {fileID: 253934606, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
-  skillName: Slash bluster
+  skillName: Enery Bolt
   skillPriority: 2
