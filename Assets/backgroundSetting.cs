@@ -13,6 +13,7 @@ public class backgroundSetting : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = fieldList[GameMaster.match];
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = backgroundList[GameMaster.match];
         
+        AudioMaster.playBattleFieldAudio(2 + GameMaster.match);
     }
 
     // Update is called once per frame

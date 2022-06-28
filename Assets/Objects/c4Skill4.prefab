@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetArea: 04000000060000000700000008000000
+  targetArea: 000000000200000003000000050000000600000008000000
   skillEffect: {fileID: 0}
   damage: 45
   cost: 35
   skillMinImage: {fileID: 281127904, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
-  skillName: Blade Dance
+  skillName: Dark Lightning
   skillPriority: 2

@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca3eed0276013429024aec9163be6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetArea: 010000000400000007000000
+  targetArea: 04000000
   skillEffect: {fileID: 8103981942090560074, guid: 90ae7f59002b48847b6a19bf61058134, type: 3}
-  damage: 30
-  cost: 20
+  damage: 60
+  cost: 45
   skillMinImage: {fileID: 1287160543, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
-  skillName: Sword Flow
+  skillName: Demonize
   skillPriority: 2

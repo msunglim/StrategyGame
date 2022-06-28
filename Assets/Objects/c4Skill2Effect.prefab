@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7138931826431947676}
   - component: {fileID: 3098909623810331818}
-  - component: {fileID: 4387054357822397177}
   - component: {fileID: 3544550036702582372}
+  - component: {fileID: 698745702839961693}
   m_Layer: 0
   m_Name: c4Skill2Effect
   m_TagString: Untagged
@@ -86,18 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4387054357822397177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8103981942090560074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7080b27a205d96143a1bd83ff1ff0aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3544550036702582372
 Animator:
   serializedVersion: 4
@@ -118,3 +106,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &698745702839961693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103981942090560074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 554259c9ba956fb469eec2b749a46578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

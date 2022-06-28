@@ -39,7 +39,8 @@ public class statManager : MonoBehaviour
                 ? GameMaster.p1c.getCharacterProfile()
                 : GameMaster.p2c.getCharacterProfile();
         player.GetComponent<SpriteRenderer>().transform.localScale =
-            new Vector2(1, 1);
+            new Vector2(1.05f, 1.05f);
+
         if (playerNumber == -1)
         {
             player
@@ -54,9 +55,6 @@ public class statManager : MonoBehaviour
             player.GetComponent<SpriteRenderer>().bounds.size.x /
             2;
 
-        // transform.position =
-        //     new Vector2(startingX + playerNumber * (defaultSize / 2),
-        //         transform.position.y);
         if (playerNumber == 1)
         {
             hpBar = transform.GetChild(1).gameObject;
@@ -65,14 +63,14 @@ public class statManager : MonoBehaviour
             hpBar.transform.localScale =
                 new Vector2(currentSizeHP, hpBar.transform.localScale.y);
             hpBar.transform.position =
-                new Vector2(startingX + playerNumber * (currentSizeHP / 2),
-                    hpBar.transform.position.y);
+                new Vector3(startingX + playerNumber * (currentSizeHP / 2),
+                    hpBar.transform.position.y, hpBar.transform.position.z);
             currentSizeEN = defaultSize * (float)(GameMaster.p1EN / 100.0);
             enBar.transform.localScale =
                 new Vector2(currentSizeEN, enBar.transform.localScale.y);
             enBar.transform.position =
-                new Vector2(startingX + playerNumber * (currentSizeEN / 2),
-                    enBar.transform.position.y);
+                new Vector3(startingX + playerNumber * (currentSizeEN / 2),
+                    enBar.transform.position.y , enBar.transform.position.z);
         }
         else
         {
@@ -83,26 +81,20 @@ public class statManager : MonoBehaviour
             hpBar.transform.localScale =
                 new Vector2(currentSizeHP, hpBar.transform.localScale.y);
             hpBar.transform.position =
-                new Vector2(startingX + playerNumber * (currentSizeHP / 2),
-                    hpBar.transform.position.y);
+                new Vector3(startingX + playerNumber * (currentSizeHP / 2),
+                    hpBar.transform.position.y, hpBar.transform.position.z);
             currentSizeEN = defaultSize * (float)(GameMaster.p2EN / 100.0);
             enBar.transform.localScale =
                 new Vector2(currentSizeEN, enBar.transform.localScale.y);
             enBar.transform.position =
-                new Vector2(startingX + playerNumber * (currentSizeEN / 2),
-                    enBar.transform.position.y);
+                new Vector3(startingX + playerNumber * (currentSizeEN / 2),
+                    enBar.transform.position.y, enBar.transform.position.z);
         }
     }
 
     public void updateHPbar(int newHP)
     {
         currentSizeHP = defaultSize * (float)(newHP / 100.0);
-
-        // transform.GetChild(1).transform.localScale =
-        //     new Vector2(currentSizeHP, gameObject.transform.localScale.y);
-        // transform.GetChild(1).transform.position =
-        //     new Vector2(startingX + playerNumber * (currentSizeHP / 2),
-        //         transform.GetChild(1).transform.position.y);
         updateBar = true;
 
         transform.GetChild(3).GetComponent<TMPro.TextMeshPro>().text =
@@ -112,13 +104,6 @@ public class statManager : MonoBehaviour
     public void updateENbar(int newEN)
     {
         currentSizeEN = defaultSize * (float)(newEN / 100.0);
-
-        // transform.GetChild(2).transform.localScale =
-        //     new Vector2(currentSizeEN,
-        //         transform.GetChild(2).transform.localScale.y);
-        // transform.GetChild(2).transform.position =
-        //     new Vector2(startingX + playerNumber * (currentSizeEN / 2),
-        //         transform.GetChild(2).transform.position.y);
         updateBar = true;
 
         transform.GetChild(4).GetComponent<TMPro.TextMeshPro>().text =
@@ -137,9 +122,9 @@ public class statManager : MonoBehaviour
                     new Vector2(defaultSize * (float)(newHP / 100.0), 1),
                     2 * Time.deltaTime);
             transform.GetChild(1).transform.position =
-                new Vector2(startingX +
+                new Vector3(startingX +
                     playerNumber * (defaultSize * (float)(newHP / 100.0) / 2),
-                    transform.GetChild(1).transform.position.y);
+                    transform.GetChild(1).transform.position.y, transform.GetChild(1).transform.position.z);
 
             //EN update
             int newEN = (playerNumber == 1) ? GameMaster.p1EN : GameMaster.p2EN;
@@ -150,9 +135,9 @@ public class statManager : MonoBehaviour
                     2 * Time.deltaTime);
 
             transform.GetChild(2).transform.position =
-                new Vector2(startingX +
+                new Vector3(startingX +
                     playerNumber * (defaultSize * (float)(newEN / 100.0) / 2),
-                    transform.GetChild(2).transform.position.y);
+                    transform.GetChild(2).transform.position.y, transform.GetChild(2).transform.position.z);
 
             if (
                 (

@@ -86,14 +86,12 @@ public class skillManager : MonoBehaviour
             Instantiate(skillEffect,
             new Vector3(x, y, -3),
             Quaternion.identity);
-
         Destroy(currEffect, 2.0f);
     }
 
     public void moveToward(int x, int y, int direction, int rotate)
     {
         GameObject field = GameObject.Find("Battlefield");
-        
         if (y < 10) //if enemy is in range
         {
             currEffect

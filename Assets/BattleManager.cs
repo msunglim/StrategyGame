@@ -199,14 +199,15 @@ public class BattleManager : MonoBehaviour
 
         //display switchScenebutton (from battleField to combatPlanner)
         yield return new WaitForSeconds(1.5f);
-        if(GameMaster.match != 3){
+        if (GameMaster.match != 3)
+        {
             GameObject nextSceneButton =
-            (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
-                ? switchSceneButtonToMatchingBattle
-                : switchSceneButtonToCombatPlanner;
-        GameObject button = (GameObject) Instantiate(nextSceneButton);
+                (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
+                    ? switchSceneButtonToMatchingBattle
+                    : switchSceneButtonToCombatPlanner;
+
+            GameObject button = (GameObject) Instantiate(nextSceneButton);
         }
-        
     }
 
     //required time : 0.75s
@@ -303,7 +304,6 @@ public class BattleManager : MonoBehaviour
             } //defense
             else if (skills[i] == GameMaster.additionalSkillList[1])
             {
-
                 skill = character.defense(activatercontroll);
             } //missile
             else if (skills[i] == GameMaster.additionalSkillList[2])
@@ -586,24 +586,29 @@ public class BattleManager : MonoBehaviour
         updatePlayerInfoBar(p2controll, 1, true);
         updatePlayerInfoBar(p2controll, 1, false);
 
-        if (p1controll.getHP() <= 0)
+        //at least one of them is dead.
+        if (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
         {
-            p1character.die();
-            p2character.isVictory();
-        }
-        if (p2controll.getHP() <= 0)
-        {
-            p2character.die();
-            p1character.isVictory();
-            if (p1controll.getHP() > 0)
+            AudioMaster.playMainAudio();
+            if (p1controll.getHP() <= 0)
             {
-                GameMaster.match++;
+                p1character.die();
+                p2character.isVictory();
             }
-
-            if (GameMaster.match == 3)
+            if (p2controll.getHP() <= 0)
             {
-                yield return new WaitForSeconds(3f);
-                SceneManager.LoadScene(victoryScene.name);
+                p2character.die();
+                p1character.isVictory();
+                if (p1controll.getHP() > 0)
+                {
+                    GameMaster.match++;
+                }
+
+                if (GameMaster.match == 3)
+                {
+                    yield return new WaitForSeconds(3f);
+                    SceneManager.LoadScene(victoryScene.name);
+                }
             }
         }
     }

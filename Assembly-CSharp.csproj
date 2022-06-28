@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets\additionalSkillManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
+     <Compile Include="Assets\audioManager.cs" />
      <Compile Include="Assets\addtionalCardListManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
      <Compile Include="Assets\MoveToDestination.cs" />
@@ -52,6 +53,7 @@
      <Compile Include="Assets\updateRound.cs" />
      <Compile Include="Assets\buttonInactivater.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+     <Compile Include="Assets\AudioMaster.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
      <Compile Include="Assets\textGenerator.cs" />
      <Compile Include="Assets\characterSetting.cs" />
