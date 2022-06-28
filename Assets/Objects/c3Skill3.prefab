@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 030000000400000005000000060000000700000008000000
   skillEffect: {fileID: 8103981942090560074, guid: 2aa658139dec56c4f95ce0f8441a09d7, type: 3}
   damage: 25
-  cost: 20
+  cost: 25
   skillMinImage: {fileID: 21300000, guid: d2ecaaf8f3d09e6498109e08b086dd8a, type: 3}
   skillName: Papulatus
   skillPriority: 2

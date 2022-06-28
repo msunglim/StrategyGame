@@ -8,6 +8,7 @@ public class MoveToDestination : MonoBehaviour
 
             x,
             y;
+    private int speed = 15;
     private bool destroyWhenReach;
     // Start is called before the first frame update
     void Start()
@@ -21,11 +22,14 @@ public class MoveToDestination : MonoBehaviour
             Vector3
                 .MoveTowards(transform.position,
                 new Vector3(x, y, transform.position.z),
-                Time.deltaTime * 15);
+                Time.deltaTime * speed);
         if ( destroyWhenReach && transform.position.x == x && transform.position.y == y)
         {
             Destroy (gameObject);
         }
+    }
+    public void setSpeed(int s){
+        speed = s;
     }
 
     public void setDestination(float a, float b, int directionX, bool tf)

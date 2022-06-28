@@ -54,6 +54,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField]
     private Object victoryScene;
 
+    [SerializeField]
+    private GameObject updateStatText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -289,7 +292,7 @@ public class BattleManager : MonoBehaviour
         if (skills[i] == skillList[9])
         {
             character.heal (activatercontroll);
-
+            instantiateStatText(activatercontroll.getX(), activatercontroll.getY(), 15, "Heal EN");
             int playerCode = (activatercontroll == p1controll) ? 0 : 1;
 
             //   updatePlayerInfoBar(activatercontroll, playerCode, false);
@@ -301,6 +304,7 @@ public class BattleManager : MonoBehaviour
             if (skills[i] == GameMaster.additionalSkillList[0])
             {
                 skill = character.restore(activatercontroll);
+                instantiateStatText(activatercontroll.getX(), activatercontroll.getY(), 30, "Restore HP");
             } //defense
             else if (skills[i] == GameMaster.additionalSkillList[1])
             {
@@ -492,6 +496,8 @@ public class BattleManager : MonoBehaviour
                 }
                 attackee.setHP(attackee.getHP() - dm);
 
+                instantiateStatText(opponentX, opponentY, -dm, "Damage");
+              
                 //update HP bar of opponent of a skill caster.
                 int playerCode = (attackee == p2controll) ? 1 : 0;
 
@@ -537,7 +543,12 @@ public class BattleManager : MonoBehaviour
                 new Color(255, 255, 255, 0.5f);
         }
     }
-
+    private void instantiateStatText(int playerX, int playerY , int dm, string t){
+         GameObject text = Instantiate(updateStatText, new Vector3(x[playerX] , y[playerY], -2), Quaternion.identity);
+         text.GetComponent<MoveToDestination>().setDestination(x[playerX], y[playerY] + 2 , 0, true);
+         text.GetComponent<MoveToDestination>().setSpeed(3);
+         text.GetComponent<textColorManager>().setTextAndColor(dm, t );
+    }
     //playercode 0 = player 1 , playercode 1 = player 2
     private void updatePlayerInfoBar(
         playerControll pc,
@@ -545,6 +556,7 @@ public class BattleManager : MonoBehaviour
         bool updateHP
     )
     {
+      
         if (updateHP)
         {
             playerInfo
@@ -561,6 +573,7 @@ public class BattleManager : MonoBehaviour
                 .GetComponent<statManager>()
                 .updateENbar(pc.getEN());
         }
+       
     }
 
     //exeucte this code after any attack skill executes.
@@ -585,7 +598,7 @@ public class BattleManager : MonoBehaviour
         updatePlayerInfoBar(p1controll, 0, false);
         updatePlayerInfoBar(p2controll, 1, true);
         updatePlayerInfoBar(p2controll, 1, false);
-
+        
         //at least one of them is dead.
         if (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
         {

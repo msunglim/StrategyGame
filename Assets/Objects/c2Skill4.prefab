@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 0000000002000000040000000600000008000000
   skillEffect: {fileID: 4060725292437241961, guid: 3ddb2cd03be826d4bb8e606d6e9f208e, type: 3}
   damage: 45
-  cost: 35
+  cost: 40
   skillMinImage: {fileID: 21300000, guid: d17aeeb4ad4c317458d97999714b0c7d, type: 3}
   skillName: Summon Evil
   skillPriority: 2

@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 030000000400000005000000
   skillEffect: {fileID: 8103981942090560074, guid: c5a0d6037746e9a4aaf78895c1dea85f, type: 3}
   damage: 25
-  cost: 15
+  cost: 20
   skillMinImage: {fileID: 253934606, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
   skillName: Enery Bolt
   skillPriority: 2

@@ -221,7 +221,8 @@ public class SkillCardManager : MonoBehaviour
     }
 
     public void headOfCard()
-    {
+    {   
+        GetComponent<AudioSource>().Play();
         Destroy (tail);
     }
 
@@ -232,7 +233,7 @@ public class SkillCardManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // GameObject minmap = GameObject.Find("MinMap");
+       
         GameObject playerInfo = GameObject.Find("PlayerInfo");
         GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
 
@@ -245,6 +246,7 @@ public class SkillCardManager : MonoBehaviour
             availableEN >= currSkillManager.getCost()
         )
         {
+            GetComponent<AudioSource>().Play();
             int newAvailableEN = availableEN - currSkillManager.getCost();
             if (newAvailableEN > 100)
             {
@@ -277,6 +279,7 @@ public class SkillCardManager : MonoBehaviour
             isAdded && parent != null //when it is at the combat schedule
         )
         {
+            parent.GetComponent<AudioSource>().Play();
             parent.GetComponent<SkillCardManager>().removeFilter();
             GameMaster
                 .removeToP1Skills(parent
@@ -311,12 +314,13 @@ public class SkillCardManager : MonoBehaviour
         }
         else if (!isUsedInCombatPanel && !isAdded)
         {
+            GetComponent<AudioSource>().Play();
             // when it is at the additional card panel.
             characterSetting character =
                 GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
             
             int randomInt = Random.Range(0, 8);
-            // int randomInt = 3;
+            // int randomInt = 2;
             //reset random int if the skill is already added to p1skilllist
             while(Array.IndexOf(GameMaster.p1SkillList, GameMaster.additionalSkillList[randomInt])>-1){
                 randomInt = Random.Range(0, 8);
@@ -337,6 +341,9 @@ public class SkillCardManager : MonoBehaviour
                 .setImage(1, GameMaster.p1SkillList.Length  - 1, true);
             Destroy(card.transform.GetChild(3).gameObject);
             card.transform.parent = minmap.transform;
+
+            GameObject additionalPanel = GameObject.Find("additionalCardManager");
+            additionalPanel.GetComponent<additionalCardListManager>().disableAllCards();
         }
     }
 }

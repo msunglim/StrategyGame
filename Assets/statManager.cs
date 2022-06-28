@@ -103,13 +103,14 @@ public class statManager : MonoBehaviour
 
     public void updateENbar(int newEN)
     {
+   
         currentSizeEN = defaultSize * (float)(newEN / 100.0);
         updateBar = true;
 
         transform.GetChild(4).GetComponent<TMPro.TextMeshPro>().text =
             "EN" + newEN;
     }
-
+  
     void Update()
     {
         if (updateBar)
@@ -120,7 +121,7 @@ public class statManager : MonoBehaviour
                 Vector3
                     .Lerp(transform.GetChild(1).transform.localScale,
                     new Vector2(defaultSize * (float)(newHP / 100.0), 1),
-                    2 * Time.deltaTime);
+                    10 * Time.deltaTime);
             transform.GetChild(1).transform.position =
                 new Vector3(startingX +
                     playerNumber * (defaultSize * (float)(newHP / 100.0) / 2),
@@ -132,28 +133,31 @@ public class statManager : MonoBehaviour
                 Vector3
                     .Lerp(transform.GetChild(2).transform.localScale,
                     new Vector2(defaultSize * (float)(newEN / 100.0), 1),
-                    2 * Time.deltaTime);
+                    10 * Time.deltaTime);
 
             transform.GetChild(2).transform.position =
                 new Vector3(startingX +
                     playerNumber * (defaultSize * (float)(newEN / 100.0) / 2),
                     transform.GetChild(2).transform.position.y, transform.GetChild(2).transform.position.z);
-
+              
             if (
                 (
-                Mathf.Round(transform.GetChild(1).transform.localScale.x * 10) *
-                0.1f ==
+                Mathf.Abs(Mathf.Round(transform.GetChild(1).transform.localScale.x * 10) *
+                0.1f -
                 Mathf.Round(defaultSize * (float)(newHP / 100.0) * 10) * 0.1f
-                ) &&
+                ) <=0.1f) &&
                 (
-                Mathf.Round(transform.GetChild(2).transform.localScale.x * 10) *
-                0.1f ==
+                Mathf.Abs(Mathf.Round(transform.GetChild(2).transform.localScale.x * 10) *
+                0.1f -
                 Mathf.Round(defaultSize * (float)(newEN / 100.0) * 10) * 0.1f
-                )
+                ) <= 0.1f)
             )
             {
+               
                 updateBar = false;
+                
             }
+      
         }
     }
 }
