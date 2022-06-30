@@ -24,11 +24,11 @@ public class newMatch : MonoBehaviour
 
         GameMaster.p2EN = 100;
 
-        GameMaster.p1x = 0;
+        GameMaster.p1x = 1;
 
         GameMaster.p1y = 1;
 
-        GameMaster.p2x = 1;
+        GameMaster.p2x = 2;
 
         GameMaster.p2y = 1;
 

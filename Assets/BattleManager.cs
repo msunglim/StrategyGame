@@ -52,9 +52,6 @@ public class BattleManager : MonoBehaviour
     private float skillCardY;
 
     [SerializeField]
-    private Object victoryScene;
-
-    [SerializeField]
     private GameObject updateStatText;
 
     // Start is called before the first frame update
@@ -75,7 +72,6 @@ public class BattleManager : MonoBehaviour
         p1character = p1.GetComponent<characterSetting>();
         p2character = p2.GetComponent<characterSetting>();
         playerInfo = GameObject.Find("PlayerInfo");
-
         p1guard = false;
         p2guard = false;
         p1skillCards = new GameObject[3];
@@ -113,7 +109,6 @@ public class BattleManager : MonoBehaviour
                 false);
             p2skillCards[i].GetComponent<SkillCardManager>().tailOfCard();
         }
-
         StartCoroutine(activateSkill());
     }
 
@@ -209,7 +204,9 @@ public class BattleManager : MonoBehaviour
                     ? switchSceneButtonToMatchingBattle
                     : switchSceneButtonToCombatPlanner;
 
-            GameObject button = (GameObject) Instantiate(nextSceneButton);
+            GameObject button =
+                (GameObject)
+                Instantiate(nextSceneButton);
         }
     }
 
@@ -265,37 +262,37 @@ public class BattleManager : MonoBehaviour
         if (skills[i] == skillList[4])
         {
             character.guard (activatercontroll);
-
+             instantiateStatText(activatercontroll.getX(),
+                activatercontroll.getY(),
+                15,
+                "DEF +");
             //   p2character.guard (p2controll);
         }
 
         if (skills[i] == skillList[5])
         {
             skill = character.useSkill(activatercontroll, 1);
-            // skill = character.restore(activatercontroll);
         }
         if (skills[i] == skillList[6])
         {
             skill = character.useSkill(activatercontroll, 2);
-            // skill = character.defense(activatercontroll);
         }
         if (skills[i] == skillList[7])
         {
             skill = character.useSkill(activatercontroll, 3);
-            // skill = character.missile(activatercontroll);
         }
         if (skills[i] == skillList[8])
         {
             skill = character.useSkill(activatercontroll, 4);
-            // skill = character.smash(activatercontroll);
         }
         if (skills[i] == skillList[9])
         {
             character.heal (activatercontroll);
-            instantiateStatText(activatercontroll.getX(), activatercontroll.getY(), 15, "Heal EN");
+            instantiateStatText(activatercontroll.getX(),
+            activatercontroll.getY(),
+            15,
+            "EN UP ");
             int playerCode = (activatercontroll == p1controll) ? 0 : 1;
-
-            //   updatePlayerInfoBar(activatercontroll, playerCode, false);
         }
 
         //additional skill test
@@ -303,12 +300,19 @@ public class BattleManager : MonoBehaviour
         {
             if (skills[i] == GameMaster.additionalSkillList[0])
             {
-                skill = character.restore(activatercontroll);
-                instantiateStatText(activatercontroll.getX(), activatercontroll.getY(), 30, "Restore HP");
+                character.restore (activatercontroll);
+                instantiateStatText(activatercontroll.getX(),
+                activatercontroll.getY(),
+                30,
+                "HP UP ");
             } //defense
             else if (skills[i] == GameMaster.additionalSkillList[1])
             {
-                skill = character.defense(activatercontroll);
+                character.defense (activatercontroll);
+                instantiateStatText(activatercontroll.getX(),
+                activatercontroll.getY(),
+                1000,
+                "DEF +");
             } //missile
             else if (skills[i] == GameMaster.additionalSkillList[2])
             {
@@ -496,8 +500,8 @@ public class BattleManager : MonoBehaviour
                 }
                 attackee.setHP(attackee.getHP() - dm);
 
-                instantiateStatText(opponentX, opponentY, -dm, "Damage");
-              
+                instantiateStatText(opponentX, opponentY, -dm, "HP ");
+
                 //update HP bar of opponent of a skill caster.
                 int playerCode = (attackee == p2controll) ? 1 : 0;
 
@@ -543,12 +547,20 @@ public class BattleManager : MonoBehaviour
                 new Color(255, 255, 255, 0.5f);
         }
     }
-    private void instantiateStatText(int playerX, int playerY , int dm, string t){
-         GameObject text = Instantiate(updateStatText, new Vector3(x[playerX] , y[playerY], -2), Quaternion.identity);
-         text.GetComponent<MoveToDestination>().setDestination(x[playerX], y[playerY] + 2 , 0, true);
-         text.GetComponent<MoveToDestination>().setSpeed(3);
-         text.GetComponent<textColorManager>().setTextAndColor(dm, t );
+
+    private void instantiateStatText(int playerX, int playerY, int dm, string t)
+    {
+        GameObject text =
+            Instantiate(updateStatText,
+            new Vector3(x[playerX], y[playerY], -2),
+            Quaternion.identity);
+        text
+            .GetComponent<MoveToDestination>()
+            .setDestination(x[playerX], y[playerY] + 2, 0, true);
+        text.GetComponent<MoveToDestination>().setSpeed(3);
+        text.GetComponent<textColorManager>().setTextAndColor(dm, t);
     }
+
     //playercode 0 = player 1 , playercode 1 = player 2
     private void updatePlayerInfoBar(
         playerControll pc,
@@ -556,7 +568,6 @@ public class BattleManager : MonoBehaviour
         bool updateHP
     )
     {
-      
         if (updateHP)
         {
             playerInfo
@@ -573,7 +584,6 @@ public class BattleManager : MonoBehaviour
                 .GetComponent<statManager>()
                 .updateENbar(pc.getEN());
         }
-       
     }
 
     //exeucte this code after any attack skill executes.
@@ -598,7 +608,7 @@ public class BattleManager : MonoBehaviour
         updatePlayerInfoBar(p1controll, 0, false);
         updatePlayerInfoBar(p2controll, 1, true);
         updatePlayerInfoBar(p2controll, 1, false);
-        
+
         //at least one of them is dead.
         if (p1controll.getHP() <= 0 || p2controll.getHP() <= 0)
         {
@@ -620,7 +630,7 @@ public class BattleManager : MonoBehaviour
                 if (GameMaster.match == 3)
                 {
                     yield return new WaitForSeconds(3f);
-                    SceneManager.LoadScene(victoryScene.name);
+                    SceneManager.LoadScene("Victory");
                 }
             }
         }

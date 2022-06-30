@@ -47,7 +47,7 @@ MonoBehaviour:
   targetArea: 000000000100000002000000030000000400000005000000060000000700000008000000
   skillEffect: {fileID: 8103981942090560074, guid: 0a056bdcfbb72ef43bc8e5753761a831, type: 3}
   damage: 30
-  cost: 35
+  cost: 40
   skillMinImage: {fileID: -1115339786, guid: 2ef1462b0f26a514aa48fdd7ba423da4, type: 3}
   skillName: Cursed Energy
   skillPriority: 2

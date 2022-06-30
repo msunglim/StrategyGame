@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+ using System; 
 public class switchScene : MonoBehaviour
 {
     [SerializeField]
-    private Object destination;
+    private string destination;
+    // private UnityEngine.Object destination;
 
     public void SwitchScene(){
-        SceneManager.LoadScene(destination.name);
+        try{
+            //  SceneManager.LoadScene(destination.name);
+             SceneManager.LoadScene(destination);
+        }
+        catch(NullReferenceException ex){
+
+            Debug.Log("Error Error!" + ex);
+        }
         
     }
 }
