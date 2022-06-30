@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-using Random=UnityEngine.Random;
+
+using Random = UnityEngine.Random;
 
 public class SkillCardManager : MonoBehaviour
 {
@@ -85,11 +86,13 @@ public class SkillCardManager : MonoBehaviour
         //if index is greater than the number of skills character currently have,
         //there will be error.
         // {
-        
         //캐릭터 코드를 쓸까..
         //skill = character.getSkillList()[index];
         //character code 1 = player 1 , 2 = player 2
-        skill = (characterCode == 1) ? GameMaster.p1SkillList[index] : GameMaster.p2SkillList[index] ;
+        skill =
+            (characterCode == 1)
+                ? GameMaster.p1SkillList[index]
+                : GameMaster.p2SkillList[index];
 
         currSkillManager = skill.GetComponent<skillManager>();
         spr.sprite = currSkillManager.getSkillMinImage();
@@ -221,7 +224,7 @@ public class SkillCardManager : MonoBehaviour
     }
 
     public void headOfCard()
-    {   
+    {
         GetComponent<AudioSource>().Play();
         Destroy (tail);
     }
@@ -233,117 +236,134 @@ public class SkillCardManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-       
-        GameObject playerInfo = GameObject.Find("PlayerInfo");
-        GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
-
-        //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
-        //if it is true, then it can be removed by clicking out of combat schedule.
-        if (
-            !isAdded &&
-            GameMaster.p1Size < GameMaster.p1Skills.Length &&
-            isUsedInCombatPanel &&
-            availableEN >= currSkillManager.getCost()
-        )
+        if (GameObject.Find("MinMap"))
         {
-            GetComponent<AudioSource>().Play();
-            int newAvailableEN = availableEN - currSkillManager.getCost();
-            if (newAvailableEN > 100)
+            GameObject playerInfo = GameObject.Find("PlayerInfo");
+            GameObject p1Stat = playerInfo.transform.GetChild(0).gameObject;
+
+            //if isAdd is false, it means, skillcard is not added to combat schedule. so by clicking it, it can be added to cs.
+            //if it is true, then it can be removed by clicking out of combat schedule.
+            if (
+                !isAdded &&
+                GameMaster.p1Size < GameMaster.p1Skills.Length &&
+                isUsedInCombatPanel &&
+                availableEN >= currSkillManager.getCost()
+            )
             {
-                newAvailableEN = 100;
+                GetComponent<AudioSource>().Play();
+                int newAvailableEN = availableEN - currSkillManager.getCost();
+                if (newAvailableEN > 100)
+                {
+                    newAvailableEN = 100;
+                }
+                else if (newAvailableEN < 0)
+                {
+                    newAvailableEN = 0;
+                }
+                p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
+
+                transform
+                    .parent
+                    .GetComponent<MinMapGenerator>()
+                    .setAvailableEN(newAvailableEN);
+
+                //여기서 가능한곳에 넣어야합니다. 지금은 사이즈에 따라 하고있음.. ㅜ
+                GameMaster.addToP1Skills (skill, gameObject);
+
+                //이것들을 필터만 추가하는것으로 바꾸어야합니다.
+                // SpriteRenderer[] allspr = GetComponentsInChildren<SpriteRenderer>();
+                // for (int i = 0; i < allspr.Length; i++)
+                // {
+                //     allspr[i].color = Color.grey;
+                // }
+                addFilter();
+                isAdded = true;
             }
-            else if (newAvailableEN < 0)
+            else if (
+                isAdded && parent != null //when it is at the combat schedule
+            )
             {
-                newAvailableEN = 0;
-            }
-            p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
+                parent.GetComponent<AudioSource>().Play();
+                parent.GetComponent<SkillCardManager>().removeFilter();
+                GameMaster
+                    .removeToP1Skills(parent
+                        .GetComponent<SkillCardManager>()
+                        .getSkill(),
+                    gameObject);
 
-            transform
-                .parent
-                .GetComponent<MinMapGenerator>()
-                .setAvailableEN(newAvailableEN);
+                //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
+                //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
+                int newAvailableEN =
+                    availableEN +
+                    parent
+                        .GetComponent<SkillCardManager>()
+                        .getSkill()
+                        .GetComponent<skillManager>()
+                        .getCost();
+                if (newAvailableEN > 100)
+                {
+                    newAvailableEN = 100;
+                }
+                else if (newAvailableEN < 0)
+                {
+                    newAvailableEN = 0;
+                }
+                p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
 
-            //여기서 가능한곳에 넣어야합니다. 지금은 사이즈에 따라 하고있음.. ㅜ
-            GameMaster.addToP1Skills (skill, gameObject);
-
-            //이것들을 필터만 추가하는것으로 바꾸어야합니다.
-            // SpriteRenderer[] allspr = GetComponentsInChildren<SpriteRenderer>();
-            // for (int i = 0; i < allspr.Length; i++)
-            // {
-            //     allspr[i].color = Color.grey;
-            // }
-            addFilter();
-            isAdded = true;
-        }
-        else if (
-            isAdded && parent != null //when it is at the combat schedule
-        )
-        {
-            parent.GetComponent<AudioSource>().Play();
-            parent.GetComponent<SkillCardManager>().removeFilter();
-            GameMaster
-                .removeToP1Skills(parent
-                    .GetComponent<SkillCardManager>()
-                    .getSkill(),
-                gameObject);
-
-            //    transform.parent.GetComponent<MinMapGenerator>().getAvailableEN() + currSkillManager.getCost();
-            //저래 긴이유는 컴벳스케줄에있는 애는 새로운 스킬카드라 아무것도 할당되있지않아서 부모(minmap말고 원래 전신)을 참고할 수 밖에없음.
-            int newAvailableEN =
-                availableEN +
                 parent
+                    .transform
+                    .parent
+                    .GetComponent<MinMapGenerator>()
+                    .setAvailableEN(newAvailableEN);
+            }
+            else if (!isUsedInCombatPanel && !isAdded)
+            {
+                GetComponent<AudioSource>().Play();
+
+                // when it is at the additional card panel.
+                characterSetting character =
+                    GameMaster
+                        .p1c
+                        .getCharacter()
+                        .GetComponent<characterSetting>();
+
+                int randomInt = Random.Range(0, 8);
+
+                // int randomInt = 1;
+                //reset random int if the skill is already added to p1skilllist
+                while (Array
+                        .IndexOf(GameMaster.p1SkillList,
+                        GameMaster.additionalSkillList[randomInt]) >
+                    -1
+                )
+                {
+                    randomInt = Random.Range(0, 8);
+                }
+                GameMaster
+                    .addToP1SkillList(GameMaster
+                        .additionalSkillList[randomInt]);
+
+                headOfCard();
+                setImage(1, GameMaster.p1SkillList.Length - 1, false);
+                Destroy(transform.parent.gameObject, 2.0f);
+
+                GameObject minmap = GameObject.Find("MinMap");
+                GameObject card =
+                    Instantiate(gameObject,
+                    new Vector3(6.8f, 0, -1),
+                    Quaternion.identity);
+                card
                     .GetComponent<SkillCardManager>()
-                    .getSkill()
-                    .GetComponent<skillManager>()
-                    .getCost();
-            if (newAvailableEN > 100)
-            {
-                newAvailableEN = 100;
-            }
-            else if (newAvailableEN < 0)
-            {
-                newAvailableEN = 0;
-            }
-            p1Stat.GetComponent<statManager>().updateENbar(newAvailableEN);
+                    .setImage(1, GameMaster.p1SkillList.Length - 1, true);
+                Destroy(card.transform.GetChild(3).gameObject);
+                card.transform.parent = minmap.transform;
 
-            parent
-                .transform
-                .parent
-                .GetComponent<MinMapGenerator>()
-                .setAvailableEN(newAvailableEN);
-        }
-        else if (!isUsedInCombatPanel && !isAdded)
-        {
-            GetComponent<AudioSource>().Play();
-            // when it is at the additional card panel.
-            characterSetting character =
-                GameMaster.p1c.getCharacter().GetComponent<characterSetting>();
-            
-            int randomInt = Random.Range(0, 8);
-            // int randomInt = 2;
-            //reset random int if the skill is already added to p1skilllist
-            while(Array.IndexOf(GameMaster.p1SkillList, GameMaster.additionalSkillList[randomInt])>-1){
-                randomInt = Random.Range(0, 8);
+                GameObject additionalPanel =
+                    GameObject.Find("additionalCardManager");
+                additionalPanel
+                    .GetComponent<additionalCardListManager>()
+                    .disableAllCards();
             }
-            GameMaster.addToP1SkillList(GameMaster.additionalSkillList[randomInt]);
-            
-            headOfCard();
-            setImage(1, GameMaster.p1SkillList.Length - 1, false);
-            Destroy(transform.parent.gameObject, 2.0f);
-
-            GameObject minmap = GameObject.Find("MinMap");
-            GameObject card =
-                Instantiate(gameObject,
-                new Vector3(6.8f, 0, -1),
-                Quaternion.identity);
-            card
-                .GetComponent<SkillCardManager>()
-                .setImage(1, GameMaster.p1SkillList.Length  - 1, true);
-            Destroy(card.transform.GetChild(3).gameObject);
-            card.transform.parent = minmap.transform;
-
-            GameObject additionalPanel = GameObject.Find("additionalCardManager");
-            additionalPanel.GetComponent<additionalCardListManager>().disableAllCards();
         }
     }
 }

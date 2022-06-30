@@ -38,7 +38,7 @@ public class FieldGenerator : MonoBehaviour
     //true if p1 -> <- p2. false if p2 -> <-p1.
     private bool crossDirection;
 
-    void Start()
+    void Awake()
     {
         crossDirection = false;
         x = new float[] { -4.5f, -1.5f, 1.5f, 4.5f };

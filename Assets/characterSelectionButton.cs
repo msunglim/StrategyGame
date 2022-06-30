@@ -40,11 +40,7 @@ public class characterSelectionButton : MonoBehaviour
                 .getCharacterName();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+   
     private void OnMouseDown()
     {
         GameMaster.p1c.setCharacter(GameMaster.characterList[characterIndex]);
@@ -62,11 +58,11 @@ public class characterSelectionButton : MonoBehaviour
 
         GameMaster.p2EN = 100;
 
-        GameMaster.p1x = 0;
+        GameMaster.p1x = 1;
 
         GameMaster.p1y = 1;
 
-        GameMaster.p2x = 1;
+        GameMaster.p2x = 2;
 
         GameMaster.p2y = 1;
 
@@ -77,7 +73,6 @@ public class characterSelectionButton : MonoBehaviour
         GameMaster.round = 1;
 
         //how many characters this player has competed with.
-
         GameMaster.match = 0; //start from 0 to 3
 
         GetComponent<switchScene>().SwitchScene();

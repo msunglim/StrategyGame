@@ -14,11 +14,11 @@ public class GameMaster : MonoBehaviour
 
     public static int p2EN = 100;
 
-    public static int p1x = 0;
+    public static int p1x = 1;
 
     public static int p1y = 1;
 
-    public static int p2x = 1;
+    public static int p2x = 2;
 
     public static int p2y = 1;
 

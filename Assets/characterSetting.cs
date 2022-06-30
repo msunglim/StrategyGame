@@ -417,7 +417,8 @@ public class characterSetting : MonoBehaviour
 
     public GameObject defense(playerControll pc)
     {
-         GetComponent<audioManager>().playAudio(2);
+        //  GetComponent<audioManager>().playAudio(2);
+        guard(pc);
         GameMaster
             .additionalSkillList[1]
             .GetComponent<skillManager>()
@@ -428,6 +429,7 @@ public class characterSetting : MonoBehaviour
                 .additionalSkillList[1]
                 .GetComponent<skillManager>()
                 .getCost());
+        pc.setDEF(1000);
         return GameMaster.additionalSkillList[1];
     }
 
