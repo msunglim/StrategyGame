@@ -1,5 +1,6 @@
 # StrategyGame 
-https://www.youtube.com/watch?v=fSB4EXrAIbo
+#https://www.youtube.com/watch?v=fSB4EXrAIbo
+
 Implement a battle game with Unity. A player selects one character to play. The player selects three action cards and the character will perform the selected actions in this turn.  Fight with enemy until HP of one of them goes below zero.
 
 The motivation of this project is InuYasha Demon Tournament made by 'adult swim'.
